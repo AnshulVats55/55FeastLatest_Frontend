@@ -8,6 +8,7 @@ export const getChipStyles = makeStyles()((theme) => ({
   getTypographyOneStyles: {
     fontSize: "0.8rem",
     color: "#000",
+    fontWeight:500,
   },
 }));
 

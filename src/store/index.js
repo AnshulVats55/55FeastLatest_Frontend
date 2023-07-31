@@ -6,6 +6,8 @@ import mealBookingSlice from "./slices/mealBookingSlice";
 import snackBarSlice from "./slices/SnackbarSlice";
 import totalMemberSlice from "./slices/TotalMembersSlice";
 import PrebookDateSlice from "./slices/PrebookDatesSlice";
+import PrebookStatusSlice from "./slices/PrebookStatusSlice";
+import FetchPrebookDatesSlice from "./slices/FetchPrebookDatesSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
@@ -24,6 +26,8 @@ const reducer = combineReducers({
   snackbarReducer: snackBarSlice.reducer,
   totalMemberReducer: totalMemberSlice.reducer,
   prebookDatesReducer: PrebookDateSlice.reducer,
+  prebookStatusReducer: PrebookStatusSlice.reducer,
+  FetchPrebookDatesReducer: FetchPrebookDatesSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

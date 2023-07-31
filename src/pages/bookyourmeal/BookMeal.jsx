@@ -16,6 +16,7 @@ import {
 } from "../../bookingMethods/BookingMethods";
 import { handleFormattedDate, getNextDate } from "../../common/CommonData";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
+import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
 import snackbarMessages from "../../Constants";
 
 const BookMeal = () => {
@@ -33,6 +34,7 @@ const BookMeal = () => {
   const [prebookScroll, setPrebookScroll] = useState("paper");
   const [isBooked, setIsBooked] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [allBookedDates, setAllBookedDates] = useState([]);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -60,6 +62,8 @@ const BookMeal = () => {
       const response = await handleMemberBookingStatus(memberData._id);
       console.log("Response of booking status API", response);
       const allBookingDates = response?.data?.data;
+      setAllBookedDates(allBookingDates);
+      dispatch(getPrebookDates(allBookingDates));
       if (
         allBookingDates?.indexOf(formattedDate) > -1 ||
         allBookingDates?.indexOf(nextDateFormatted) > -1
@@ -96,7 +100,7 @@ const BookMeal = () => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings closed for today !");
+        handleBookingNotifications("Bookings not allowed on weekend !");
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
@@ -221,6 +225,7 @@ const BookMeal = () => {
             open={prebookOpen}
             scroll={prebookScroll}
             handleClose={handlePrebookClose}
+            allBookedDates={allBookedDates}
           />
         ) : (
           <></>

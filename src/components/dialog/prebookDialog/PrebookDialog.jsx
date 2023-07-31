@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { getPrebookDialogStyles } from "./PrebookDialog.Styles";
 import {
   Button,
@@ -10,24 +10,25 @@ import {
   DialogTitle,
   Typography,
   Grid,
-  Stack,
 } from "@mui/material";
 // import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 // import { format, addDays, isWeekend } from "date-fns";
-import {
-  handleFormattedDate,
-  // getLastDateOfCurrentMonth,
-  // getNextDate,
-} from "../../../common/CommonData";
-import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
+import // handleFormattedDate,
+// getLastDateOfCurrentMonth,
+// getNextDate,
+"../../../common/CommonData";
+// import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import { useDispatch, useSelector } from "react-redux";
 import snackbarMessages from "../../../Constants";
-import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
+// import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import DateChip from "../../chip/Chip";
 import PrebookUtils from "./Prebook.Utils";
 import { removeAllDates } from "../../../store/slices/PrebookDatesSlice";
+import { getPrebookStatus } from "../../../store/slices/PrebookStatusSlice";
+import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
+import { getPrebookDates } from "../../../store/slices/FetchPrebookDatesSlice";
 
-const PrebookDialog = ({ open, scroll, handleClose }) => {
+const PrebookDialog = ({ open, scroll, handleClose, allBookedDates }) => {
   const prebookedDates = useSelector((state) => {
     return state.prebookDatesReducer;
   });
@@ -51,35 +52,43 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
     }
   }, [open]);
 
-  const [rangeStartDate, setRangeStartDate] = useState("");
-  const [rangeEndDate, setRangeEndDate] = useState("");
-
-  const handleStartDatePicked = (event) => {
-    const formattedDate = handleFormattedDate(event);
-    const reversedDate = getReversedDate(formattedDate);
-    setRangeStartDate(reversedDate);
-  };
-
-  const handleEndDatePicked = (event) => {
-    const formattedDate = handleFormattedDate(event);
-    const reversedDate = getReversedDate(formattedDate);
-    setRangeEndDate(reversedDate);
-  };
-
-  const disableWeekends = (date) => {
-    return date.getDay() === 0 || date.getDay() === 6;
-  };
-
   const memberData = {
     email: email,
     bookedDates: prebookedDates,
   };
   const handlePrebooking = async (memberData) => {
-    console.log("Member data being sent", memberData);
-    const response = await handleMealPrebooking(memberData);
-    console.log("Response of prebooking API", response);
-    if (response?.data?.status === snackbarMessages.SUCCESS) {
-      dispatch(removeAllDates());
+    if (prebookedDates.length <= 0) {
+      dispatch(
+        setCustomSnackbar({
+          snackbarOpen: true,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: snackbarMessages.SELECT_START_DATE,
+        })
+      );
+    } else {
+      const response = await handleMealPrebooking(memberData);
+      console.log("Response of prebooking API", response);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        dispatch(removeAllDates());
+        dispatch(getPrebookDates(response?.data?.data?.bookedDates));
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage: snackbarMessages.PREBOOKING_SUCCESSFULL,
+          })
+        );
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: snackbarMessages.PREBOOKING_FAILURE,
+          })
+        );
+      }
     }
   };
 
@@ -125,6 +134,7 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
                       key={index}
                       dayName={day.dayName}
                       dateValue={day.date}
+                      allBookedDates={allBookedDates}
                     />
                   );
                 })}

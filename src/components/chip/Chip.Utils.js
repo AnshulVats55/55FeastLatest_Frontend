@@ -8,24 +8,27 @@ import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
 // import { handleFormattedDate } from "../../common/CommonData";
 import { setPrebookDates } from "../../store/slices/PrebookDatesSlice";
-import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
+import {
+  handleMemberBookingStatus,
+  handleCancelMealBooking,
+} from "../../bookingMethods/BookingMethods";
 
 const ChipUtils = () => {
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
   });
+
+  const currentDate = new Date();
+  const currentHours = currentDate.getHours();
+  const currentFormattedDate = handleFormattedDate(currentDate);
+  const currentReversedDate = getReversedDate(currentFormattedDate);
+
   const dispatch = useDispatch();
   const [isSelected, setIsSelected] = useState(false);
-  // const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isAlreadyBooked, setIsAlreadyBooked] = useState(false);
-  // const [datesPicked, setDatesPicked] = useState([]);
 
   const checkPrebookingAvailabilty = (dateToBeChecked) => {
     //checks availabilty for prebooking
-    const currentDate = new Date();
-    const currentHours = currentDate.getHours();
-    const currentFormattedDate = handleFormattedDate(currentDate);
-    const currentReversedDate = getReversedDate(currentFormattedDate);
     if (currentReversedDate === dateToBeChecked) {
       if (currentHours >= 0 && currentHours <= 8) {
         return true;
@@ -37,16 +40,15 @@ const ChipUtils = () => {
     }
   };
 
-  const datesPickedByMember = [];
   const handleDateSelection = async (dateToBeChecked) => {
     console.log("date to be checked", dateToBeChecked);
     setIsSelected(!isSelected);
     const isBookingOpen = checkPrebookingAvailabilty(dateToBeChecked);
     console.log("isbookingopen", isBookingOpen);
     if (isBookingOpen === true) {
-      const currentDate = new Date();
-      const currentFormattedDate = handleFormattedDate(currentDate);
-      const currentReversedDate = getReversedDate(currentFormattedDate);
+      // const currentDate = new Date();
+      // const currentFormattedDate = handleFormattedDate(currentDate);
+      // const currentReversedDate = getReversedDate(currentFormattedDate);
       dispatch(setPrebookDates(currentReversedDate));
     } else if (isBookingOpen === false) {
       dispatch(
@@ -66,9 +68,72 @@ const ChipUtils = () => {
     console.log("Response of pre-booking status API------->>>>>>>>", response);
     const allBookedDates = response?.data?.data;
     if (response?.data?.status === snackbarMessages.SUCCESS) {
-      // setIsDataLoaded(true);
       if (allBookedDates.indexOf(dateToBeChecked) > -1) {
         setIsAlreadyBooked(true);
+      }
+    }
+  };
+
+  const handlePrebookCancellation = async (dateToBeChecked) => {
+    const prebookData = {
+      userId: memberData._id,
+      date: dateToBeChecked,
+    };
+    if (currentReversedDate === dateToBeChecked) {
+      if (currentHours >= 0 && currentHours <= 8 && isAlreadyBooked === true) {
+        const response = await handleCancelMealBooking(prebookData);
+        if (response?.data?.status === snackbarMessages.SUCCESS) {
+          setIsAlreadyBooked(false);
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.SUCCESS,
+              snackbarMessage:
+                snackbarMessages.PREBOOK_CANCELLATION_SUCCESSFULL,
+            })
+          );
+        } else if (
+          response?.response?.data?.status === snackbarMessages.ERROR
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.PREBOOK_CANCELLATION_FAILURE,
+            })
+          );
+        }
+      } else {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Time limit exceeded !",
+          })
+        );
+      }
+    } else if (
+      currentReversedDate !== dateToBeChecked &&
+      isAlreadyBooked === true
+    ) {
+      const response = await handleCancelMealBooking(prebookData);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setIsAlreadyBooked(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage: snackbarMessages.PREBOOK_CANCELLATION_SUCCESSFULL,
+          })
+        );
+      } else if (response?.response?.data?.status === snackbarMessages.ERROR) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: snackbarMessages.PREBOOK_CANCELLATION_FAILURE,
+          })
+        );
       }
     }
   };
@@ -77,9 +142,10 @@ const ChipUtils = () => {
     isSelected,
     setIsSelected,
     handleDateSelection,
-    // isDataLoaded,
     isAlreadyBooked,
+    setIsAlreadyBooked,
     getPrebookingStatus,
+    handlePrebookCancellation,
   };
 };
 

@@ -67,15 +67,6 @@ const PrebookUtils = () => {
   }, []);
 
   const handleMealPrebooking = async (memberData) => {
-    if (memberData.length <= 0) {
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.SELECT_DATE,
-        })
-      );
-    }
     try {
       const response = await axios.post(
         `${BASE_URL}/bookmeal/multiple`,
