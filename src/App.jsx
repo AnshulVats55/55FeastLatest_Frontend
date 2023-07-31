@@ -14,7 +14,7 @@ function App(){
             <PersistGate persistor={persistor}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <AllRoutes />
-                </LocalizationProvider>   
+                </LocalizationProvider>
             </PersistGate>
         </Provider>
     );
