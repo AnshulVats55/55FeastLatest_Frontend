@@ -1,7 +1,9 @@
 import { makeStyles } from "tss-react/mui";
 
-export const getPrebookDialogStyles = makeStyles()((theme) => ({
-  getDialogBoxStyles: {},
+export const getBookForAnyoneStyles = makeStyles()((theme) => ({
+  getDialogBoxStyles: {
+    // background:"grey",
+  },
 
   getDialogTitleStyles: {
     textAlign: "center",
@@ -23,20 +25,45 @@ export const getPrebookDialogStyles = makeStyles()((theme) => ({
     fontSize: theme.typography.fontSize,
   },
 
-  getGridContStyles: {
-    width: "100%",
-    margin: "1rem 0rem 0rem",
+  getMemberCardStyles: {
+    minWidth: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    border: "none",
+    borderRadius: "5px",
+    margin: "0.5rem 0rem",
+    padding: "0.25rem 0rem",
+    cursor: "pointer",
+    transition: "0.20s ease-in-out",
+    "&:hover": {
+      boxShadow:
+        "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
+      transform: "scale(1.015)",
+    },
   },
 
-  getGridItemStyles: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+  getDialogActionStyles: {
+    // background:"wheat",
+  },
+
+  getMemberNameStyles: {
+    fontSize: theme.typography.fontSize,
+    fontFamily: theme.typography.fontFamily,
+    color: "#232229",
+  },
+
+  getMemberEmailStyles: {
+    fontSize: theme.typography.fontSize,
+    fontFamily: theme.typography.fontFamily,
+    color: "#232229",
   },
 
   root: {
+    width: "100%",
+    marginTop: "1rem",
     "& .MuiInputBase-root": {
-      fontSize: "1rem",
+      fontSize: "0.9rem",
       background: "#F7F7F7",
       "& fieldset": {
         border: "none",
@@ -61,8 +88,6 @@ export const getPrebookDialogStyles = makeStyles()((theme) => ({
       color: "#232229 !important",
     },
   },
-
-  getDialogActionStyles: {},
 
   getCloseButtonStyles: {
     width: "15%",
@@ -92,6 +117,4 @@ export const getPrebookDialogStyles = makeStyles()((theme) => ({
       fontSize: "0.9rem",
     },
   },
-
-  getDatePickerStyles: {},
 }));

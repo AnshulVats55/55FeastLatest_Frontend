@@ -43,10 +43,10 @@ export const handleCancelMealBooking = async (memberData) => {
   }
 };
 
-export const handleMemberBookingStatus = async (memberId) => {
+export const handleMemberBookingStatus = async (memberEmail) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/bookmeal/me/counts?id=${memberId}`,
+      `${BASE_URL}/bookmeal/me/counts?email=${memberEmail}`,
       {
         headers: {
           Authorization: `Bearer ${MEMBER_TOKEN}`,

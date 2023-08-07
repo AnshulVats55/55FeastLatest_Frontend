@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { getBookForAnyoneStyles } from "./BookForAnyone.Styles";
+import BookForAnyoneUtils from "./BookForAnyone.Utils";
 import {
   Button,
   Dialog,
@@ -12,23 +12,17 @@ import {
   Typography,
   Skeleton,
 } from "@mui/material";
-import { getBookForBuddyDialogStyles } from "./BookForBuddy.Styles";
 import InviteMemberCard from "../../card/InviteMemberCard";
 import {
   getMyBuddies,
   bookMealForBuddy,
 } from "../../../bookingMethods/BookingMethods";
-// import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
-import { useSelector } from "react-redux";
-import BookForBuddyUtils from "./BookForBuddy.Utils";
+// import BookForAnyoneCard from "../../card/bookForAnyoneCard/BookForAnyoneCard";
 
-const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
-  const myData = useSelector((state) => {
-    return state.memberDataReducer;
-  });
-
-  const { classes } = getBookForBuddyDialogStyles();
+const BookForAnyone = ({ open, scroll, handleClose, children }) => {
+  const { classes } = getBookForAnyoneStyles();
   const {
+    myData,
     isDataLoaded,
     setIsDataLoaded,
     searchTerm,
@@ -38,7 +32,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
     date,
     handleMemberSearch,
     checkMealBookingAvailability,
-  } = BookForBuddyUtils();
+  } = BookForAnyoneUtils();
 
   let animationDuration = 0.4;
 
@@ -53,16 +47,15 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
   }, [open]);
 
   useEffect(() => {
-    const handleMyBuddies = async () => {
+    const handleAllMembers = async () => {
       const response = await getMyBuddies(myData.email);
-      // console.log("Response of my buddies api is this ------------>", response);
       if (response?.data?.status === "success") {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
       }
     };
 
-    handleMyBuddies();
+    handleAllMembers();
   }, []);
 
   const filteredUsers = myBuddies?.filter((member) =>
@@ -74,10 +67,11 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);
-      // console.log(`Meal booked for my buddy ${buddyData.email}`, response);
       return response;
     }
   };
+
+  console.log("children at book for anyone dialog", children);
 
   return (
     <div>
@@ -93,7 +87,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
           id="scroll-dialog-title"
           className={classes.getDialogTitleStyles}
         >
-          Book for buddy
+          Book for anyone
         </DialogTitle>
         <DialogContent
           dividers={scroll === "paper"}
@@ -110,12 +104,12 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
                 fontSize: "1rem",
               }}
             >
-              Book a lunch count for your buddy and invite them to have lunch
-              with you
+              Book a lunch count for any member and help them to avail lunch
+              without a miss
             </Typography>
             <TextField
               type="search"
-              placeholder="Search for your buddy..."
+              placeholder="Search for any member..."
               variant="outlined"
               multiline
               className={classes.root}
@@ -133,13 +127,13 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
                       memberEmail={member.email}
                       memberId={memberId}
                       animationDuration={animationDuration}
-                      children="Book"
+                      children={children}
                       isDataLoaded={isDataLoaded}
-                      isDashboard={false}
+                      isDashboard={true}
                       isEmailChopRequired={true}
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
-                      isButtonDisableRequired={true}
+                      isButtonDisableRequired={false}
                       handleAction={() => {
                         const response = handleBookForBuddy({
                           email: member.email,
@@ -173,10 +167,12 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
                       memberName={member.memberName}
                       memberEmail={member.memberEmail}
                       animationDuration={animationDuration}
-                      children="Book"
+                      children={children}
                       isDataLoaded={isDataLoaded}
-                      isButtonRequired={true}
+                      isDashboard={true}
                       isEmailChopRequired={true}
+                      isActionButtonRequired={true}
+                      isStatusCheckRequired={true}
                     />
                   </Skeleton>
                 );
@@ -197,4 +193,4 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
   );
 };
 
-export default BookForBuddyDialog;
+export default BookForAnyone;

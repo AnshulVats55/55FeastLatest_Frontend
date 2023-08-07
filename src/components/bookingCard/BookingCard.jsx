@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Typography, Skeleton, Box } from "@mui/material";
 import React, { useEffect } from "react";
 import CommonButton from "../button/CommonButton";

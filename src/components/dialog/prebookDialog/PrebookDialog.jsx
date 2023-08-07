@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { getPrebookDialogStyles } from "./PrebookDialog.Styles";
 import {
   Button,
@@ -11,31 +11,22 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-// import { format, addDays, isWeekend } from "date-fns";
-import // handleFormattedDate,
-// getLastDateOfCurrentMonth,
-// getNextDate,
-"../../../common/CommonData";
-// import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import { useDispatch, useSelector } from "react-redux";
 import snackbarMessages from "../../../Constants";
-// import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import DateChip from "../../chip/Chip";
 import PrebookUtils from "./Prebook.Utils";
 import { removeAllDates } from "../../../store/slices/PrebookDatesSlice";
-import { getPrebookStatus } from "../../../store/slices/PrebookStatusSlice";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import { getPrebookDates } from "../../../store/slices/FetchPrebookDatesSlice";
 
-const PrebookDialog = ({ open, scroll, handleClose, allBookedDates }) => {
+const PrebookDialog = ({ open, scroll, handleClose }) => {
   const prebookedDates = useSelector((state) => {
     return state.prebookDatesReducer;
   });
+  console.log("Prebook dates kept in store", prebookedDates);
   const { email } = useSelector((state) => {
     return state.memberDataReducer;
   });
-  console.log("prebook dates from store", prebookedDates);
 
   const { classes } = getPrebookDialogStyles();
   const { openDatesForPrebook, handleMealPrebooking } = PrebookUtils();
@@ -62,12 +53,11 @@ const PrebookDialog = ({ open, scroll, handleClose, allBookedDates }) => {
         setCustomSnackbar({
           snackbarOpen: true,
           snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.SELECT_START_DATE,
+          snackbarMessage: snackbarMessages.SELECT_DATE,
         })
       );
     } else {
       const response = await handleMealPrebooking(memberData);
-      console.log("Response of prebooking API", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(removeAllDates());
         dispatch(getPrebookDates(response?.data?.data?.bookedDates));
@@ -126,19 +116,25 @@ const PrebookDialog = ({ open, scroll, handleClose, allBookedDates }) => {
               Pre-book your mouthwatering meals and enjoy a week full of
               culinary delights, conveniently delivered to your table
             </Typography>
-            <Grid container spacing={1} className={classes.getGridContStyles}>
-              <Grid item xs={12} className={classes.getGridItemStyles}>
-                {openDatesForPrebook?.map((day, index) => {
-                  return (
+            <Grid container spacing={0} className={classes.getGridContStyles}>
+              {openDatesForPrebook?.map((day, index) => {
+                return (
+                  <Grid
+                    item
+                    lg={2.4}
+                    md={2.4}
+                    sm={2.4}
+                    xs={6}
+                    className={classes.getGridItemStyles}
+                  >
                     <DateChip
                       key={index}
                       dayName={day.dayName}
                       dateValue={day.date}
-                      allBookedDates={allBookedDates}
                     />
-                  );
-                })}
-              </Grid>
+                  </Grid>
+                );
+              })}
             </Grid>
           </DialogContentText>
         </DialogContent>

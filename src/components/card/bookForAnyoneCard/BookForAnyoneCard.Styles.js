@@ -1,6 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 
-export const getInviteMemberCardStyles = makeStyles()((theme) => ({
+export const getBookForAnyoneCardStyles = makeStyles()((theme) => ({
   getMemberCardStyles: {
     minWidth: "100%",
     border: "none",
@@ -27,6 +27,7 @@ export const getInviteMemberCardStyles = makeStyles()((theme) => ({
     "@media screen and (max-width: 599px)": {
       display: "none",
     },
+    background: "orange",
   },
 
   getMemberNumberStyles: {
@@ -41,6 +42,7 @@ export const getInviteMemberCardStyles = makeStyles()((theme) => ({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
+    background: "green",
   },
 
   getMemberNameStyles: {
@@ -60,6 +62,7 @@ export const getInviteMemberCardStyles = makeStyles()((theme) => ({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
+    background: "red",
   },
 
   getMemberEmailStyles: {
@@ -74,17 +77,9 @@ export const getInviteMemberCardStyles = makeStyles()((theme) => ({
 }));
 
 export const getInviteButtonCustomStyles = {
-  customStyles: (isActionButtonRequired, isAlreadyBooked) => {
+  customStyles: (isDashboard) => {
     return {
-      background: isAlreadyBooked ? "red" : "transparent",
-      color: isAlreadyBooked ? "#FFF" : "#ef5d36",
-      borderColor: isAlreadyBooked ? "red" : "#ef5d36",
-      display: isActionButtonRequired ? "flex" : "none",
-      "&:hover": {
-        background: isAlreadyBooked ? "transparent" : "#ef5d36",
-        color: isAlreadyBooked ? "red" : "#FFF",
-        borderColor: isAlreadyBooked ? "red" : "#ef5d36",
-      },
+      display: isDashboard ? "flex" : "none",
       "@media screen and (max-width: 615px)": {
         fontSize: "0.8rem",
       },
@@ -95,7 +90,7 @@ export const getInviteButtonCustomStyles = {
   },
 };
 
-export const getInviteMemberCardAnimation = {
+export const getBookForAnyoneCardAnimation = {
   initial: {
     translateY: "25px",
     opacity: 0,

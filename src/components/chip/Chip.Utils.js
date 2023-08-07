@@ -6,12 +6,9 @@ import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
-// import { handleFormattedDate } from "../../common/CommonData";
 import { setPrebookDates } from "../../store/slices/PrebookDatesSlice";
-import {
-  handleMemberBookingStatus,
-  handleCancelMealBooking,
-} from "../../bookingMethods/BookingMethods";
+import { handleCancelMealBooking } from "../../bookingMethods/BookingMethods";
+import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
 
 const ChipUtils = () => {
   const memberData = useSelector((state) => {
@@ -36,20 +33,17 @@ const ChipUtils = () => {
         return false;
       }
     } else {
-      return dateToBeChecked;
+      return getReversedDate(dateToBeChecked);
     }
   };
 
   const handleDateSelection = async (dateToBeChecked) => {
-    console.log("date to be checked", dateToBeChecked);
-    setIsSelected(!isSelected);
+    // console.log("date to be checked", dateToBeChecked);
     const isBookingOpen = checkPrebookingAvailabilty(dateToBeChecked);
-    console.log("isbookingopen", isBookingOpen);
+    // console.log("isbookingopen", isBookingOpen);
     if (isBookingOpen === true) {
-      // const currentDate = new Date();
-      // const currentFormattedDate = handleFormattedDate(currentDate);
-      // const currentReversedDate = getReversedDate(currentFormattedDate);
-      dispatch(setPrebookDates(currentReversedDate));
+      setIsSelected(!isSelected);
+      dispatch(setPrebookDates(currentFormattedDate));
     } else if (isBookingOpen === false) {
       dispatch(
         setCustomSnackbar({
@@ -59,25 +53,15 @@ const ChipUtils = () => {
         })
       );
     } else {
+      setIsSelected(!isSelected);
       dispatch(setPrebookDates(isBookingOpen)); //isBookingOpen is a date in this case
-    }
-  };
-
-  const getPrebookingStatus = async (dateToBeChecked) => {
-    const response = await handleMemberBookingStatus(memberData._id);
-    console.log("Response of pre-booking status API------->>>>>>>>", response);
-    const allBookedDates = response?.data?.data;
-    if (response?.data?.status === snackbarMessages.SUCCESS) {
-      if (allBookedDates.indexOf(dateToBeChecked) > -1) {
-        setIsAlreadyBooked(true);
-      }
     }
   };
 
   const handlePrebookCancellation = async (dateToBeChecked) => {
     const prebookData = {
-      userId: memberData._id,
-      date: dateToBeChecked,
+      email: memberData.email,
+      date: getReversedDate(dateToBeChecked),
     };
     if (currentReversedDate === dateToBeChecked) {
       if (currentHours >= 0 && currentHours <= 8 && isAlreadyBooked === true) {
@@ -93,7 +77,7 @@ const ChipUtils = () => {
             })
           );
         } else if (
-          response?.response?.data?.status === snackbarMessages.ERROR
+          response?.response?.data?.status === snackbarMessages.FAILURE
         ) {
           dispatch(
             setCustomSnackbar({
@@ -119,6 +103,8 @@ const ChipUtils = () => {
       const response = await handleCancelMealBooking(prebookData);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsAlreadyBooked(false);
+        setIsSelected(false);
+        dispatch(getPrebookDates([]));
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
@@ -144,7 +130,6 @@ const ChipUtils = () => {
     handleDateSelection,
     isAlreadyBooked,
     setIsAlreadyBooked,
-    getPrebookingStatus,
     handlePrebookCancellation,
   };
 };

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -17,7 +18,7 @@ const WeeklyDataUtils = () => {
   const handleLastFiveDaysCount = async () => {
     //handles last five days count
     const response = await getLastFiveDaysCount();
-    console.log("Response of get previous week count API", response);
+    // console.log("Response of get previous week count API", response);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       const fiveDaysCount = [],
         fiveDaysName = [],

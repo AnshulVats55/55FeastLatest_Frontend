@@ -6,38 +6,27 @@ import { getChipStyles, getDateChipStyles } from "./Chip.Styles";
 import { Typography, Stack, Chip } from "@mui/material";
 import ChipUtils from "./Chip.Utils";
 import { useSelector } from "react-redux";
+import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 
-const DateChip = ({ dayName, dateValue, allBookedDates }) => {
-  console.log("datevalue", dateValue);
-  const bookingStatus = useSelector((state) => {
-    return state.prebookStatusReducer;
-  });
-  console.log("booking status from store", bookingStatus);
-
+const DateChip = ({ dayName, dateValue }) => {
   const prebookingDates = useSelector((state) => {
     return state.FetchPrebookDatesReducer;
   });
-  console.log("prebooking dates from store------->>>>>>>>>", prebookingDates);
+
   const { classes } = getChipStyles();
   const {
     isSelected,
-    setIsSelected,
     handleDateSelection,
     isAlreadyBooked,
     setIsAlreadyBooked,
-    getPrebookingStatus,
     handlePrebookCancellation,
   } = ChipUtils();
   const { dateChipStyles } = getDateChipStyles;
 
   useEffect(() => {
+    console.log("dateValue in useEffect", dateValue);
     //checks if date is already present in allBookedDates array
-    // prebookingDates?.map((date) => {
-    //   if (dateValue === date) {
-    //     setIsAlreadyBooked(true);
-    //   }
-    // });
-    if (prebookingDates.indexOf(dateValue) > -1) {
+    if (prebookingDates?.indexOf(getReversedDate(dateValue)) > -1) {
       setIsAlreadyBooked(true);
     }
   }, [prebookingDates]);

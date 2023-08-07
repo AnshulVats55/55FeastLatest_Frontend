@@ -3,8 +3,12 @@ import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
 import { useDispatch } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
+import { useSelector } from "react-redux";
 
-const BookForBuddyUtils = () => {
+const BookForAnyoneUtils = () => {
+  const myData = useSelector((state) => {
+    return state.memberDataReducer;
+  });
   const dispatch = useDispatch();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -17,9 +21,9 @@ const BookForBuddyUtils = () => {
   const nextDateFormatted = handleFormattedDate(nextDate);
 
   const date =
-    new Date().getHours() >= 15 && new Date().getHours() <= 23
-      ? nextDateFormatted
-      : formattedDate;
+    new Date().getHours() >= 0 && new Date().getHours() <= 17
+      ? formattedDate
+      : nextDateFormatted;
 
   const memberData = [
     //member's dummy data
@@ -72,7 +76,7 @@ const BookForBuddyUtils = () => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay === 0) {
-      if (currentHour >= 15 && currentHour <= 23) {
+      if (currentHour >= 17 && currentHour <= 23) {
         //booking allowed from 5PM(Sunday) to 9AM(Monday)
         setIsBookingOpen(true);
         return true;
@@ -82,11 +86,8 @@ const BookForBuddyUtils = () => {
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
-      if (currentHour >= 0 && currentHour <= 8) {
+      if (currentHour >= 0 && currentHour <= 17) {
         //booking allowed from 7PM to 9AM the next day
-        setIsBookingOpen(true);
-        return true;
-      } else if (currentHour >= 12 && currentHour <= 23) {
         setIsBookingOpen(true);
         return true;
       } else {
@@ -95,10 +96,7 @@ const BookForBuddyUtils = () => {
         return false;
       }
     } else if (currentDay === 5) {
-      if (
-        (currentHour >= 0 && currentHour <= 8) ||
-        (currentHour >= 12 && currentHour <= 23) //this condition needs to be removed in final product
-      ) {
+      if (currentHour >= 0 && currentHour <= 17) {
         //booking allowed from 12AM(Friday) to 9AM(Friday)
         setIsBookingOpen(true);
         return true;
@@ -115,6 +113,7 @@ const BookForBuddyUtils = () => {
   };
 
   return {
+    myData,
     isDataLoaded,
     setIsDataLoaded,
     searchTerm,
@@ -128,4 +127,4 @@ const BookForBuddyUtils = () => {
   };
 };
 
-export default BookForBuddyUtils;
+export default BookForAnyoneUtils;

@@ -29,6 +29,9 @@ import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { motion } from "framer-motion";
 import * as XLSX from "xlsx";
+import AdminDashboardUtils from "./AdminDashboard.Utils";
+import BookForAnyone from "../../components/dialog/bookForAnyoneDialog/BookForAnyone";
+
 const AdminDashboard = () => {
   const { location } = useSelector((state) => {
     return state.memberDataReducer;
@@ -46,6 +49,12 @@ const AdminDashboard = () => {
   const [addMemberScroll, setAddMemberScroll] = useState("paper");
   const [deleteMemberOpen, setDeleteMemberOpen] = useState(false);
   const [deleteMemberScroll, setDeleteMemberScroll] = useState("paper");
+  const {
+    bookForAnyoneOpen,
+    bookForAnyoneScroll,
+    handleBookForAnyoneOpen,
+    handleBookForAnyoneClose,
+  } = AdminDashboardUtils();
   let animationDuration = 0.4;
 
   const formattedDate = handleFormattedDate(new Date());
@@ -53,7 +62,7 @@ const AdminDashboard = () => {
   const nextDateFormatted = handleFormattedDate(nextDate);
 
   const dateToGetTodaysCount = {
-    //date to get todays count
+    //date to get todays count (count remains visible till 12PM on that day)
     date:
       new Date().getHours() >= 12 && new Date().getHours() <= 23
         ? nextDateFormatted
@@ -117,11 +126,12 @@ const AdminDashboard = () => {
     //get total members according to location
     const handleGetTotalMembers = async () => {
       const response = await getTotalMembers(location);
+      console.log("Total members in office", response);
       setTotalMembers(response?.data?.data?.length);
     };
 
     handleGetTotalMembers();
-  }, []);
+  }, [totalMembers]);
 
   useEffect(() => {
     //gradually increases the value from 0 to todaysCount.length
@@ -333,9 +343,9 @@ const AdminDashboard = () => {
                   style={{ width: "100%" }}
                 >
                   <CommonButton
-                    children={"Update menu"}
+                    children={"Book for anyone"}
                     type=""
-                    onClick={() => {}}
+                    onClick={handleBookForAnyoneOpen("paper")}
                     customStyles={{
                       width: "75% !important",
                       height: "40px",
@@ -357,6 +367,16 @@ const AdminDashboard = () => {
                       },
                     }}
                   />
+                  {bookForAnyoneOpen ? (
+                    <BookForAnyone
+                      open={bookForAnyoneOpen}
+                      scroll={bookForAnyoneScroll}
+                      handleClose={handleBookForAnyoneClose}
+                      children="Book"
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </motion.div>
               </Box>
             </Stack>
@@ -474,9 +494,11 @@ const AdminDashboard = () => {
                           memberName={member.fullName}
                           memberEmail={member.email}
                           animationDuration={animationDuration}
-                          children="Remove"
                           isDataLoaded={isDataLoaded}
                           isDashboard={true}
+                          isEmailChopRequired={false}
+                          isActionButtonRequired={false}
+                          isStatusCheckRequired={false}
                         />
                       </Grid>
                     );
@@ -510,7 +532,6 @@ const AdminDashboard = () => {
                           memberName={member.memberName}
                           memberEmail={member.memberEmail}
                           animationDuration={animationDuration}
-                          children="Remove"
                           isDataLoaded={isDataLoaded}
                           isDashboard={true}
                         />

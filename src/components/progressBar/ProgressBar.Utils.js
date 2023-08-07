@@ -6,17 +6,20 @@ const ProgressBarUtils = () => {
   const handleProgressPercentage = (totalMembers, todaysCount) => {
     //handles progress percentage
     const progressPercentage = (todaysCount / totalMembers) * 100;
-    setProgress(progressPercentage);
+    console.log(progressPercentage);
+    setProgress(0);
 
     let currentValue = 0;
     const increment = progressPercentage / 100;
     const interval = setInterval(() => {
       currentValue += increment;
-      if (currentValue >= progressPercentage) {
-        currentValue = progressPercentage;
+      const roundedValue = Math.round(currentValue);
+      if (roundedValue >= progressPercentage) {
+        setProgress(progressPercentage);
         clearInterval(interval);
+      } else {
+        setProgress(roundedValue);
       }
-      setProgress(currentValue);
     }, 10);
 
     return () => {
@@ -26,6 +29,7 @@ const ProgressBarUtils = () => {
 
   return {
     progress,
+    setProgress,
     handleProgressPercentage,
   };
 };

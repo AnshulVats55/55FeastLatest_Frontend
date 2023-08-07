@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -122,10 +123,10 @@ const SignupForm = () => {
     event.preventDefault();
     dispatch(setIsLoading(true));
     const response = await handleMemberSignup(memberData);
-    console.log(
-      "Signup response is-------------------------------->",
-      response
-    );
+    // console.log(
+    //   "Signup response is-------------------------------->",
+    //   response
+    // );
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       dispatch(setIsLoading(false));
       dispatch(

@@ -16,6 +16,7 @@ const PLEASE_TRY_AGAIN = "Please try again !";
 const ERROR_FETCHING_DATA = "Error while fetching data !";
 const MEMBER_MEAL_BOOKING_SUCCESSFULL = "Meal booked successfully !";
 const MEMBER_MEAL_BOOKING_FAILURE = "Error booking meal !";
+const MEMBER_MEAL_ALREADY_BOOKED = "Meal is already booked !";
 const MEMBER_MEAL_CANCELLATION_SUCCESSFULL = "Meal cancelled successfully !";
 const MEMBER_MEAL_CANCELLATION_FAILURE = "Error cancelling meal !";
 const BUDDY_MEAL_BOOKING_SUCCESSFULL = "Meal booked successfully !";
@@ -37,6 +38,7 @@ const MEMBER_INVITATION_SUCCESSFULL = "Invitation sent successfully !";
 const MEMBER_INVITATION_FAILURE = "Error sending invitation !";
 const MEMBER_ADDED_SUCCESSFULL = "Member added successfully !";
 const MEMBER_ADDED_FAILURE = "Error adding member !";
+const MEMBER_EMAIL_ALREADY_EXISTS = "Email already exists !";
 const MEMBER_DELETE_SUCCESSFULL = "Member deleted successfully !";
 const MEMBER_DELETE_FAILURE = "Error deleting member !";
 const MEMBER_DELETED_SUCCESSFULL = "Member deleted successfully !";
@@ -65,6 +67,7 @@ export default {
   ERROR_FETCHING_DATA,
   MEMBER_MEAL_BOOKING_SUCCESSFULL,
   MEMBER_MEAL_BOOKING_FAILURE,
+  MEMBER_MEAL_ALREADY_BOOKED,
   MEMBER_MEAL_CANCELLATION_SUCCESSFULL,
   MEMBER_MEAL_CANCELLATION_FAILURE,
   BUDDY_MEAL_BOOKING_SUCCESSFULL,
@@ -95,4 +98,5 @@ export default {
   FILE_DOWNLOAD_FAILURE,
   DATA_FETCHED_SUCCESSFULL,
   DATA_FETCHED_FAILURE,
+  MEMBER_EMAIL_ALREADY_EXISTS,
 };

@@ -7,7 +7,6 @@ const FetchPrebookDatesSlice = createSlice({
   initialState: initialState,
   reducers: {
     getPrebookDates: (state, action) => {
-      console.log("action payload", action.payload);
       return (state = action.payload);
     },
   },

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
@@ -42,8 +43,11 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
 
   useEffect(() => {
     const handleGetNonInvitedMembers = async () => {
-      const response = await getNonInvitedMembers(adminData.email, adminData.location);
-      console.log("non invited members", response);
+      const response = await getNonInvitedMembers(
+        adminData.email,
+        adminData.location
+      );
+      // console.log("non invited members", response);
       if (response?.data?.status === "success") {
         setNotInvited(response.data.data);
         setIsDataLoaded(true);
@@ -92,7 +96,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
 
   const handleInviteNewMember = async (memberEmail) => {
     const response = await handleInviteMembers(memberEmail);
-    console.log(`${memberEmail} has been invited by you !`, response);
+    // console.log(`${memberEmail} has been invited by you !`, response);
     return response;
   };
 
@@ -153,6 +157,9 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
                       children={children}
                       isDataLoaded={isDataLoaded}
                       isDashboard={false}
+                      isEmailChopRequired={true}
+                      isActionButtonRequired={true}
+                      isStatusCheckRequired={false}
                       handleAction={() => {
                         const response = handleInviteNewMember(member.email);
                         return response;

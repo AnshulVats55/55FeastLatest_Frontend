@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
@@ -26,7 +27,7 @@ const BookMeal = () => {
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
   });
-  console.log(memberData._id);
+  console.log("member emai", memberData.email);
 
   const [bookForBuddyOpen, setBookForBuddyOpen] = useState(false);
   const [prebookOpen, setPrebookOpen] = useState(false);
@@ -49,9 +50,9 @@ const BookMeal = () => {
   };
 
   const myData = {
-    userId: memberData._id,
+    email: memberData.email,
     date:
-      new Date().getHours() >= 12 && new Date().getHours() <= 23
+      new Date().getHours() >= 14 && new Date().getHours() <= 23
         ? nextDateFormatted
         : formattedDate,
   };
@@ -59,7 +60,7 @@ const BookMeal = () => {
   useEffect(() => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
-      const response = await handleMemberBookingStatus(memberData._id);
+      const response = await handleMemberBookingStatus(memberData.email);
       console.log("Response of booking status API", response);
       const allBookingDates = response?.data?.data;
       setAllBookedDates(allBookingDates);
@@ -104,11 +105,11 @@ const BookMeal = () => {
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
-      if (currentHour >= 0 && currentHour <= 11) {
+      if (currentHour >= 0 && currentHour <= 8) {
         //booking allowed from 7PM to 9AM the next day
         setIsBookingOpen(true);
         return true;
-      } else if (currentHour >= 12 && currentHour <= 23) {
+      } else if (currentHour >= 15 && currentHour <= 23) {
         setIsBookingOpen(true);
         return true;
       } else {
@@ -218,14 +219,14 @@ const BookMeal = () => {
           actionName="Pre-Book your meal"
           animationDuration={0.5}
           onClick={handlePrebookOpen("paper")}
-          label="Coming soon"
+          label="Most awaited"
         />
         {prebookOpen ? (
           <PrebookDialog
             open={prebookOpen}
             scroll={prebookScroll}
             handleClose={handlePrebookClose}
-            allBookedDates={allBookedDates}
+            // allBookedDates={allBookedDates}
           />
         ) : (
           <></>

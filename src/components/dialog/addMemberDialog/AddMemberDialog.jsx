@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from "react";
 import {
   Button,
@@ -64,7 +65,7 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
     email: email,
     location: location,
   };
-  console.log(newMemberData);
+  // console.log(newMemberData);
 
   return (
     <div>

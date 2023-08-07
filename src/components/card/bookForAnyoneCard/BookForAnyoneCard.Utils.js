@@ -1,21 +1,12 @@
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import snackbarMessages from "../../Constants";
-import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
-import { useState } from "react";
-import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData";
+import snackbarMessages from "../../../Constants";
+import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
+import { handleMemberBookingStatus } from "../../../bookingMethods/BookingMethods";
+import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
 
-const InviteMemberCardUtils = () => {
+const BookForAnyoneCardUtils = () => {
   const formattedDate = handleFormattedDate(new Date());
-  const nextDate = getNextDate(new Date());
-  const nextDateFormatted = handleFormattedDate(nextDate);
-
-  const dateToBeChecked =
-    new Date().getHours() >= 15 && new Date().getHours() <= 23
-      ? nextDateFormatted
-      : formattedDate;
-
   const dispatch = useDispatch();
 
   const [allDatesBooked, setAllDatesBooked] = useState([]);
@@ -59,7 +50,6 @@ const InviteMemberCardUtils = () => {
             })
           );
         } else if (response?.data?.message === "Meal booked successfully") {
-          setIsAlreadyBooked(true);
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,
@@ -85,14 +75,12 @@ const InviteMemberCardUtils = () => {
               snackbarMessage: snackbarMessages.MEMBER_INVITATION_FAILURE,
             })
           );
-        } else if (
-          response?.response?.data?.message === "Meal is already booked"
-        ) {
+        } else {
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,
               snackbarType: snackbarMessages.ERROR,
-              snackbarMessage: snackbarMessages.MEMBER_MEAL_ALREADY_BOOKED,
+              snackbarMessage: snackbarMessages.MEMBER_MEAL_BOOKING_FAILURE,
             })
           );
         }
@@ -117,9 +105,8 @@ const InviteMemberCardUtils = () => {
       setAllDatesBooked(response.data.data);
     }
   };
-
   return {
-    dateToBeChecked,
+    formattedDate,
     allDatesBooked,
     isAlreadyBooked,
     setIsAlreadyBooked,
@@ -130,4 +117,4 @@ const InviteMemberCardUtils = () => {
   };
 };
 
-export default InviteMemberCardUtils;
+export default BookForAnyoneCardUtils;

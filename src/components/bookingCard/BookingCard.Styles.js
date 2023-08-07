@@ -31,24 +31,23 @@ export const getBookingCardStyles = makeStyles()((theme) => ({
   },
 
   getCardLabelContStyles: {
-    minWidth:"100%",
+    minWidth: "100%",
     borderRadius: "10px 10px 0px 0px",
-    display:"flex",
-    justifyContent:"flex-end",
-    padding:"0rem 2rem",
+    display: "flex",
+    justifyContent: "flex-end",
+    padding: "0rem 2rem",
   },
 
   getCardLabelStyles: {
-    fontSize:"0.7rem",
+    fontSize: "0.7rem",
     fontFamily: theme.typography.fontFamily,
-    background:"#4caf50",
-    border:"none",
-    borderRadius:"10px",
-    padding:"0.1rem 0.70rem",
-    color:"#FFF",
-    fontWeight:500,
+    background: "#4caf50",
+    border: "none",
+    borderRadius: "0px 10px 0px 10px",
+    padding: "0.1rem 0.70rem",
+    color: "#FFF",
+    fontWeight: 500,
   },
-
 
   getImageSkeletonStyles: {
     width: "100%",
@@ -75,7 +74,6 @@ export const getBookingCardStyles = makeStyles()((theme) => ({
     fontSize: "0.9rem",
     textAlign: "center",
     marginTop: "0.25rem",
-    textAlign: "center",
     "@media screen and (max-width: 1275px)": {
       fontSize: "0.85rem",
     },

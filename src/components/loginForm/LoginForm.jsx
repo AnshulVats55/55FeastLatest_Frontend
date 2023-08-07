@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -58,7 +59,7 @@ const LoginForm = () => {
   const handleFormSubmit = async () => {
     dispatch(setIsLoading(true));
     const response = await handleMemberLogin(memberData);
-    console.log(response);
+    // console.log(response);
     if (response?.data?.status === "success") {
       dispatch(setIsLoading(false));
       dispatch(

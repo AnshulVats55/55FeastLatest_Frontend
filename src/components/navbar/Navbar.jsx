@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import {
   AppBar,
@@ -37,7 +38,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const { isAdmin, photo, gender } = useSelector((state) => {
-    console.log(state.memberDataReducer);
+    // console.log(state.memberDataReducer);
     return state.memberDataReducer;
   });
 

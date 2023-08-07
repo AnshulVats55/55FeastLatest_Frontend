@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { format, addDays, isWeekend } from "date-fns";
+import { addDays, isWeekend } from "date-fns";
 import { handleFormattedDate } from "../../../common/CommonData";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";
 import MEMBER_TOKEN from "../../../api/memberToken/MemberToken";
 import { useDispatch } from "react-redux";
-import snackbarMessages from "../../../Constants";
-import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
+// import snackbarMessages from "../../../Constants";
+// import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 
 const PrebookUtils = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const PrebookUtils = () => {
   const [openDatesForPrebook, setOpenDatesForPrebook] = useState([]);
 
   const getDaysNameFromDate = (date) => {
-    //gives day name according to current date
+    //gives day name according to date
     const day = new Date(date).getDay();
     switch (day) {
       case 0:

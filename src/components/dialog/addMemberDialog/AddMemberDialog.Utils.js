@@ -43,7 +43,7 @@ const AddMemberDialogUtils = () => {
       dispatch(setIsLoading(true));
       const response = await handleAddMember(newMemberData);
       console.log("Response of add new member API is this", response);
-      if (response?.data?.status === "success") {
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(setIsLoading(false));
         dispatch(
           setCustomSnackbar({
@@ -55,15 +55,26 @@ const AddMemberDialogUtils = () => {
         setFullName("");
         setEmail("");
         setLocation("");
-      } else if (response?.data?.data?.status === "failure") {
-        dispatch(setIsLoading(false));
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: "Error adding member !",
-          })
-        );
+      } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
+        if (response?.response?.data?.message === "Email already exists") {
+          dispatch(setIsLoading(false));
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.MEMBER_EMAIL_ALREADY_EXISTS,
+            })
+          );
+        } else {
+          dispatch(setIsLoading(false));
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.MEMBER_ADDED_FAILURE,
+            })
+          );
+        }
       }
     }
   };

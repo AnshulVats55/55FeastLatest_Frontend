@@ -1,23 +1,18 @@
 import { useEffect } from "react";
-import { Typography, Skeleton, Grid } from "@mui/material";
-import InviteButton from "../inviteButton/InviteButton";
+import BookForAnyoneCardUtils from "./BookForAnyoneCard.Utils";
 import {
-  getInviteMemberCardStyles,
+  getBookForAnyoneCardStyles,
   getInviteButtonCustomStyles,
-  getInviteMemberCardAnimation,
-} from "./InviteMemberCard.Styles";
+  getBookForAnyoneCardAnimation,
+} from "./BookForAnyoneCard.Styles";
+import { Typography, Skeleton, Grid } from "@mui/material";
+import InviteButton from "../../inviteButton/InviteButton";
 import { motion } from "framer-motion";
-import InviteMemberCardUtils from "./InviteMemberCard.Utils";
-import { handleCancelMealBooking } from "../../bookingMethods/BookingMethods";
-import { useDispatch } from "react-redux";
-import snackbarMessages from "../../Constants";
-import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 
-const InviteMemberCard = ({
+const BookForAnyoneCard = ({
   indexNumber,
   memberName,
   memberEmail,
-  memberId,
   children,
   animationDuration,
   isDataLoaded,
@@ -26,11 +21,10 @@ const InviteMemberCard = ({
   isEmailChopRequired,
   isActionButtonRequired,
   isStatusCheckRequired,
-  isButtonDisableRequired,
 }) => {
-  const { classes } = getInviteMemberCardStyles();
+  const { classes } = getBookForAnyoneCardStyles();
   const {
-    dateToBeChecked,
+    formattedDate,
     allDatesBooked,
     isAlreadyBooked,
     setIsAlreadyBooked,
@@ -38,11 +32,9 @@ const InviteMemberCard = ({
     handleMemberEmail,
     actionBeingPerformed,
     getBookingStatusOfMember,
-  } = InviteMemberCardUtils();
+  } = BookForAnyoneCardUtils();
   const { customStyles } = getInviteButtonCustomStyles;
-  const { initial, whileInView, transition } = getInviteMemberCardAnimation;
-
-  const dispatch = useDispatch();
+  const { initial, whileInView, transition } = getBookForAnyoneCardAnimation;
 
   let newMemberEmail = "";
   {
@@ -50,50 +42,19 @@ const InviteMemberCard = ({
   }
   handleMemberName();
 
-  const memberDataToBeSent = {
-    email: memberEmail,
-    date: dateToBeChecked,
-  };
-
   useEffect(() => {
-    //checks status of member meal booking if it's already booked
     if (isStatusCheckRequired) {
       getBookingStatusOfMember(memberEmail);
     }
-  }, [isAlreadyBooked]);
-
-  console.log("formatted date at invite member card", dateToBeChecked);
+  }, []);
 
   useEffect(() => {
-    //if meal is already booked, set the flag to "true"
-    console.log("all dates booked array", allDatesBooked);
-    if (allDatesBooked?.indexOf(dateToBeChecked) > -1) {
+    if (allDatesBooked?.indexOf(formattedDate) > -1) {
       setIsAlreadyBooked(true);
     }
-  }, [allDatesBooked]);
+  }, []);
 
-  const handleMealCancellation = async (memberDataToBeSent) => {
-    const response = await handleCancelMealBooking(memberDataToBeSent);
-    if (response?.data?.status === snackbarMessages.SUCCESS) {
-      setIsAlreadyBooked(false);
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.SUCCESS,
-          snackbarMessage:
-            snackbarMessages.MEMBER_MEAL_CANCELLATION_SUCCESSFULL,
-        })
-      );
-    } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.MEMBER_MEAL_CANCELLATION_FAILURE,
-        })
-      );
-    }
-  };
+  console.log("Children from dialog windows", children);
 
   return (
     <>
@@ -135,10 +96,10 @@ const InviteMemberCard = ({
               lg={5}
               md={5}
               sm={5}
-              xs={isDashboard ? 7 : 0}
+              xs={isDashboard ? 0 : 7}
               className={classes.getMemberEmailContStyles}
               sx={{
-                ...(!isDashboard
+                ...(isDashboard
                   ? {
                       "@media screen and (max-width: 599px)": {
                         display: "none",
@@ -163,31 +124,16 @@ const InviteMemberCard = ({
               lg={2}
               md={2}
               sm={2}
-              xs={isActionButtonRequired ? 3 : 0}
+              xs={isDashboard ? 3 : 0}
               className={classes.getInviteButtonContStyles}
             >
               <InviteButton
-                children={
-                  isStatusCheckRequired
-                    ? isAlreadyBooked
-                      ? "Cancel"
-                      : children
-                    : children
-                }
+                children={children}
                 type=""
                 handleAction={() => {
-                  return isStatusCheckRequired
-                    ? isAlreadyBooked
-                      ? actionBeingPerformed(() => {
-                          handleMealCancellation(memberDataToBeSent);
-                        })
-                      : actionBeingPerformed(handleAction)
-                    : actionBeingPerformed(handleAction);
+                  return actionBeingPerformed(handleAction);
                 }}
-                styles={customStyles(isActionButtonRequired, isAlreadyBooked)}
-                isButtonDisableRequired={
-                  isAlreadyBooked ? isButtonDisableRequired : false
-                }
+                styles={customStyles(isDashboard)}
               />
             </Grid>
           </Grid>
@@ -256,23 +202,14 @@ const InviteMemberCard = ({
               <Skeleton animation="wave">
                 <Grid item className={classes.getInviteButtonContStyles}>
                   <Skeleton animation="wave">
-                    {!isDashboard ? (
+                    {isDashboard ? (
                       <InviteButton
-                        children={
-                          isStatusCheckRequired
-                            ? isAlreadyBooked
-                              ? "Cancel"
-                              : children
-                            : children
-                        }
+                        children={children}
                         type=""
-                        // handleAction={() => {
-                        //   return actionBeingPerformed(handleAction);
-                        // }}
-                        styles={customStyles(
-                          isActionButtonRequired,
-                          isAlreadyBooked
-                        )}
+                        handleAction={() => {
+                          return actionBeingPerformed(handleAction);
+                        }}
+                        styles={customStyles(isDashboard)}
                       />
                     ) : null}
                   </Skeleton>
@@ -286,4 +223,4 @@ const InviteMemberCard = ({
   );
 };
 
-export default InviteMemberCard;
+export default BookForAnyoneCard;
