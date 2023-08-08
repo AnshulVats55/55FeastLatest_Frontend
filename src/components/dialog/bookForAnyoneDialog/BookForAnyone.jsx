@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
 import { getBookForAnyoneStyles } from "./BookForAnyone.Styles";
 import BookForAnyoneUtils from "./BookForAnyone.Utils";

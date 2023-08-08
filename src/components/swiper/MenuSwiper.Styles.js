@@ -14,7 +14,6 @@ export const getMenuItemStyles = makeStyles()((theme) => ({
     fontWeight: 500,
     color: "#ef5d36",
     textAlign: "center",
-    fontWeight: "normal",
     "@media screen and (max-width: 544px)": {
       fontSize: "2.25rem",
     },

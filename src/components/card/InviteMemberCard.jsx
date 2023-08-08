@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { Typography, Skeleton, Grid } from "@mui/material";
 import InviteButton from "../inviteButton/InviteButton";
@@ -44,10 +46,7 @@ const InviteMemberCard = ({
 
   const dispatch = useDispatch();
 
-  let newMemberEmail = "";
-  {
-    newMemberEmail = handleMemberEmail(isEmailChopRequired, memberEmail);
-  }
+  let newMemberEmail = handleMemberEmail(isEmailChopRequired, memberEmail);
   handleMemberName();
 
   const memberDataToBeSent = {

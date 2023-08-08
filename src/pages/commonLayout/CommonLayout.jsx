@@ -1,7 +1,6 @@
 import React from 'react';
 import { getCommonLayoutStyles } from './CommonLayout.Styles';
 import { Container } from '@mui/material';
-import Home from '../../components/home/Home';
 
 const CommonLayout = ({ component }) => {
 

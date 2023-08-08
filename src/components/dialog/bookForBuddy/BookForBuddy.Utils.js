@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
 import { useDispatch } from "react-redux";

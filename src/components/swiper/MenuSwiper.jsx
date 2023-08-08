@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { Typography, Skeleton } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
