@@ -8,9 +8,10 @@ import Authmodal from "../../pages/authmodal/Authmodal";
 import SignupForm from "../signupForm/SignupForm";
 import LoginForm from "../loginForm/LoginForm";
 import AdminDashboard from "../../pages/adminDashboard/AdminDashboard";
+import Reviews from "../reviews/Reviews";
 import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
-import FullPlateFood from "../../assets/full-plate.png";
+import OrangeImage from "../../assets/orange image.png";
 
 const AllRoutes = () => {
   return (
@@ -35,6 +36,11 @@ const AllRoutes = () => {
               path="/dashboard"
               element={<CommonLayout component={<AdminDashboard />} />}
             />
+            <Route
+              exact
+              path="/reviews"
+              element={<CommonLayout component={<Reviews />} />}
+            />
           </Routes>
         </>
       ) : (
@@ -51,7 +57,7 @@ const AllRoutes = () => {
               exact
               path="/signup"
               element={
-                <Authmodal image={FullPlateFood} component={<SignupForm />} />
+                <Authmodal image={OrangeImage} component={<SignupForm />} />
               }
             />
           </Routes>

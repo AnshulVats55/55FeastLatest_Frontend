@@ -11,6 +11,7 @@ const AddMemberDialogUtils = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
+  const [isLoaderRequired, setIsLoaderRequired] = useState(false);
 
   const handleAddNewMember = async (event, newMemberData) => {
     //handles adding new member
@@ -40,11 +41,13 @@ const AddMemberDialogUtils = () => {
         })
       );
     } else if (fullName !== "" && email !== "" && location !== "") {
-      dispatch(setIsLoading(true));
+      // dispatch(setIsLoading(true));
+      setIsLoaderRequired(true);
       const response = await handleAddMember(newMemberData);
       console.log("Response of add new member API is this", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
-        dispatch(setIsLoading(false));
+        // dispatch(setIsLoading(false));
+        setIsLoaderRequired(false);
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
@@ -55,9 +58,12 @@ const AddMemberDialogUtils = () => {
         setFullName("");
         setEmail("");
         setLocation("");
-      } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
         if (response?.response?.data?.message === "Email already exists") {
-          dispatch(setIsLoading(false));
+          // dispatch(setIsLoading(false));
+          setIsLoaderRequired(false);
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,
@@ -66,7 +72,8 @@ const AddMemberDialogUtils = () => {
             })
           );
         } else {
-          dispatch(setIsLoading(false));
+          // dispatch(setIsLoading(false));
+          setIsLoaderRequired(false);
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,
@@ -87,6 +94,8 @@ const AddMemberDialogUtils = () => {
     location,
     setLocation,
     handleAddNewMember,
+    isLoaderRequired,
+    setIsLoaderRequired,
   };
 };
 

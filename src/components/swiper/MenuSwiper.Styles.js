@@ -11,7 +11,7 @@ export const getMenuItemStyles = makeStyles()((theme) => ({
 
   getSwiperTextOneStyles: {
     fontSize: "2.5rem",
-    fontWeight: 500,
+    fontWeight: "normal",
     color: "#ef5d36",
     textAlign: "center",
     "@media screen and (max-width: 544px)": {

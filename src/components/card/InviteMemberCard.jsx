@@ -40,6 +40,8 @@ const InviteMemberCard = ({
     handleMemberEmail,
     actionBeingPerformed,
     getBookingStatusOfMember,
+    isLoaderRequired,
+    setIsLoaderRequired,
   } = InviteMemberCardUtils();
   const { customStyles } = getInviteButtonCustomStyles;
   const { initial, whileInView, transition } = getInviteMemberCardAnimation;
@@ -72,9 +74,11 @@ const InviteMemberCard = ({
   }, [allDatesBooked]);
 
   const handleMealCancellation = async (memberDataToBeSent) => {
+    setIsLoaderRequired(true);
     const response = await handleCancelMealBooking(memberDataToBeSent);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       setIsAlreadyBooked(false);
+      setIsLoaderRequired(false);
       dispatch(
         setCustomSnackbar({
           snackbarOpen: true,
@@ -84,6 +88,7 @@ const InviteMemberCard = ({
         })
       );
     } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
+      setIsLoaderRequired(false);
       dispatch(
         setCustomSnackbar({
           snackbarOpen: true,
@@ -134,10 +139,10 @@ const InviteMemberCard = ({
               lg={5}
               md={5}
               sm={5}
-              xs={isDashboard ? 7 : 0}
+              xs={isActionButtonRequired ? 0 : 7}
               className={classes.getMemberEmailContStyles}
               sx={{
-                ...(!isDashboard
+                ...(isActionButtonRequired
                   ? {
                       "@media screen and (max-width: 599px)": {
                         display: "none",
@@ -187,6 +192,7 @@ const InviteMemberCard = ({
                 isButtonDisableRequired={
                   isAlreadyBooked ? isButtonDisableRequired : false
                 }
+                isLoaderRequired={isLoaderRequired}
               />
             </Grid>
           </Grid>
@@ -265,9 +271,6 @@ const InviteMemberCard = ({
                             : children
                         }
                         type=""
-                        // handleAction={() => {
-                        //   return actionBeingPerformed(handleAction);
-                        // }}
                         styles={customStyles(
                           isActionButtonRequired,
                           isAlreadyBooked

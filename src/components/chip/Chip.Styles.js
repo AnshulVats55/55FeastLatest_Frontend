@@ -23,11 +23,11 @@ export const getDateChipStyles = {
         ? "#ef5d36"
         : "#FFDAD1",
       color: isAlreadyBooked ? "#FFF" : isSelected ? "#FFF" : "#ef5d36",
-      borderRadius: "5px !important",
+      borderRadius: "5px",
       fontWeight: 500,
       padding: "2rem 1.25rem",
       fontSize: "1rem",
-      border: "1px solid #FFDAD1",
+      border: isAlreadyBooked ? "" : "1px solid #FFDAD1",
       "&:hover": {
         background: isAlreadyBooked
           ? "#4caf50"

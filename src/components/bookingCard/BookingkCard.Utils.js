@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const BookingkCardUtils = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -8,6 +8,10 @@ const BookingkCardUtils = () => {
       setIsDataLoaded(true);
     }, 1500);
   };
+
+  useEffect(() => {
+    handleDataLoading();
+  }, [isDataLoaded]);
 
   return {
     isDataLoaded,

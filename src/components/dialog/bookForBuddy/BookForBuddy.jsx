@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from "react";
 import {
   Button,
   Dialog,
@@ -11,76 +10,27 @@ import {
   TextField,
   Typography,
   Skeleton,
+  Box,
 } from "@mui/material";
 import { getBookForBuddyDialogStyles } from "./BookForBuddy.Styles";
 import InviteMemberCard from "../../card/InviteMemberCard";
-import {
-  getMyBuddies,
-  bookMealForBuddy,
-} from "../../../bookingMethods/BookingMethods";
-// import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
-import { useSelector } from "react-redux";
 import BookForBuddyUtils from "./BookForBuddy.Utils";
 
-const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
-  const myData = useSelector((state) => {
-    return state.memberDataReducer;
-  });
-
+const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
   const { classes } = getBookForBuddyDialogStyles();
   const {
+    animationDuration,
     isDataLoaded,
-    setIsDataLoaded,
-    searchTerm,
-    myBuddies,
-    setMyBuddies,
     memberData,
     date,
     handleMemberSearch,
-    checkMealBookingAvailability,
-  } = BookForBuddyUtils();
-
-  let animationDuration = 0.4;
-
-  const descriptionElementRef = useRef(null);
-  useEffect(() => {
-    if (open) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
-    }
-  }, [open]);
-
-  useEffect(() => {
-    const handleMyBuddies = async () => {
-      const response = await getMyBuddies(myData.email);
-      // console.log("Response of my buddies api is this ------------>", response);
-      if (response?.data?.status === "success") {
-        setMyBuddies(response?.data?.data);
-        setIsDataLoaded(true);
-      }
-    };
-
-    handleMyBuddies();
-  }, []);
-
-  const filteredUsers = myBuddies?.filter((member) =>
-    member.fullName.toLowerCase().includes(searchTerm)
-  );
-
-  const handleBookForBuddy = async (buddyData) => {
-    //handles meal booking for buddies
-    const isBookingAllowed = checkMealBookingAvailability();
-    if (isBookingAllowed) {
-      const response = await bookMealForBuddy(buddyData);
-      // console.log(`Meal booked for my buddy ${buddyData.email}`, response);
-      return response;
-    }
-  };
+    descriptionElementRef,
+    filteredUsers,
+    handleBookForBuddy,
+  } = BookForBuddyUtils(open);
 
   return (
-    <div>
+    <Box>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -133,7 +83,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
                       memberEmail={member.email}
                       memberId={memberId}
                       animationDuration={animationDuration}
-                      children="Book"
+                      children={children}
                       isDataLoaded={isDataLoaded}
                       isDashboard={false}
                       isEmailChopRequired={true}
@@ -193,7 +143,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 

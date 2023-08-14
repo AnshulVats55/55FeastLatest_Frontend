@@ -147,7 +147,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
             />
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
-                filteredUsers.map((member, index) => {
+                filteredUsers?.map((member, index) => {
                   return (
                     <InviteMemberCard
                       indexNumber={index + 1}

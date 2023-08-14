@@ -10,6 +10,7 @@ import {
   DialogTitle,
   Typography,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import snackbarMessages from "../../../Constants";
@@ -29,7 +30,12 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
   });
 
   const { classes } = getPrebookDialogStyles();
-  const { openDatesForPrebook, handleMealPrebooking } = PrebookUtils();
+  const {
+    openDatesForPrebook,
+    handleMealPrebooking,
+    isLoaderRequired,
+    setIsLoaderRequired,
+  } = PrebookUtils();
 
   const dispatch = useDispatch();
 
@@ -57,6 +63,7 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
         })
       );
     } else {
+      setIsLoaderRequired(true);
       const response = await handleMealPrebooking(memberData);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(removeAllDates());
@@ -68,6 +75,7 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
             snackbarMessage: snackbarMessages.PREBOOKING_SUCCESSFULL,
           })
         );
+        setIsLoaderRequired(false);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
@@ -78,6 +86,7 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
             snackbarMessage: snackbarMessages.PREBOOKING_FAILURE,
           })
         );
+        setIsLoaderRequired(false);
       }
     }
   };
@@ -145,7 +154,10 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
             }}
             className={classes.getCloseButtonStyles}
           >
-            Book
+            Book&nbsp;
+            {isLoaderRequired && (
+              <CircularProgress size={15} thickness={4} color="inherit" />
+            )}
           </Button>
           <Button
             onClick={handleClose}

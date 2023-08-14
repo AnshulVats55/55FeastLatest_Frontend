@@ -36,6 +36,7 @@ const BookMeal = () => {
   const [isBooked, setIsBooked] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [allBookedDates, setAllBookedDates] = useState([]);
+  const [isLoaderRequired, setIsLoaderRequired] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -155,6 +156,7 @@ const BookMeal = () => {
   const handleMealBooking = async () => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
+      setIsLoaderRequired(true);
       const response = await handleMemberCountBooking(mealBookingData);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsBooked(true);
@@ -165,6 +167,7 @@ const BookMeal = () => {
             snackbarMessage: snackbarMessages.MEMBER_MEAL_BOOKING_SUCCESSFULL,
           })
         );
+        setIsLoaderRequired(false);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
@@ -175,11 +178,13 @@ const BookMeal = () => {
             snackbarMessage: snackbarMessages.MEMBER_MEAL_BOOKING_FAILURE,
           })
         );
+        setIsLoaderRequired(false);
       }
     }
   };
 
   const handleMealCancellation = async () => {
+    setIsLoaderRequired(true);
     const response = await handleCancelMealBooking(myData);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       setIsBooked(false);
@@ -191,6 +196,7 @@ const BookMeal = () => {
             snackbarMessages.MEMBER_MEAL_CANCELLATION_SUCCESSFULL,
         })
       );
+      setIsLoaderRequired(false);
     } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
       dispatch(
         setCustomSnackbar({
@@ -199,6 +205,7 @@ const BookMeal = () => {
           snackbarMessage: snackbarMessages.MEMBER_MEAL_CANCELLATION_FAILURE,
         })
       );
+      setIsLoaderRequired(false);
     }
   };
 
@@ -215,11 +222,12 @@ const BookMeal = () => {
         <BookingCard
           image={PrebookImage}
           heading="Have Frictionless Meals"
-          caption="Pre-book your meal and enjoy your meal!"
+          caption="Pre-book your meal for a week and relax!"
           actionName="Pre-Book your meal"
           animationDuration={0.5}
           onClick={handlePrebookOpen("paper")}
           label="Most awaited"
+          isLoaderRequired={false}
         />
         {prebookOpen ? (
           <PrebookDialog
@@ -249,12 +257,14 @@ const BookMeal = () => {
           animationDuration={0.6}
           onClick={handleBookForBuddyOpen("paper")}
           label="Try it out"
+          isLoaderRequired={false}
         />
         {bookForBuddyOpen ? (
           <BookForBuddyDialog
             open={bookForBuddyOpen}
             scroll={bookForBuddyScroll}
             handleClose={handleBookForBuddyClose}
+            children="Book"
           />
         ) : (
           <></>
@@ -278,6 +288,7 @@ const BookMeal = () => {
           onClick={isBooked ? handleMealCancellation : handleMealBooking}
           isBooked={isBooked}
           label="Most used"
+          isLoaderRequired={isLoaderRequired}
         />
       </Grid>
     </Grid>

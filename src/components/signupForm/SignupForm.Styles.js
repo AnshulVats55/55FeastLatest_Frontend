@@ -2,7 +2,6 @@ import { makeStyles } from "tss-react/mui";
 
 export const getSignupFormStyles = makeStyles()((theme) => ({
   getMainContStyles: {
-    // background:"lightgreen",
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -11,7 +10,6 @@ export const getSignupFormStyles = makeStyles()((theme) => ({
   },
 
   getTextContStyles: {
-    // background:"brown",
     justifyContent: "center",
     alignItems: "center",
     "@media screen and (max-width: 599px)": {
@@ -40,7 +38,6 @@ export const getSignupFormStyles = makeStyles()((theme) => ({
   },
 
   getSignupFormStyles: {
-    // background:"cyan",
     width: "80%",
     "@media screen and (max-width: 1200px)": {
       width: "90%",
@@ -101,7 +98,6 @@ export const getSignupFormStyles = makeStyles()((theme) => ({
   },
 
   getLinkContStyles: {
-    // background:"skyblue",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -135,3 +131,79 @@ export const getSignupFormStyles = makeStyles()((theme) => ({
     },
   },
 }));
+
+export const getProfilePicAnimation = {
+  initial: {
+    scale: 1,
+  },
+  whileTap: {
+    scale: 0.97,
+  },
+  transition: {
+    duration: 0.1,
+  },
+};
+
+export const getAdditionalStyles = {
+  getSelectStyles: {
+    "& .MuiSelect-select": {
+      paddingLeft: "13px",
+      fontSize: "1rem",
+      background: "#F7F7F7",
+    },
+    "&.MuiInputBase-root": {
+      color: "#232229 !important",
+      "& fieldset": {
+        border: "none",
+      },
+      "&:hover fieldset": {
+        border: "none",
+      },
+      "&.MuiInputBase-root.Mui-focused fieldset": {
+        border: "1px solid #ef5d36",
+      },
+    },
+  },
+
+  getPasswordFieldStyles: {
+    "&.MuiOutlinedInput-root": {
+      background: "#F7F7F7",
+      fontSize: "1rem",
+      "& fieldset": {
+        border: "none",
+      },
+      "&:hover fieldset": {
+        border: "none",
+      },
+      "&.MuiInputBase-root.Mui-focused fieldset": {
+        border: "1px solid #ef5d36",
+      },
+    },
+    "&.MuiFormLabel-root": {
+      color: "green !important",
+      fontSize: "1rem",
+      "&.MuiFormLabel-root.Mui-focused": {
+        color: "#ef5d36",
+      },
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "#232229 !important",
+    },
+  },
+
+  getCommonButtonCustomStyles: {
+    width: "100% !important",
+    height: "40px",
+    borderRadius: "4px",
+    border: "1px solid #ef5d36",
+    color: "#ef5d36",
+    "&:hover": {
+      background: "#ef5d36",
+      border: "none",
+      color: "#FFF",
+    },
+    "&:focus": {
+      outline: "none",
+    },
+  },
+};

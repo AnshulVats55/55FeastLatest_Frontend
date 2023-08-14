@@ -40,6 +40,8 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
     location,
     setLocation,
     handleAddNewMember,
+    isLoaderRequired,
+    setIsLoaderRequired,
   } = AddMemberDialogUtils();
   const { customStyles } = getCommonButtonCustomStyles;
 
@@ -65,7 +67,6 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
     email: email,
     location: location,
   };
-  // console.log(newMemberData);
 
   return (
     <div>
@@ -253,6 +254,7 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
                     onClick={(event) => {
                       handleAddNewMember(event, newMemberData);
                     }}
+                    isLoaderRequired={isLoaderRequired}
                   />
                 </motion.div>
               </Grid>
@@ -268,7 +270,6 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      {isLoading ? <Loader /> : <></>}
     </div>
   );
 };

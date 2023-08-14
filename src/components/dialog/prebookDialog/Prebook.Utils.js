@@ -15,6 +15,7 @@ const PrebookUtils = () => {
   const dispatch = useDispatch();
   const todaysDate = new Date();
   const [openDatesForPrebook, setOpenDatesForPrebook] = useState([]);
+  const [isLoaderRequired, setIsLoaderRequired] = useState(false);
 
   const getDaysNameFromDate = (date) => {
     //gives day name according to date
@@ -90,6 +91,8 @@ const PrebookUtils = () => {
   return {
     openDatesForPrebook,
     handleMealPrebooking,
+    isLoaderRequired,
+    setIsLoaderRequired,
   };
 };
 

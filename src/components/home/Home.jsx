@@ -57,6 +57,17 @@ const Home = () => {
     }, 1500);
   }, [isDataLoaded]);
 
+  const imageVariants = {
+    bounce: {
+      y: [0, -25, 25, 0],
+      transition: {
+        duration: 15,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
     <>
       {isDataLoaded ? (
@@ -168,13 +179,9 @@ const Home = () => {
           >
             <motion.div
               className={classes.getHomeImageContStyles}
-              initial={{ scale: 1.2, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                duration: 1,
-                repeatType: "reverse",
-                ease: "easeInOut",
-              }}
+              variants={imageVariants}
+              initial="bounce"
+              animate="bounce"
             >
               <img
                 src={LunchImage}
@@ -195,6 +202,7 @@ const Home = () => {
               <MenuSwiper
                 heading="Our Lunch Picks!"
                 caption="The Culinary delights for the FiftyFive Tribe to satiate the hunger pangs!"
+                swiperType="Lunch"
               />
             </motion.div>
           </Grid>
@@ -211,6 +219,7 @@ const Home = () => {
               <MenuSwiper
                 heading="Our Snack Picks!"
                 caption="Is your productivity getting hacked? Our list of healthy snacks is your saviour!"
+                swiperType="Snacks"
               />
             </motion.div>
           </Grid>
@@ -366,6 +375,7 @@ const Home = () => {
               <MenuSwiper
                 heading="Our Lunch Picks!"
                 caption="The Culinary delights for the FiftyFive Tribe to satiate the hunger pangs!"
+                swiperType="Lunch"
               />
             </motion.div>
           </Grid>
@@ -382,6 +392,7 @@ const Home = () => {
               <MenuSwiper
                 heading="Our Snack Picks!"
                 caption="Is your productivity getting hacked? Our list of healthy snacks is your saviour!"
+                swiperType="Snacks"
               />
             </motion.div>
           </Grid>

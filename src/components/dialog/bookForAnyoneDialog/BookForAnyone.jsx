@@ -19,7 +19,6 @@ import {
   getMyBuddies,
   bookMealForBuddy,
 } from "../../../bookingMethods/BookingMethods";
-// import BookForAnyoneCard from "../../card/bookForAnyoneCard/BookForAnyoneCard";
 
 const BookForAnyone = ({ open, scroll, handleClose, children }) => {
   const { classes } = getBookForAnyoneStyles();
@@ -131,7 +130,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                       animationDuration={animationDuration}
                       children={children}
                       isDataLoaded={isDataLoaded}
-                      isDashboard={true}
+                      isDashboard={false}
                       isEmailChopRequired={true}
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
@@ -175,6 +174,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                       isEmailChopRequired={true}
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
+                      isButtonDisableRequired={false}
                     />
                   </Skeleton>
                 );

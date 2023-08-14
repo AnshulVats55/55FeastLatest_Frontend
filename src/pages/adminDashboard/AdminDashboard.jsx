@@ -31,6 +31,9 @@ import { motion } from "framer-motion";
 import * as XLSX from "xlsx";
 import AdminDashboardUtils from "./AdminDashboard.Utils";
 import BookForAnyone from "../../components/dialog/bookForAnyoneDialog/BookForAnyone";
+import BASE_URL from "../../api/baseUrl/BaseUrl";
+import MEMBER_TOKEN from "../../api/memberToken/MemberToken";
+import axios from "axios";
 
 const AdminDashboard = () => {
   const { location } = useSelector((state) => {
@@ -230,10 +233,50 @@ const AdminDashboard = () => {
     }
   };
 
-  // const handleExportInPDF = (pdfFileLink) => {
-  //   //handles exporting member list in PDF
-  //   window.open(pdfFileLink);
-  // };
+  const handlePreviousMonthData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/bookmeal/month/count`, {
+        headers: {
+          Authorization: `Bearer ${MEMBER_TOKEN}`,
+          "Content-Type": "application/json",
+          referrerPolicy: "no-referrer",
+          mode: "no-mode",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      console.log(
+        "MONTHLY DATA API RESPONSE------------->>>>>>>>>>>>>>>",
+        response
+      );
+      if (response?.data?.status === "success") {
+        const fileName = "July Data";
+        try {
+          const worksheet = XLSX.utils.json_to_sheet(response.data.data);
+          const workbook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, `${fileName}`);
+          XLSX.writeFile(workbook, `${fileName}.xlsx`);
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.SUCCESS,
+              snackbarMessage: snackbarMessages.FILE_DOWNLOAD_SUCCESSFULL,
+            })
+          );
+        } catch (error) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.FILE_DOWNLOAD_FAILURE,
+            })
+          );
+        }
+      }
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
 
   return (
     <Grid container className={classes.getGridContStyles} rowGap={2}>
@@ -302,82 +345,125 @@ const AdminDashboard = () => {
                 to automation
               </Typography>
               <Box className={classes.getDownloadButtonsContStyles}>
-                <motion.div
-                  initial={{ scale: 1 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.1 }}
-                  style={{ width: "100%" }}
-                >
-                  <CommonButton
-                    children={"Export in Excel"}
-                    type=""
-                    onClick={() => {
-                      handleExportInExcel(todaysCount);
-                    }}
-                    customStyles={{
-                      width: "75% !important",
-                      height: "40px",
-                      borderRadius: "4px",
-                      border: "1px solid #ef5d36",
-                      color: "#ef5d36",
-                      fontSize: "0.9rem",
-                      margin: "0.25rem 0rem",
-                      "&:hover": {
-                        background: "#ef5d36",
-                        border: "none",
-                        color: "#FFF",
-                      },
-                      "&:focus": {
-                        outline: "none",
-                      },
-                      "@media screen and (max-width: 399px)": {
-                        fontSize: "0.8rem",
-                      },
-                    }}
-                  />
-                </motion.div>
-                <motion.div
-                  initial={{ scale: 1 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.1 }}
-                  style={{ width: "100%" }}
-                >
-                  <CommonButton
-                    children={"Book for anyone"}
-                    type=""
-                    onClick={handleBookForAnyoneOpen("paper")}
-                    customStyles={{
-                      width: "75% !important",
-                      height: "40px",
-                      borderRadius: "4px",
-                      border: "1px solid #ef5d36",
-                      color: "#ef5d36",
-                      fontSize: "0.9rem",
-                      margin: "0.25rem 0rem",
-                      "&:hover": {
-                        background: "#ef5d36",
-                        border: "none",
-                        color: "#FFF",
-                      },
-                      "&:focus": {
-                        outline: "none",
-                      },
-                      "@media screen and (max-width: 399px)": {
-                        fontSize: "0.8rem",
-                      },
-                    }}
-                  />
-                  {bookForAnyoneOpen ? (
-                    <BookForAnyone
-                      open={bookForAnyoneOpen}
-                      scroll={bookForAnyoneScroll}
-                      handleClose={handleBookForAnyoneClose}
-                      children="Book"
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </motion.div>
+                <Grid container sx={{ width: "100%" }}>
+                  <Grid item lg={6} xs={12}>
+                    <motion.div
+                      initial={{ scale: 1 }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.1 }}
+                      style={{ width: "100%" }}
+                    >
+                      <CommonButton
+                        children={"Daily data"}
+                        type=""
+                        onClick={() => {
+                          handleExportInExcel(todaysCount);
+                        }}
+                        customStyles={{
+                          width: "75% !important",
+                          height: "40px",
+                          borderRadius: "4px",
+                          border: "1px solid #ef5d36",
+                          color: "#ef5d36",
+                          fontSize: "0.9rem",
+                          margin: "0.25rem 0rem",
+                          "&:hover": {
+                            background: "#ef5d36",
+                            border: "none",
+                            color: "#FFF",
+                          },
+                          "&:focus": {
+                            outline: "none",
+                          },
+                          "@media screen and (max-width: 399px)": {
+                            fontSize: "0.8rem",
+                          },
+                        }}
+                      />
+                    </motion.div>
+                  </Grid>
+                  <Grid item lg={6} xs={12}>
+                    <motion.div
+                      initial={{ scale: 1 }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.1 }}
+                      style={{ width: "100%" }}
+                    >
+                      <CommonButton
+                        children={"Monthly data"}
+                        type=""
+                        onClick={handlePreviousMonthData}
+                        customStyles={{
+                          width: "75% !important",
+                          height: "40px",
+                          borderRadius: "4px",
+                          border: "1px solid #ef5d36",
+                          color: "#ef5d36",
+                          fontSize: "0.9rem",
+                          margin: "0.25rem 0rem",
+                          "&:hover": {
+                            background: "#ef5d36",
+                            border: "none",
+                            color: "#FFF",
+                          },
+                          "&:focus": {
+                            outline: "none",
+                          },
+                          "@media screen and (max-width: 399px)": {
+                            fontSize: "0.8rem",
+                          },
+                        }}
+                      />
+                    </motion.div>
+                  </Grid>
+                  <Grid item lg={12} xs={12}>
+                    <motion.div
+                      initial={{ scale: 1 }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.1 }}
+                      style={{ width: "100%" }}
+                    >
+                      <CommonButton
+                        children={"Book for anyone"}
+                        type=""
+                        onClick={handleBookForAnyoneOpen("paper")}
+                        customStyles={{
+                          width: "87.5% !important",
+                          height: "40px",
+                          borderRadius: "4px",
+                          border: "1px solid #ef5d36",
+                          color: "#ef5d36",
+                          fontSize: "0.9rem",
+                          margin: "0.25rem 0rem",
+                          "&:hover": {
+                            background: "#ef5d36",
+                            border: "none",
+                            color: "#FFF",
+                          },
+                          "&:focus": {
+                            outline: "none",
+                          },
+                          "@media screen and (max-width: 1199px)": {
+                            width: "75% !important",
+                          },
+                          "@media screen and (max-width: 399px)": {
+                            fontSize: "0.8rem",
+                          },
+                        }}
+                      />
+                      {bookForAnyoneOpen ? (
+                        <BookForAnyone
+                          open={bookForAnyoneOpen}
+                          scroll={bookForAnyoneScroll}
+                          handleClose={handleBookForAnyoneClose}
+                          children="Book"
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </motion.div>
+                  </Grid>
+                </Grid>
               </Box>
             </Stack>
           </Box>

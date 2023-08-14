@@ -1,12 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
-import { useDispatch } from "react-redux";
+import {
+  getMyBuddies,
+  bookMealForBuddy,
+} from "../../../bookingMethods/BookingMethods";
+import { useDispatch, useSelector } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
 
-const BookForBuddyUtils = () => {
+const BookForBuddyUtils = ({ open }) => {
+  const myData = useSelector((state) => {
+    return state.memberDataReducer;
+  });
+
   const dispatch = useDispatch();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -22,6 +30,31 @@ const BookForBuddyUtils = () => {
     new Date().getHours() >= 15 && new Date().getHours() <= 23
       ? nextDateFormatted
       : formattedDate;
+
+  let animationDuration = 0.4;
+
+  const descriptionElementRef = useRef(null);
+  useEffect(() => {
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [open]);
+
+  useEffect(() => {
+    const handleMyBuddies = async () => {
+      const response = await getMyBuddies(myData.email);
+      console.log("Response of my buddies api is this ------------>", response);
+      if (response?.data?.status === "success") {
+        setMyBuddies(response?.data?.data);
+        setIsDataLoaded(true);
+      }
+    };
+
+    handleMyBuddies();
+  }, []);
 
   const memberData = [
     //member's dummy data
@@ -80,7 +113,7 @@ const BookForBuddyUtils = () => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings closed for today !");
+        handleBookingNotifications("Bookings open at 5PM !");
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
@@ -116,17 +149,30 @@ const BookForBuddyUtils = () => {
     }
   };
 
+  const filteredUsers = myBuddies?.filter((member) =>
+    member.fullName.toLowerCase().includes(searchTerm)
+  );
+
+  const handleBookForBuddy = async (buddyData) => {
+    //handles meal booking for buddies
+    const isBookingAllowed = checkMealBookingAvailability();
+    if (isBookingAllowed) {
+      const response = await bookMealForBuddy(buddyData);
+      // console.log(`Meal booked for my buddy ${buddyData.email}`, response);
+      return response;
+    }
+  };
+
   return {
+    animationDuration,
     isDataLoaded,
-    setIsDataLoaded,
-    searchTerm,
     setSearchTerm,
-    myBuddies,
-    setMyBuddies,
     memberData,
     date,
     handleMemberSearch,
-    checkMealBookingAvailability,
+    descriptionElementRef,
+    filteredUsers,
+    handleBookForBuddy,
   };
 };
 

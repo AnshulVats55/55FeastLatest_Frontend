@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Typography, Skeleton, Box } from "@mui/material";
-import React, { useEffect } from "react";
 import CommonButton from "../button/CommonButton";
 import {
   getBookingCardStyles,
@@ -19,15 +18,12 @@ const BookingCard = ({
   onClick,
   isBooked,
   label,
+  isLoaderRequired,
 }) => {
   const { classes } = getBookingCardStyles();
   const { isDataLoaded, handleDataLoading } = BookingkCardUtils();
   const { customStyles } = getCommonButtonCustomStyles;
   const { initial, animate, whileHover, transition } = getBookingCardAnimation;
-
-  useEffect(() => {
-    handleDataLoading();
-  }, [isDataLoaded]);
 
   return (
     <motion.div
@@ -56,6 +52,7 @@ const BookingCard = ({
             type=""
             customStyles={customStyles(isBooked)}
             onClick={onClick ? onClick : null}
+            isLoaderRequired={isLoaderRequired}
           />
         </>
       ) : (
@@ -83,6 +80,7 @@ const BookingCard = ({
               type=""
               customStyles={customStyles(isBooked)}
               onClick={onClick ? onClick : null}
+              isLoaderRequired={isLoaderRequired}
             />
           </Skeleton>
         </>

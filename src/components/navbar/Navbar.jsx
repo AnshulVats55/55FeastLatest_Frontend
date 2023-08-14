@@ -176,11 +176,11 @@ const Navbar = () => {
                       onClick={handleCloseNavMenu}
                     />
                     <List>
-                      {adminNavigationLinks.map((link, index) => (
+                      {adminNavigationLinks?.map((link, index) => (
                         <ListItem
                           key={index}
                           component="a"
-                          href={link.url}
+                          href={index < 2 ? link.url : ""}
                           className={classes.getListItemStylesOne}
                           sx={{
                             ...(index === 0
@@ -220,7 +220,7 @@ const Navbar = () => {
                       onClick={handleCloseNavMenu}
                     />
                     <List>
-                      {memberNavigationLinks.map((link, index) => (
+                      {memberNavigationLinks?.map((link, index) => (
                         <ListItem
                           key={index}
                           component="a"
@@ -245,31 +245,39 @@ const Navbar = () => {
                 </Drawer>
               )}
             </Box>
-            <Typography
-              noWrap
-              component="a"
-              href="/"
+            <Box
               sx={{
-                mr: 2,
-                fontSize: "1.5rem !important",
+                // background: "orange",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
                 display: { xs: "flex", md: "none" },
-                flexGrow: 0.7,
-                "@media screen and (max-width: 899px)": {
-                  flexGrow: 1,
-                },
-                "@media screen and (max-width: 599px)": {
-                  fontSize: "1.25rem !important",
-                },
-                "@media screen and (max-width: 399px)": {
-                  fontSize: "1.10rem !important",
-                  mr: 3.5,
-                },
               }}
-              className={classes.getBrandLogoStyles}
             >
-              55Feast
-            </Typography>
-
+              <Typography
+                noWrap
+                component="a"
+                href="/"
+                sx={{
+                  fontSize: "1.5rem !important",
+                  display: { xs: "flex", md: "none" },
+                  // flexGrow: 2,
+                  "@media screen and (max-width: 899px)": {
+                    // flexGrow: 1,
+                  },
+                  "@media screen and (max-width: 599px)": {
+                    // fontSize: "1.25rem !important",
+                  },
+                  "@media screen and (max-width: 399px)": {
+                    fontSize: "1.10rem !important",
+                    // mr: 3.5,
+                  },
+                }}
+                className={classes.getBrandLogoStylesTwo}
+              >
+                55Feast
+              </Typography>
+            </Box>
             <Box className={classes.getNavLinksStylesTwo}>
               <Typography
                 noWrap
@@ -280,7 +288,7 @@ const Navbar = () => {
                   display: { xs: "none", md: "flex" },
                   fontSize: "1.5rem !important",
                 }}
-                className={classes.getBrandLogoStyles}
+                className={classes.getBrandLogoStylesOne}
               >
                 55Feast
               </Typography>
@@ -291,7 +299,7 @@ const Navbar = () => {
                   }}
                   className={classes.getNavLinksContStylesTwo}
                 >
-                  {adminNavigationLinks.map((page, index) => (
+                  {adminNavigationLinks?.map((page, index) => (
                     <motion.div
                       transition={{ duration: 0.15 }}
                       whileTap={{ scale: 0.95 }}
@@ -316,7 +324,7 @@ const Navbar = () => {
                   }}
                   className={classes.getNavLinksContStylesTwo}
                 >
-                  {memberNavigationLinks.map((page, index) => (
+                  {memberNavigationLinks?.map((page, index) => (
                     <motion.div
                       transition={{ duration: 0.15 }}
                       whileTap={{ scale: 0.95 }}

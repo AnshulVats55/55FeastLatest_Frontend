@@ -3,6 +3,13 @@ const SUCCESS = "success";
 const FAILURE = "failure";
 const INFO = "info";
 const ERROR = "error";
+const FIRST_NAME_REQUIRED = "Enter your firstname !";
+const LAST_NAME_REQUIRED = "Enter your lastname !";
+const GENDER_REQUIRED = "Select your gender !";
+const LOCATION_REQUIRED = "Select your locaation !";
+const EMAIL_REQUIRED = "Enter your email !";
+const PASSWORD_REQUIRED = "Create your password !";
+const PHONE_NUMBER_REQUIRED = "Enter your number !";
 const SIGNUP_SUCCESSFULL = "Account created successfully !";
 const SIGNUP_FAILURE = "Error creating account !";
 const EMAIL_EXIST = "User with given email already exists !";
@@ -48,12 +55,20 @@ const NO_MEMBER_IN_LIST = "No member in list !";
 const FILE_DOWNLOAD_FAILURE = "Error downloading file !";
 const DATA_FETCHED_SUCCESSFULL = "Data fetched successfully !";
 const DATA_FETCHED_FAILURE = "Error fetching data !";
+const TRY_AGAIN = "Please try again !";
 
 export default {
   SUCCESS,
   FAILURE,
   INFO,
   ERROR,
+  FIRST_NAME_REQUIRED,
+  LAST_NAME_REQUIRED,
+  GENDER_REQUIRED,
+  LOCATION_REQUIRED,
+  EMAIL_REQUIRED,
+  PASSWORD_REQUIRED,
+  PHONE_NUMBER_REQUIRED,
   SIGNUP_SUCCESSFULL,
   SIGNUP_FAILURE,
   EMAIL_EXIST,
@@ -99,4 +114,5 @@ export default {
   DATA_FETCHED_SUCCESSFULL,
   DATA_FETCHED_FAILURE,
   MEMBER_EMAIL_ALREADY_EXISTS,
+  TRY_AGAIN,
 };

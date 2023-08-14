@@ -1,8 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+// import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { getSignupFormStyles } from "./SignupForm.Styles";
+import {
+  getSignupFormStyles,
+  getProfilePicAnimation,
+  getAdditionalStyles,
+} from "./SignupForm.Styles";
 import {
   Box,
   Grid,
@@ -21,135 +25,56 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CustomDialog from "../dialog/Dialog";
 import { motion } from "framer-motion";
-import handleMemberSignup from "../../api/signup/Signup";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsLoading } from "../../store/slices/LoaderSlice";
-import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import Loader from "../loader/Loader";
-import snackbarMessages from "../../Constants";
+import SignupFormUtils from "./SignupForm.Utils";
 
 const SignupForm = () => {
   const { classes } = getSignupFormStyles();
+  const { initial, whileTap, transition } = getProfilePicAnimation;
+  const {
+    getSelectStyles,
+    getPasswordFieldStyles,
+    getCommonButtonCustomStyles,
+  } = getAdditionalStyles;
+  const {
+    isLoading,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    phoneNumber,
+    gender,
+    setGender,
+    profilePicture,
+    location,
+    setLocation,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    isProfilePicAttached,
+    isPasswordVisible,
+    open,
+    scroll,
+    handleClose,
+    handlePhoneNumber,
+    handleProfilePictureChange,
+    handlePasswordVisibility,
+    handleMouseDownPassword,
+    handleSignup,
+    emailErrorMsg,
+    setEmailErrorMsg,
+    emailValidator,
+    passwordErrorMsg,
+    setPasswordErrorMsg,
+    passwordCheck,
+  } = SignupFormUtils();
 
-  const { isLoading } = useSelector((state) => {
-    return state.loaderReducer;
-  });
-  // console.log(isLoading);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [location, setLocation] = useState("");
-  const [gender, setGender] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [isProfilePicAttached, setIsProfilePicAttached] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-  const [open, setOpen] = useState(false);
-  const [scroll, setScroll] = useState("paper");
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handlePhoneNumber = (event) => {
-    const input = event.target.value;
-    const hasEnglishAlphabets = /[a-zA-Z]/.test(input);
-    const hasSpecialSymbols = /[^a-zA-Z0-9\s]/.test(input);
-
-    if (hasEnglishAlphabets) {
-      alert("Phone number can't have english characters");
-    } else if (hasSpecialSymbols) {
-      alert("Phone number can't have special symbols");
-    } else {
-      setPhoneNumber(input);
-    }
-  };
-
-  const getBase64 = (file) => {
-    let reader = new FileReader();
-    let encodedFile = "";
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      encodedFile = reader.result;
-      setProfilePicture(encodedFile);
-    };
-    reader.onerror = function (error) {
-      return error;
-    };
-  };
-
-  const handleProfilePictureChange = (event) => {
-    const profilePic = event.target.files;
-    if (profilePic && profilePic.length > 0) {
-      getBase64(profilePic[0]);
-      setIsProfilePicAttached(true);
-      setOpen(true);
-    }
-  };
-
-  const handlePasswordVisibility = () => {
-    //to toggle visibility of password
-    setIsPasswordVisible(!isPasswordVisible);
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const memberData = {
-    firstName: firstName,
-    lastName: lastName,
-    phone: parseInt(phoneNumber),
-    photo: profilePicture,
-    location: location,
-    gender: gender,
-    email: email,
-    password: password,
-  };
-
-  const handleSignup = async (event) => {
-    event.preventDefault();
-    dispatch(setIsLoading(true));
-    const response = await handleMemberSignup(memberData);
-    // console.log(
-    //   "Signup response is-------------------------------->",
-    //   response
-    // );
-    if (response?.data?.status === snackbarMessages.SUCCESS) {
-      dispatch(setIsLoading(false));
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.SUCCESS,
-          snackbarMessage: snackbarMessages.SIGNUP_SUCCESSFULL,
-        })
-      );
-      setTimeout(() => {
-        navigate("/");
-      }, 2500);
-    } else if (response?.data?.status === snackbarMessages.FAILURE) {
-      dispatch(setIsLoading(false));
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.FAILURE,
-          snackbarMessage: snackbarMessages.SIGNUP_FAILURE,
-        })
-      );
-    }
-  };
 
   return (
     <Box className={classes.getMainContStyles}>
@@ -239,9 +164,9 @@ const SignupForm = () => {
             }}
           >
             <motion.div
-              initial={{ scale: 1 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ duration: 0.1 }}
+              initial={initial}
+              whileTap={whileTap}
+              transition={transition}
               style={{
                 width: "100%",
                 display: "flex",
@@ -293,25 +218,7 @@ const SignupForm = () => {
                   onChange={(e) => {
                     setLocation(e.target.value);
                   }}
-                  sx={{
-                    "& .MuiSelect-select": {
-                      paddingLeft: "13px",
-                      fontSize: "1rem",
-                      background: "#F7F7F7",
-                    },
-                    "&.MuiInputBase-root": {
-                      color: "#232229 !important",
-                      "& fieldset": {
-                        border: "none",
-                      },
-                      "&:hover fieldset": {
-                        border: "none",
-                      },
-                      "&.MuiInputBase-root.Mui-focused fieldset": {
-                        border: "1px solid #ef5d36",
-                      },
-                    },
-                  }}
+                  sx={getSelectStyles}
                 >
                   <MenuItem value="" className={classes.getMenuItemStyles}>
                     Select location
@@ -346,25 +253,7 @@ const SignupForm = () => {
                   onChange={(e) => {
                     setGender(e.target.value);
                   }}
-                  sx={{
-                    "& .MuiSelect-select": {
-                      paddingLeft: "13px",
-                      fontSize: "1rem",
-                      background: "#F7F7F7",
-                    },
-                    "&.MuiInputBase-root": {
-                      color: "#232229 !important",
-                      "& fieldset": {
-                        border: "none",
-                      },
-                      "&:hover fieldset": {
-                        border: "none",
-                      },
-                      "&.MuiInputBase-root.Mui-focused fieldset": {
-                        border: "1px solid #ef5d36",
-                      },
-                    },
-                  }}
+                  sx={getSelectStyles}
                 >
                   <MenuItem value="" className={classes.getMenuItemStyles}>
                     Select gender
@@ -396,10 +285,24 @@ const SignupForm = () => {
                 {...register("email", { required: true })}
                 onChange={(e) => {
                   setEmail(e.target.value);
+                  setEmailErrorMsg(emailValidator(e.target.value));
                 }}
                 className={classes.root}
                 inputProps={{ className: classes.input }}
               ></TextField>
+              {email.length > 0 ? (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: emailErrorMsg.status ? "#4caf50" : "red",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  {emailErrorMsg.text}
+                </Typography>
+              ) : (
+                <></>
+              )}
             </Stack>
           </Grid>
 
@@ -417,6 +320,7 @@ const SignupForm = () => {
                 })}
                 onChange={(e) => {
                   setPassword(e.target.value);
+                  setPasswordErrorMsg(passwordCheck(e.target.value));
                 }}
                 endAdornment={
                   <InputAdornment position="end">
@@ -434,32 +338,21 @@ const SignupForm = () => {
                     </IconButton>
                   </InputAdornment>
                 }
-                sx={{
-                  "&.MuiOutlinedInput-root": {
-                    background: "#F7F7F7",
-                    fontSize: "1rem",
-                    "& fieldset": {
-                      border: "none",
-                    },
-                    "&:hover fieldset": {
-                      border: "none",
-                    },
-                    "&.MuiInputBase-root.Mui-focused fieldset": {
-                      border: "1px solid #ef5d36",
-                    },
-                  },
-                  "&.MuiFormLabel-root": {
-                    color: "green !important",
-                    fontSize: "1rem",
-                    "&.MuiFormLabel-root.Mui-focused": {
-                      color: "#ef5d36",
-                    },
-                  },
-                  "& .MuiOutlinedInput-input": {
-                    color: "#232229 !important",
-                  },
-                }}
+                sx={getPasswordFieldStyles}
               />
+              {password.length > 0 ? (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: passwordErrorMsg.status ? "#4caf50" : "red",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  {passwordErrorMsg.text}
+                </Typography>
+              ) : (
+                <></>
+              )}
             </Stack>
           </Grid>
 
@@ -471,23 +364,11 @@ const SignupForm = () => {
             >
               <CommonButton
                 children="Signup"
-                customStyles={{
-                  width: "100% !important",
-                  height: "40px",
-                  borderRadius: "4px",
-                  border: "1px solid #ef5d36",
-                  color: "#ef5d36",
-                  "&:hover": {
-                    background: "#ef5d36",
-                    border: "none",
-                    color: "#FFF",
-                  },
-                  "&:focus": {
-                    outline: "none",
-                  },
-                }}
+                customStyles={getCommonButtonCustomStyles}
                 type="submit"
-                onClick={(event)=>{handleSignup(event)}}
+                onClick={(event) => {
+                  handleSignup(event);
+                }}
               />
             </motion.div>
           </Grid>

@@ -39,6 +39,7 @@ const DeleteMemberDialog = ({
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalMembers, setTotalMembers] = useState([]);
+  const [isLoaderRequired, setIsLoaderRequired] = useState(false);
   let animationDuration = 0.4;
 
   const descriptionElementRef = useRef(null);
@@ -150,7 +151,7 @@ const DeleteMemberDialog = ({
             />
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
-                filteredUsers.map((member, index) => {
+                filteredUsers?.map((member, index) => {
                   return (
                     <InviteMemberCard
                       indexNumber={index + 1}

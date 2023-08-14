@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { getInviteButtonStyles } from "./InviteButton.Styles";
 
 const InviteButton = ({
@@ -8,6 +8,7 @@ const InviteButton = ({
   handleAction,
   styles,
   isButtonDisableRequired,
+  isLoaderRequired,
 }) => {
   const { classes } = getInviteButtonStyles(styles);
 
@@ -27,7 +28,10 @@ const InviteButton = ({
       onClick={handleActionBeingPerformed}
       disabled={isButtonDisableRequired}
     >
-      {children}
+      {children}&nbsp;
+      {isLoaderRequired && (
+        <CircularProgress size={15} thickness={4} color="inherit" />
+      )}
     </Button>
   );
 };
