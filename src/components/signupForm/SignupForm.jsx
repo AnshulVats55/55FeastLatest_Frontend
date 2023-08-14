@@ -1,5 +1,7 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-// import { useState } from "react";
+/* eslint-disable no-restricted-globals */
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import {

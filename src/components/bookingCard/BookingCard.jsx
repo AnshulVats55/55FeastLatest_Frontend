@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 import { Typography, Skeleton, Box } from "@mui/material";
 import CommonButton from "../button/CommonButton";
 import {
@@ -21,7 +23,7 @@ const BookingCard = ({
   isLoaderRequired,
 }) => {
   const { classes } = getBookingCardStyles();
-  const { isDataLoaded, handleDataLoading } = BookingkCardUtils();
+  const { isDataLoaded } = BookingkCardUtils();
   const { customStyles } = getCommonButtonCustomStyles;
   const { initial, animate, whileHover, transition } = getBookingCardAnimation;
 

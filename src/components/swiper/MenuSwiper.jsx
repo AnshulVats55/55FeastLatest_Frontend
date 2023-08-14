@@ -1,5 +1,7 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 import { Typography, Skeleton } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -50,7 +52,7 @@ export default function MenuSwiper({ heading, caption, swiperType }) {
             modules={[EffectCoverflow, Pagination]}
             className={classes.getMainContStyles}
           >
-            {swiperType =="Lunch"
+            {swiperType === "Lunch"
               ? lunchItems?.map((item) => {
                   return (
                     <SwiperSlide className={classes.getFoodItemImageContStyles}>

@@ -15,7 +15,6 @@ const BookingkCardUtils = () => {
 
   return {
     isDataLoaded,
-    handleDataLoading,
   };
 };
 
