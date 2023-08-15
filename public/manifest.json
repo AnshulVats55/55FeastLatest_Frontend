@@ -19,8 +19,13 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://fiftyfive-feast.netlify.app/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "Welcome to \"55Feast\" !",
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ]
 }
