@@ -1,4 +1,12 @@
+/* eslint-disable no-undef */
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
+// eslint-disable-next-line no-restricted-globals
+
 // This is the "Offline copy of pages" service worker
+const ignored = self.__WB_MANIFEST;
 
 const CACHE = "pwabuilder-offline";
 
