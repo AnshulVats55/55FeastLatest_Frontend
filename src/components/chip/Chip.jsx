@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-globals */
 import { useEffect } from "react";
 import { getChipStyles, getDateChipStyles } from "./Chip.Styles";
-import { Typography, Stack, Chip } from "@mui/material";
+import { Typography, Stack, Chip, CircularProgress, Box } from "@mui/material";
 import ChipUtils from "./Chip.Utils";
 import { useSelector } from "react-redux";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
@@ -21,12 +21,13 @@ const DateChip = ({ dayName, dateValue }) => {
     isAlreadyBooked,
     setIsAlreadyBooked,
     handlePrebookCancellation,
+    isLoaderRequired,
   } = ChipUtils();
   const { dateChipStyles } = getDateChipStyles;
 
   useEffect(() => {
     console.log("dateValue in useEffect", dateValue);
-    //checks if date is already present in allBookedDates array
+    //checking if date is already present in allBookedDates array
     if (prebookingDates?.indexOf(getReversedDate(dateValue)) > -1) {
       setIsAlreadyBooked(true);
     }
@@ -35,7 +36,27 @@ const DateChip = ({ dayName, dateValue }) => {
   return (
     <Stack className={classes.getChipContStyles}>
       <Chip
-        label={dayName}
+        label={
+          isLoaderRequired ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {dayName}
+              <CircularProgress
+                size={11}
+                thickness={4}
+                color="inherit"
+                sx={{ margin: "0 0.5rem" }}
+              />
+            </Box>
+          ) : (
+            dayName
+          )
+        }
         onClick={() => {
           isAlreadyBooked
             ? handlePrebookCancellation(dateValue)

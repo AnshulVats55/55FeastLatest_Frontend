@@ -11,6 +11,7 @@ import {
   Typography,
   Grid,
   CircularProgress,
+  Box,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import snackbarMessages from "../../../Constants";
@@ -53,6 +54,7 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
     email: email,
     bookedDates: prebookedDates,
   };
+
   const handlePrebooking = async (memberData) => {
     if (prebookedDates.length <= 0) {
       dispatch(
@@ -92,7 +94,7 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
   };
 
   return (
-    <div>
+    <Box>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -167,7 +169,7 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 

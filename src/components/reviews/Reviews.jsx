@@ -9,11 +9,20 @@ const Reviews = () => {
   const { imageVariants } = ReviewsUtils();
 
   return (
-    <motion.div variants={imageVariants} initial="bounce" animate="bounce">
-      <Box className={classes.getImageContStyles}>
-        <img src={ComingSoonImage} alt="reviews" />
-      </Box>
-    </motion.div>
+    <Box className={classes.getTopContStyles}>
+      <motion.div
+        variants={imageVariants}
+        initial="bounce"
+        animate="bounce"
+        className={classes.getImageContStyles}
+      >
+        <img
+          src={ComingSoonImage}
+          alt="reviews"
+          className={classes.getImageStyles}
+        />
+      </motion.div>
+    </Box>
   );
 };
 

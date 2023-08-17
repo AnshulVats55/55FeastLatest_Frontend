@@ -23,6 +23,7 @@ const ChipUtils = () => {
   const dispatch = useDispatch();
   const [isSelected, setIsSelected] = useState(false);
   const [isAlreadyBooked, setIsAlreadyBooked] = useState(false);
+  const [isLoaderRequired, setLoaderRequired] = useState(false);
 
   const checkPrebookingAvailabilty = (dateToBeChecked) => {
     //checks availabilty for prebooking
@@ -65,8 +66,10 @@ const ChipUtils = () => {
     };
     if (currentReversedDate === dateToBeChecked) {
       if (currentHours >= 0 && currentHours <= 8 && isAlreadyBooked === true) {
+        setLoaderRequired(true);
         const response = await handleCancelMealBooking(prebookData);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
+          setLoaderRequired(false);
           setIsAlreadyBooked(false);
           dispatch(
             setCustomSnackbar({
@@ -100,8 +103,10 @@ const ChipUtils = () => {
       currentReversedDate !== dateToBeChecked &&
       isAlreadyBooked === true
     ) {
+      setLoaderRequired(true);
       const response = await handleCancelMealBooking(prebookData);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setLoaderRequired(false);
         setIsAlreadyBooked(false);
         setIsSelected(false);
         dispatch(getPrebookDates([]));
@@ -131,6 +136,7 @@ const ChipUtils = () => {
     isAlreadyBooked,
     setIsAlreadyBooked,
     handlePrebookCancellation,
+    isLoaderRequired,
   };
 };
 

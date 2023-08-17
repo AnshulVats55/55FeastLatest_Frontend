@@ -43,7 +43,7 @@ const BookMeal = () => {
   const nextDate = getNextDate(new Date());
   const nextDateFormatted = handleFormattedDate(nextDate);
 
-  const mealBookingData = {
+  const mealBookingData = {//here 12Pm will be updated to 17PM
     email: memberData.email,
     date:
       new Date().getHours() >= 12 && new Date().getHours() <= 23
@@ -51,10 +51,10 @@ const BookMeal = () => {
         : formattedDate,
   };
 
-  const myData = {
+  const myData = {//here 12Pm will be updated to 17PM
     email: memberData.email,
     date:
-      new Date().getHours() >= 14 && new Date().getHours() <= 23
+      new Date().getHours() >= 12 && new Date().getHours() <= 23
         ? nextDateFormatted
         : formattedDate,
   };
@@ -111,7 +111,7 @@ const BookMeal = () => {
         //booking allowed from 7PM to 9AM the next day
         setIsBookingOpen(true);
         return true;
-      } else if (currentHour >= 15 && currentHour <= 23) {
+      } else if (currentHour >= 12 && currentHour <= 23) {
         setIsBookingOpen(true);
         return true;
       } else {

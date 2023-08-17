@@ -8,8 +8,6 @@ import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";
 import MEMBER_TOKEN from "../../../api/memberToken/MemberToken";
 import { useDispatch } from "react-redux";
-// import snackbarMessages from "../../../Constants";
-// import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 
 const PrebookUtils = () => {
   const dispatch = useDispatch();
