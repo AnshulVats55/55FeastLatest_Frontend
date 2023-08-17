@@ -300,4 +300,11 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
       fontSize: "0.8rem",
     },
   },
+
+  bookForAnyoneBtnContStyles: {
+    width: "100%",
+    "@media screen and (max-width: 1199px)": {
+      width: "90%",
+    },
+  },
 }));

@@ -346,12 +346,21 @@ const AdminDashboard = () => {
               </Typography>
               <Box className={classes.getDownloadButtonsContStyles}>
                 <Grid container sx={{ width: "100%" }}>
-                  <Grid item lg={6} xs={12}>
+                  <Grid
+                    item
+                    lg={6}
+                    xs={12}
+                    sx={{
+                      background: "",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
                     <motion.div
                       initial={{ scale: 1 }}
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.1 }}
-                      style={{ width: "100%" }}
+                      style={{ width: "90%", background: "" }}
                     >
                       <CommonButton
                         children={"Daily data"}
@@ -360,7 +369,7 @@ const AdminDashboard = () => {
                           handleExportInExcel(todaysCount);
                         }}
                         customStyles={{
-                          width: "75% !important",
+                          width: "90% !important",
                           height: "40px",
                           borderRadius: "4px",
                           border: "1px solid #ef5d36",
@@ -382,19 +391,28 @@ const AdminDashboard = () => {
                       />
                     </motion.div>
                   </Grid>
-                  <Grid item lg={6} xs={12}>
+                  <Grid
+                    item
+                    lg={6}
+                    xs={12}
+                    sx={{
+                      background: "",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
                     <motion.div
                       initial={{ scale: 1 }}
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.1 }}
-                      style={{ width: "100%" }}
+                      style={{ width: "90%", background: "" }}
                     >
                       <CommonButton
                         children={"Monthly data"}
                         type=""
                         onClick={handlePreviousMonthData}
                         customStyles={{
-                          width: "75% !important",
+                          width: "90% !important",
                           height: "40px",
                           borderRadius: "4px",
                           border: "1px solid #ef5d36",
@@ -416,19 +434,35 @@ const AdminDashboard = () => {
                       />
                     </motion.div>
                   </Grid>
-                  <Grid item lg={12} xs={12}>
+                  <Grid
+                    item
+                    lg={12}
+                    xs={12}
+                    sx={{
+                      background: "",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
                     <motion.div
                       initial={{ scale: 1 }}
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.1 }}
-                      style={{ width: "100%" }}
+                      // style={{
+                      //   width: "100%",
+                      //   background: "wheat",
+                      //   "@media screen and (max-width: 1199px)": {
+                      //     width:"90% !important"
+                      //   },
+                      // }}
+                      className={classes.bookForAnyoneBtnContStyles}
                     >
                       <CommonButton
                         children={"Book for anyone"}
                         type=""
                         onClick={handleBookForAnyoneOpen("paper")}
                         customStyles={{
-                          width: "87.5% !important",
+                          width: "90% !important",
                           height: "40px",
                           borderRadius: "4px",
                           border: "1px solid #ef5d36",
@@ -444,7 +478,7 @@ const AdminDashboard = () => {
                             outline: "none",
                           },
                           "@media screen and (max-width: 1199px)": {
-                            width: "75% !important",
+                            width: "90% !important",
                           },
                           "@media screen and (max-width: 399px)": {
                             fontSize: "0.8rem",
