@@ -18,6 +18,12 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
+    },
+    {
+      "src": "55FeastLogo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
   "start_url": "https://fiftyfive-feast.netlify.app/",
@@ -25,5 +31,6 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "description": "Welcome to \"55Feast\" !",
-  "display_override": ["standalone", "window-controls-overlay"]
+  "display_override": ["standalone", "window-controls-overlay"],
+  "prefer_related_applications": "false"
 }
