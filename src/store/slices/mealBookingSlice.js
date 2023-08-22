@@ -1,17 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-let mealBookingData = {
-
-};
+let mealBookingData = {};
 
 const mealBookingSlice = createSlice({
-    name: 'mealBookingSlice',
-    initialState: mealBookingData,
-    reducers:{
-        setMealBookingData(state, action){
-            return state = action.payload;
-        }
-    }
+  name: "mealBookingSlice",
+  initialState: mealBookingData,
+  reducers: {
+    setMealBookingData(state, action) {
+      return (state = action.payload);
+    },
+  },
 });
 
 export const { setMealBookingData } = mealBookingSlice.actions;

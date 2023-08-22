@@ -1,4 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 const SUCCESS = "success";
 const FAILURE = "failure";
 const INFO = "info";
@@ -56,6 +60,7 @@ const FILE_DOWNLOAD_FAILURE = "Error downloading file !";
 const DATA_FETCHED_SUCCESSFULL = "Data fetched successfully !";
 const DATA_FETCHED_FAILURE = "Error fetching data !";
 const TRY_AGAIN = "Please try again !";
+const MEMBER_MEAL_STATUS = "Error fetching status !";
 
 export default {
   SUCCESS,
@@ -115,4 +120,5 @@ export default {
   DATA_FETCHED_FAILURE,
   MEMBER_EMAIL_ALREADY_EXISTS,
   TRY_AGAIN,
+  MEMBER_MEAL_STATUS,
 };

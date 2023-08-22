@@ -34,6 +34,8 @@ import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
 import MaleAvatar from "../../assets/male avatar.jpg";
 import FemaleAvatar from "../../assets/female avatar.jpg";
+import { setIsLoading } from "../../store/slices/LoaderSlice";
+import Loader from "../loader/Loader";
 
 const Navbar = () => {
   const { classes } = getNavbarStyles();
@@ -41,8 +43,11 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const { isAdmin, photo, gender } = useSelector((state) => {
-    // console.log(state.memberDataReducer);
     return state.memberDataReducer;
+  });
+
+  const isLoading = useSelector((state) => {
+    return state.loaderReducer.isLoading;
   });
 
   const memberNavigationLinks = [
@@ -117,6 +122,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    dispatch(setIsLoading(true));
     localStorage.removeItem("memberToken");
     if (localStorage.getItem("memberToken") === null) {
       dispatch(
@@ -130,6 +136,7 @@ const Navbar = () => {
         navigate("/");
         window.location.reload();
       }, 1500);
+      dispatch(setIsLoading(false));
     } else {
       dispatch(
         setCustomSnackbar({
@@ -138,6 +145,7 @@ const Navbar = () => {
           snackbarMessage: snackbarMessages.LOGOUT_FAILURE,
         })
       );
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -466,6 +474,7 @@ const Navbar = () => {
               </Drawer>
             </Box>
           </Toolbar>
+          {isLoading ? <Loader /> : <></>}
         </Box>
       </Container>
     </AppBar>

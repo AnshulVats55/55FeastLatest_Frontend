@@ -78,7 +78,7 @@ const BookForAnyoneUtils = () => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay === 0) {
-      if (currentHour >= 15 && currentHour <= 23) {
+      if (currentHour >= 17 && currentHour <= 23) {
         //booking allowed from 5PM(Sunday) to 9AM(Monday) for admins
         setIsBookingOpen(true);
         return true;
@@ -92,7 +92,7 @@ const BookForAnyoneUtils = () => {
         //booking allowed from 7PM to 9AM the next day for admins
         setIsBookingOpen(true);
         return true;
-      } else if (currentHour >= 15 && currentHour <= 23) {
+      } else if (currentHour >= 17 && currentHour <= 23) {
         setIsBookingOpen(true);
         return true;
       } else {

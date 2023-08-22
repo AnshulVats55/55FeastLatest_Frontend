@@ -1,4 +1,7 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -88,8 +91,8 @@ const LoginForm = () => {
         </Typography>
       </Stack>
       <form
-        onSubmit={handleSubmit(handleFormSubmit)}
         className={classes.getSignupFormStyles}
+        onSubmit={handleSubmit(handleFormSubmit)}
       >
         <Grid container rowSpacing={2} columnSpacing={1}>
           <Grid item lg={12} md={12} sm={12} xs={12}>

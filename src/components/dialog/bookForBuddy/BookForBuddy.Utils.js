@@ -1,5 +1,7 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 import { useState, useEffect, useRef } from "react";
 import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
 import {
@@ -27,7 +29,7 @@ const BookForBuddyUtils = ({ open }) => {
   const nextDateFormatted = handleFormattedDate(nextDate);
 
   const date =
-    new Date().getHours() >= 15 && new Date().getHours() <= 23
+    new Date().getHours() >= 17 && new Date().getHours() <= 23
       ? nextDateFormatted
       : formattedDate;
 
@@ -107,7 +109,7 @@ const BookForBuddyUtils = ({ open }) => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay === 0) {
-      if (currentHour >= 15 && currentHour <= 23) {
+      if (currentHour >= 17 && currentHour <= 23) {
         //booking allowed from 5PM(Sunday) to 9AM(Monday)
         setIsBookingOpen(true);
         return true;
@@ -121,7 +123,7 @@ const BookForBuddyUtils = ({ open }) => {
         //booking allowed from 7PM to 9AM the next day
         setIsBookingOpen(true);
         return true;
-      } else if (currentHour >= 12 && currentHour <= 23) {
+      } else if (currentHour >= 17 && currentHour <= 23) {
         setIsBookingOpen(true);
         return true;
       } else {
@@ -130,10 +132,7 @@ const BookForBuddyUtils = ({ open }) => {
         return false;
       }
     } else if (currentDay === 5) {
-      if (
-        (currentHour >= 0 && currentHour <= 8) ||
-        (currentHour >= 12 && currentHour <= 23) //this condition needs to be removed in final product
-      ) {
+      if (currentHour >= 0 && currentHour <= 8) {
         //booking allowed from 12AM(Friday) to 9AM(Friday)
         setIsBookingOpen(true);
         return true;
@@ -158,7 +157,7 @@ const BookForBuddyUtils = ({ open }) => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);
-      // console.log(`Meal booked for my buddy ${buddyData.email}`, response);
+      console.log(`Meal booked for my buddy ${buddyData.email}`, response);
       return response;
     }
   };

@@ -1,4 +1,7 @@
-import React from 'react';
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 import { useDispatch, useSelector } from "react-redux";
 import { Snackbar, Alert, Typography, Container } from '@mui/material';
 import { getSnackbarStyles } from './Snackbar.Styles';

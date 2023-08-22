@@ -1,5 +1,7 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable array-callback-return */
 import React, { useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";

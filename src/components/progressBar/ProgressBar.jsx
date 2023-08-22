@@ -1,5 +1,8 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
+import { useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getProgressBarStyles } from "./ProgressBar.Styles";

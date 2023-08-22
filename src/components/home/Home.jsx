@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
@@ -126,8 +127,14 @@ const Home = () => {
               </motion.div>
 
               <motion.div
-                initial={{ translateY: "50px", opacity: 0 }}
-                animate={{ translateY: "0px", opacity: 1 }}
+                initial={{
+                  translateY: "50px",
+                  opacity: 0,
+                }}
+                animate={{
+                  translateY: "0px",
+                  opacity: 1,
+                }}
                 transition={{
                   duration: 1,
                   repeatType: "reverse",

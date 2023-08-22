@@ -1,18 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const memberPicture = {
-    base64photo: "",
+  base64photo: "",
 };
 
 const memberPictureSlice = createSlice({
-    name: 'memberPicture',
-    initialState: memberPicture,
-    reducers:{
-        setMemberPicture(state, action){
-            state.base64photo = action.payload;
-        },
-    }
+  name: "memberPicture",
+  initialState: memberPicture,
+  reducers: {
+    setMemberPicture(state, action) {
+      state.base64photo = action.payload;
+    },
+  },
 });
 
-export const { setMemberPicture } =  memberPictureSlice.actions;
+export const { setMemberPicture } = memberPictureSlice.actions;
 export default memberPictureSlice;

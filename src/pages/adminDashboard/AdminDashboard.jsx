@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getAdminDashboardStyles } from "./AdminDashboard.Styles";
 import {
   Box,
@@ -24,7 +26,7 @@ import {
 import CommonButton from "../../components/button/CommonButton";
 import WeeklyData from "../../components/weeklyDataChart/WeeklyData";
 import AddMemberDialog from "../../components/dialog/addMemberDialog/AddMemberDialog";
-import DeleteMemberDialog from "../../components/dialog/DeleteMemberDialog";
+import DeleteMemberDialog from "../../components/dialog/deleteMemberDialog/DeleteMemberDialog";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { motion } from "framer-motion";
@@ -196,7 +198,7 @@ const AdminDashboard = () => {
   const handleExportInExcel = (memberData) => {
     //handles exporting member list in excel
     const fileName =
-      new Date().getHours() >= 15 && new Date().getHours() <= 23
+      new Date().getHours() >= 17 && new Date().getHours() <= 23
         ? `Count for ${handleReversedDate(nextDateFormatted)}`
         : `Count for ${handleReversedDate(formattedDate)}`;
 
@@ -301,7 +303,7 @@ const AdminDashboard = () => {
           <Box className={classes.getBoxOneStyles}>
             <Stack className={classes.getStackOneStyles}>
               <Typography className={classes.getTextOneStyles}>
-                {new Date().getHours() >= 15 && new Date().getHours() <= 23
+                {new Date().getHours() >= 17 && new Date().getHours() <= 23
                   ? `Count for ${handleReversedDate(nextDateFormatted)}`
                   : `Count for ${handleReversedDate(formattedDate)}`}
               </Typography>
@@ -309,7 +311,13 @@ const AdminDashboard = () => {
                 {`${Math.round(todaysTotalCount)}`}
               </Typography>
             </Stack>
-            <ShowChartIcon className={classes.getIconOneStyles} />
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2 }}
+            >
+              <ShowChartIcon className={classes.getIconOneStyles} />
+            </motion.div>
           </Box>
         </Grid>
 
@@ -448,13 +456,6 @@ const AdminDashboard = () => {
                       initial={{ scale: 1 }}
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.1 }}
-                      // style={{
-                      //   width: "100%",
-                      //   background: "wheat",
-                      //   "@media screen and (max-width: 1199px)": {
-                      //     width:"90% !important"
-                      //   },
-                      // }}
                       className={classes.bookForAnyoneBtnContStyles}
                     >
                       <CommonButton
@@ -519,10 +520,21 @@ const AdminDashboard = () => {
               </Typography>
               <Box className={classes.getDownloadButtonsContStyles}>
                 <motion.div
-                  initial={{ scale: 1 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.1 }}
-                  style={{ width: "100%" }}
+                  // initial={{
+                  //   boxShadow: "0 0 0 0 rgba(239,93,54, 0.5)",
+                  // }}
+                  // animate={{
+                  //   boxShadow: "0 0 0 8px rgba(239,93,54, 0)",
+                  // }}
+                  // transition={{ duration: 2, repeat: Infinity }}
+                  style={{
+                    width: "90%",
+                    background: "",
+                    padding: "0",
+                    margin: "0.25rem 0rem",
+                    borderRadius: "4px",
+                    border: "none",
+                  }}
                 >
                   <Button
                     className={classes.getAddMemberButtonStyles}
@@ -541,10 +553,14 @@ const AdminDashboard = () => {
                   <></>
                 )}
                 <motion.div
-                  initial={{ scale: 1 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.1 }}
-                  style={{ width: "100%" }}
+                  style={{
+                    width: "90%",
+                    background: "",
+                    padding: "0",
+                    margin: "0.25rem 0rem",
+                    borderRadius: "4px",
+                    border: "none",
+                  }}
                 >
                   <Button
                     className={classes.getAddMemberButtonStyles}

@@ -1,3 +1,7 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 import AllRoutes from "./components/routes/Routes";
 import store from "./store/index";
 import { PersistGate } from "redux-persist/integration/react";

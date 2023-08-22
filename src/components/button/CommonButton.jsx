@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
@@ -14,18 +15,16 @@ const CommonButton = ({
   const { classes } = getButtonStyles(customStyles);
 
   return (
-    <>
-      <Button
-        className={classes.getCommonButtonStyles}
-        type={type}
-        onClick={onClick}
-      >
-        {children}&nbsp;
-        {isLoaderRequired && (
-          <CircularProgress size={15} thickness={4} color="inherit" />
-        )}
-      </Button>
-    </>
+    <Button
+      className={classes.getCommonButtonStyles}
+      type={type}
+      onClick={onClick}
+    >
+      {children}&nbsp;
+      {isLoaderRequired && (
+        <CircularProgress size={15} thickness={4} color="inherit" />
+      )}
+    </Button>
   );
 };
 

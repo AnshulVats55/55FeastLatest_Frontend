@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { handleFormattedDate } from "../../common/CommonData";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,6 +89,7 @@ const ChipUtils = () => {
               snackbarMessage: snackbarMessages.PREBOOK_CANCELLATION_FAILURE,
             })
           );
+          setLoaderRequired(false);
         }
       } else {
         dispatch(
@@ -98,6 +99,7 @@ const ChipUtils = () => {
             snackbarMessage: "Time limit exceeded !",
           })
         );
+        setLoaderRequired(false);
       }
     } else if (
       currentReversedDate !== dateToBeChecked &&
@@ -125,6 +127,7 @@ const ChipUtils = () => {
             snackbarMessage: snackbarMessages.PREBOOK_CANCELLATION_FAILURE,
           })
         );
+        setLoaderRequired(false);
       }
     }
   };

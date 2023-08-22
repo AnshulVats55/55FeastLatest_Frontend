@@ -1,6 +1,7 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useRef } from "react";
+/* eslint-disable no-restricted-globals */
 import {
   Button,
   Dialog,
@@ -12,14 +13,9 @@ import {
   Typography,
   Skeleton,
 } from "@mui/material";
+import InviteMemberCard from "../../card/InviteMemberCard";
 import { getDeleteMemberDialogStyles } from "./DeleteMemberDialog.Styles";
-import InviteMemberCard from "../card/InviteMemberCard";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getTotalMembers,
-  handleDeleteMember,
-} from "../../invitationMethods/InvitationMethods";
-import { motion } from "framer-motion";
+import DeleteMemberDialogUtils from "./DeleteMemberDialog.Utils";
 
 const DeleteMemberDialog = ({
   open,
@@ -28,81 +24,16 @@ const DeleteMemberDialog = ({
   children,
   placeholder,
 }) => {
-  const { location } = useSelector((state) => {
-    return state.memberDataReducer;
-  });
-
   const { classes } = getDeleteMemberDialogStyles();
-
-  const dispatch = useDispatch();
-
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [totalMembers, setTotalMembers] = useState([]);
-  const [isLoaderRequired, setIsLoaderRequired] = useState(false);
-  let animationDuration = 0.4;
-
-  const descriptionElementRef = useRef(null);
-  useEffect(() => {
-    if (open) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
-    }
-  }, [open]);
-
-  useEffect(() => {
-    const handleGetTotalMembers = async () => {
-      const response = await getTotalMembers(location);
-      // console.log("Total members API response is this", response);
-      setTotalMembers(response?.data?.data);
-      setIsDataLoaded(true);
-    };
-
-    handleGetTotalMembers();
-  }, []);
-
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
-    },
-    {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
-    },
-    {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
-    },
-    {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
-    },
-    {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
-    },
-    {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
-    },
-  ];
-
-  const handleMemberSearch = (event) => {
-    //handles member search
-    setSearchTerm(event.target.value.toLowerCase());
-  };
-  const filteredUsers = totalMembers?.filter((member) =>
-    member.fullName.toLowerCase().includes(searchTerm)
-  );
-
-  const handleDeleteExistingMember = async (memberEmail) => {
-    const response = await handleDeleteMember(memberEmail);
-    return response;
-  };
+  const {
+    isDataLoaded,
+    animationDuration,
+    descriptionElementRef,
+    memberData,
+    filteredUsers,
+    handleMemberSearch,
+    handleDeleteExistingMember,
+  } = DeleteMemberDialogUtils(open);
 
   return (
     <div>

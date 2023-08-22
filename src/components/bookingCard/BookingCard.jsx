@@ -1,7 +1,14 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { Typography, Skeleton, Box } from "@mui/material";
+import {
+  Typography,
+  Skeleton,
+  Box,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import CommonButton from "../button/CommonButton";
 import {
   getBookingCardStyles,
@@ -21,10 +28,12 @@ const BookingCard = ({
   isBooked,
   label,
   isLoaderRequired,
+  isStatusFetchingRequired,
+  isStatusFetched,
 }) => {
   const { classes } = getBookingCardStyles();
   const { isDataLoaded } = BookingkCardUtils();
-  const { customStyles } = getCommonButtonCustomStyles;
+  const { customStyles, getButtonStyles } = getCommonButtonCustomStyles;
   const { initial, animate, whileHover, transition } = getBookingCardAnimation;
 
   return (
@@ -49,13 +58,32 @@ const BookingCard = ({
           <Typography className={classes.getCaptionStyles}>
             {caption}
           </Typography>
-          <CommonButton
-            children={actionName}
-            type=""
-            customStyles={customStyles(isBooked)}
-            onClick={onClick ? onClick : null}
-            isLoaderRequired={isLoaderRequired}
-          />
+          {isStatusFetchingRequired ? (
+            isStatusFetched ? (
+              <Button
+                onClick={onClick ? onClick : null}
+                isLoaderRequired={isLoaderRequired}
+                isStatusFetched={isStatusFetched}
+                sx={getButtonStyles(isBooked)}
+              >
+                {actionName}&nbsp;
+                {isLoaderRequired && (
+                  <CircularProgress size={15} thickness={4} color="inherit" />
+                )}
+              </Button>
+            ) : (
+              <Button sx={getButtonStyles(isBooked)}>Fetching status...</Button>
+            )
+          ) : (
+            <CommonButton
+              children={actionName}
+              type=""
+              customStyles={customStyles(isBooked)}
+              onClick={onClick ? onClick : null}
+              isLoaderRequired={isLoaderRequired}
+              isStatusFetched={isStatusFetched}
+            />
+          )}
         </>
       ) : (
         <>

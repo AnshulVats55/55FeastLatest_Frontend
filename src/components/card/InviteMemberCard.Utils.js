@@ -1,4 +1,7 @@
-// import { useState } from "react";
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-globals */
 import { useDispatch } from "react-redux";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
@@ -12,7 +15,7 @@ const InviteMemberCardUtils = () => {
   const nextDateFormatted = handleFormattedDate(nextDate);
 
   const dateToBeChecked =
-    new Date().getHours() >= 15 && new Date().getHours() <= 23
+    new Date().getHours() >= 17 && new Date().getHours() <= 23
       ? nextDateFormatted
       : formattedDate;
 
