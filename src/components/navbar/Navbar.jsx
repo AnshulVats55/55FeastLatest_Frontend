@@ -24,6 +24,7 @@ import {
   Logout,
   Male,
 } from "@mui/icons-material";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import MenuIcon from "@mui/icons-material/Menu";
 import { getNavbarStyles } from "./Navbar.Styles";
 import CommonButton from "../button/CommonButton";
@@ -75,8 +76,15 @@ const Navbar = () => {
       url: "/",
     },
     {
-      text: "Dashboard",
+      text: "Book your meal",
       icon: <RestaurantMenu className={classes.getListItemIconStyles} />,
+      url: "/bookyourmeal",
+    },
+    {
+      text: "Dashboard",
+      icon: (
+        <DashboardCustomizeIcon className={classes.getListItemIconStyles} />
+      ),
       url: "/dashboard",
     },
     {
@@ -172,8 +180,15 @@ const Navbar = () => {
                   open={Boolean(anchorElNav)}
                   onClick={handleCloseNavMenu}
                   sx={{
-                    borderTopRightRadius: "10px",
-                    borderBottomRightRadius: "10px",
+                    "& .MuiPaper-root": {
+                      borderTopRightRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                      background: "transparent",
+                    },
+                    "& .MuiBox-root": {
+                      borderTopRightRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    },
                   }}
                 >
                   <Box
@@ -191,7 +206,7 @@ const Navbar = () => {
                         <ListItem
                           key={index}
                           component="a"
-                          href={index < 2 ? link.url : ""}
+                          href={link.url}
                           className={classes.getListItemStylesOne}
                           sx={{
                             ...(index === 0
@@ -216,8 +231,15 @@ const Navbar = () => {
                   open={Boolean(anchorElNav)}
                   onClick={handleCloseNavMenu}
                   sx={{
-                    borderTopRightRadius: "10px",
-                    borderBottomRightRadius: "10px",
+                    "& .MuiPaper-root": {
+                      borderTopRightRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                      background: "transparent",
+                    },
+                    "& .MuiBox-root": {
+                      borderTopRightRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    },
                   }}
                 >
                   <Box
@@ -309,23 +331,27 @@ const Navbar = () => {
                   }}
                   className={classes.getNavLinksContStylesTwo}
                 >
-                  {adminNavigationLinks?.map((page, index) => (
-                    <motion.div
-                      transition={{ duration: 0.15 }}
-                      whileTap={{ scale: 0.95 }}
-                      key={index}
-                    >
-                      <Typography
-                        component="a"
-                        href={page.url}
-                        key={page.text}
-                        onClick={handleCloseNavMenu}
-                        className={classes.getNavLinksStylesOne}
-                      >
-                        {page.text}
-                      </Typography>
-                    </motion.div>
-                  ))}
+                  {adminNavigationLinks?.map((page, index) => {
+                    if (index !== 1) {
+                      return (
+                        <motion.div
+                          transition={{ duration: 0.15 }}
+                          whileTap={{ scale: 0.95 }}
+                          key={index}
+                        >
+                          <Typography
+                            component="a"
+                            href={page.url}
+                            key={page.text}
+                            onClick={handleCloseNavMenu}
+                            className={classes.getNavLinksStylesOne}
+                          >
+                            {page.text}
+                          </Typography>
+                        </motion.div>
+                      );
+                    }
+                  })}
                 </Box>
               ) : (
                 <Box
@@ -438,6 +464,17 @@ const Navbar = () => {
                 anchor="right"
                 open={Boolean(anchorElUser)}
                 onClick={handleCloseUserMenu}
+                sx={{
+                  "& .MuiPaper-root": {
+                    borderTopLeftRadius: "10px",
+                    borderBottomLeftRadius: "10px",
+                    background: "transparent",
+                  },
+                  "& .MuiBox-root": {
+                    borderTopLeftRadius: "10px",
+                    borderBottomLeftRadius: "10px",
+                  },
+                }}
               >
                 <Box
                   className={classes.getNavLinksContStylesOne}
@@ -450,7 +487,7 @@ const Navbar = () => {
                     onClick={handleCloseUserMenu}
                   />
                   <List>
-                    {actionLinks.map((link, index) => (
+                    {actionLinks?.map((link, index) => (
                       <ListItem
                         key={index}
                         className={classes.getListItemStylesTwo}

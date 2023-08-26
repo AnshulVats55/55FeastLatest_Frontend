@@ -139,24 +139,3 @@ export const getCommonButtonCustomStyles = {
     };
   },
 };
-
-export const getBookingCardAnimation = {
-  initital: {
-    translateY: "30px",
-    opacity: 0,
-  },
-  animate: {
-    translateY: "0px",
-    opacity: 1,
-  },
-  whileHover: {
-    scale: 1.015,
-  },
-  transition: (animationDuration) => {
-    return {
-      duration: animationDuration,
-      repeatType: "reverse",
-      ease: "easeInOut",
-    };
-  },
-};
