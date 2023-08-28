@@ -135,7 +135,7 @@ const SignupForm = () => {
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <Stack>
               <TextField
-                placeholder="Enter phone number"
+                placeholder="Enter phone number*"
                 variant="outlined"
                 type="text"
                 value={phoneNumber}
@@ -223,7 +223,7 @@ const SignupForm = () => {
                   sx={getSelectStyles}
                 >
                   <MenuItem value="" className={classes.getMenuItemStyles}>
-                    Select location
+                    Select location*
                   </MenuItem>
                   <MenuItem
                     value={"Jaipur"}
@@ -258,7 +258,7 @@ const SignupForm = () => {
                   sx={getSelectStyles}
                 >
                   <MenuItem value="" className={classes.getMenuItemStyles}>
-                    Select gender
+                    Select gender*
                   </MenuItem>
                   <MenuItem
                     value={"Male"}
@@ -368,6 +368,7 @@ const SignupForm = () => {
                 children="Signup"
                 customStyles={getCommonButtonCustomStyles}
                 type="submit"
+                isLoaderRequired={false}
                 onClick={(event) => {
                   handleSignup(event);
                 }}

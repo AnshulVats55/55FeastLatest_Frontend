@@ -1,6 +1,7 @@
 import axios from "axios";
 import MEMBER_TOKEN from "../api/memberToken/MemberToken";
 import BASE_URL from "../api/baseUrl/BaseUrl";
+import { useSelector } from "react-redux";
 
 export const handleMemberCountBooking = async (memberData) => {
   //books single meal of next day for a member
@@ -80,12 +81,12 @@ export const handleMemberCountByDate = async (date) => {
   }
 };
 
-export const getMyBuddies = async (memberEmail) => {
+export const getMyBuddies = async (memberEmail, memberLocation) => {
   try {
     const config = {
       method: "POST",
       url: `${BASE_URL}/user/all/joined`,
-      params: { location: "Jaipur" },
+      params: { location: memberLocation },
       headers: {
         Authorization: `Bearer ${MEMBER_TOKEN}`,
         "Content-Type": "application/json",

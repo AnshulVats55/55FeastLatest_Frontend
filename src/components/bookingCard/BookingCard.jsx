@@ -13,7 +13,6 @@ import CommonButton from "../button/CommonButton";
 import {
   getBookingCardStyles,
   getCommonButtonCustomStyles,
-  getBookingCardAnimation,
 } from "./BookingCard.Styles";
 import { motion } from "framer-motion";
 import BookingkCardUtils from "./BookingkCard.Utils";
@@ -34,15 +33,18 @@ const BookingCard = ({
   const { classes } = getBookingCardStyles();
   const { isDataLoaded } = BookingkCardUtils();
   const { customStyles, getButtonStyles } = getCommonButtonCustomStyles;
-  const { initial, animate, whileHover, transition } = getBookingCardAnimation;
 
   return (
     <motion.div
       className={classes.getCardStyles}
-      initial={initial}
-      animate={animate}
-      whileHover={whileHover}
-      transition={transition(animationDuration)}
+      initial={{ translateY: "30px", opacity: 0 }}
+      animate={{ translateY: "0px", opacity: 1 }}
+      whileHover={{ scale: 1.015 }}
+      transition={{
+        duration: animationDuration,
+        repeatType: "reverse",
+        ease: "easeInOut",
+      }}
     >
       {isDataLoaded ? (
         <>

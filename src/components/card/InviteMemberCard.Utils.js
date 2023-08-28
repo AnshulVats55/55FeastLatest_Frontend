@@ -15,7 +15,7 @@ const InviteMemberCardUtils = () => {
   const nextDateFormatted = handleFormattedDate(nextDate);
 
   const dateToBeChecked =
-    new Date().getHours() >= 17 && new Date().getHours() <= 23
+    new Date().getHours() >= 18 && new Date().getHours() <= 23
       ? nextDateFormatted
       : formattedDate;
 

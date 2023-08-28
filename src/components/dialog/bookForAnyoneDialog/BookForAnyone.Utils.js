@@ -23,7 +23,7 @@ const BookForAnyoneUtils = () => {
   const nextDateFormatted = handleFormattedDate(nextDate);
 
   const date =
-    new Date().getHours() >= 0 && new Date().getHours() <= 11
+    new Date().getHours() >= 0 && new Date().getHours() <= 17
       ? formattedDate
       : nextDateFormatted;
 
@@ -78,8 +78,8 @@ const BookForAnyoneUtils = () => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay === 0) {
-      if (currentHour >= 17 && currentHour <= 23) {
-        //booking allowed from 5PM(Sunday) to 9AM(Monday) for admins
+      if (currentHour >= 18 && currentHour <= 23) {
+        //booking allowed from 6PM(Sunday) to 9AM(Monday) for admins
         setIsBookingOpen(true);
         return true;
       } else {
@@ -88,21 +88,21 @@ const BookForAnyoneUtils = () => {
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
-      if (currentHour >= 0 && currentHour <= 11) {
-        //booking allowed from 7PM to 9AM the next day for admins
+      if (currentHour >= 0 && currentHour <= 23) {
+        //booking allowed from 12AM to 12AM the next day for admins
         setIsBookingOpen(true);
         return true;
-      } else if (currentHour >= 17 && currentHour <= 23) {
-        setIsBookingOpen(true);
-        return true;
-      } else {
-        setIsBookingOpen(false);
-        handleBookingNotifications("Bookings closed for today !");
-        return false;
+        // } else if (currentHour >= 18 && currentHour <= 23) {
+        //   setIsBookingOpen(true);
+        //   return true;
+        // } else {
+        //   setIsBookingOpen(false);
+        //   handleBookingNotifications("Bookings closed for today !");
+        // return false;
       }
     } else if (currentDay === 5) {
-      if (currentHour >= 0 && currentHour <= 11) {
-        //booking allowed from 12AM(Friday) to 11AM(Friday) for admins
+      if (currentHour >= 0 && currentHour <= 17) {
+        //booking allowed from 12AM(Friday) to 18PM(Friday) for admins
         setIsBookingOpen(true);
         return true;
       } else {

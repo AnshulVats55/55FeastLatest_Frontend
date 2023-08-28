@@ -12,6 +12,7 @@ import {
   TextField,
   Stack,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import InviteMemberCard from "../../components/card/InviteMemberCard";
 import { handleMemberCountByDate } from "../../bookingMethods/BookingMethods";
@@ -54,6 +55,7 @@ const AdminDashboard = () => {
   const [addMemberScroll, setAddMemberScroll] = useState("paper");
   const [deleteMemberOpen, setDeleteMemberOpen] = useState(false);
   const [deleteMemberScroll, setDeleteMemberScroll] = useState("paper");
+  const [isFileLoading, setIsFileLoading] = useState(false);
   const {
     bookForAnyoneOpen,
     bookForAnyoneScroll,
@@ -191,6 +193,7 @@ const AdminDashboard = () => {
     //handles member search
     setSearchTerm(event.target.value.toLowerCase());
   };
+
   const filteredUsers = todaysCount?.filter((member) =>
     member.fullName.toLowerCase().includes(searchTerm)
   );
@@ -198,7 +201,7 @@ const AdminDashboard = () => {
   const handleExportInExcel = (memberData) => {
     //handles exporting member list in excel
     const fileName =
-      new Date().getHours() >= 17 && new Date().getHours() <= 23
+      new Date().getHours() >= 18 && new Date().getHours() <= 23
         ? `Count for ${handleReversedDate(nextDateFormatted)}`
         : `Count for ${handleReversedDate(formattedDate)}`;
 
@@ -237,6 +240,7 @@ const AdminDashboard = () => {
 
   const handlePreviousMonthData = async () => {
     try {
+      setIsFileLoading(true);
       const response = await axios.get(`${BASE_URL}/bookmeal/month/count`, {
         headers: {
           Authorization: `Bearer ${MEMBER_TOKEN}`,
@@ -264,6 +268,7 @@ const AdminDashboard = () => {
               snackbarMessage: snackbarMessages.FILE_DOWNLOAD_SUCCESSFULL,
             })
           );
+          setIsFileLoading(false);
         } catch (error) {
           dispatch(
             setCustomSnackbar({
@@ -272,10 +277,12 @@ const AdminDashboard = () => {
               snackbarMessage: snackbarMessages.FILE_DOWNLOAD_FAILURE,
             })
           );
+          setIsFileLoading(false);
         }
       }
       return response;
     } catch (error) {
+      setIsFileLoading(false);
       return error;
     }
   };
@@ -303,7 +310,7 @@ const AdminDashboard = () => {
           <Box className={classes.getBoxOneStyles}>
             <Stack className={classes.getStackOneStyles}>
               <Typography className={classes.getTextOneStyles}>
-                {new Date().getHours() >= 17 && new Date().getHours() <= 23
+                {new Date().getHours() >= 18 && new Date().getHours() <= 23
                   ? `Count for ${handleReversedDate(nextDateFormatted)}`
                   : `Count for ${handleReversedDate(formattedDate)}`}
               </Typography>
@@ -419,6 +426,7 @@ const AdminDashboard = () => {
                         children={"Monthly data"}
                         type=""
                         onClick={handlePreviousMonthData}
+                        isLoaderRequired={isFileLoading}
                         customStyles={{
                           width: "90% !important",
                           height: "40px",
@@ -520,13 +528,6 @@ const AdminDashboard = () => {
               </Typography>
               <Box className={classes.getDownloadButtonsContStyles}>
                 <motion.div
-                  // initial={{
-                  //   boxShadow: "0 0 0 0 rgba(239,93,54, 0.5)",
-                  // }}
-                  // animate={{
-                  //   boxShadow: "0 0 0 8px rgba(239,93,54, 0)",
-                  // }}
-                  // transition={{ duration: 2, repeat: Infinity }}
                   style={{
                     width: "90%",
                     background: "",

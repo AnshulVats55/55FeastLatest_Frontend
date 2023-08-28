@@ -16,6 +16,7 @@ const BookForBuddyUtils = ({ open }) => {
   const myData = useSelector((state) => {
     return state.memberDataReducer;
   });
+  console.log("My data", myData);
 
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const BookForBuddyUtils = ({ open }) => {
   const nextDateFormatted = handleFormattedDate(nextDate);
 
   const date =
-    new Date().getHours() >= 17 && new Date().getHours() <= 23
+    new Date().getHours() >= 18 && new Date().getHours() <= 23
       ? nextDateFormatted
       : formattedDate;
 
@@ -47,7 +48,7 @@ const BookForBuddyUtils = ({ open }) => {
 
   useEffect(() => {
     const handleMyBuddies = async () => {
-      const response = await getMyBuddies(myData.email);
+      const response = await getMyBuddies(myData.email, myData.location);
       console.log("Response of my buddies api is this ------------>", response);
       if (response?.data?.status === "success") {
         setMyBuddies(response?.data?.data);
@@ -109,7 +110,7 @@ const BookForBuddyUtils = ({ open }) => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay === 0) {
-      if (currentHour >= 17 && currentHour <= 23) {
+      if (currentHour >= 18 && currentHour <= 23) {
         //booking allowed from 5PM(Sunday) to 9AM(Monday)
         setIsBookingOpen(true);
         return true;
@@ -123,7 +124,7 @@ const BookForBuddyUtils = ({ open }) => {
         //booking allowed from 7PM to 9AM the next day
         setIsBookingOpen(true);
         return true;
-      } else if (currentHour >= 17 && currentHour <= 23) {
+      } else if (currentHour >= 18 && currentHour <= 23) {
         setIsBookingOpen(true);
         return true;
       } else {
