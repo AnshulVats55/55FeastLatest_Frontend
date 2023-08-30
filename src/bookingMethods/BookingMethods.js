@@ -1,7 +1,6 @@
 import axios from "axios";
 import MEMBER_TOKEN from "../api/memberToken/MemberToken";
 import BASE_URL from "../api/baseUrl/BaseUrl";
-import { useSelector } from "react-redux";
 
 export const handleMemberCountBooking = async (memberData) => {
   //books single meal of next day for a member

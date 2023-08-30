@@ -11,6 +11,7 @@ import BookingCard from "../../components/bookingCard/BookingCard";
 import BookForBuddyDialog from "../../components/dialog/bookForBuddy/BookForBuddy";
 import PrebookDialog from "../../components/dialog/prebookDialog/PrebookDialog";
 import BookMealUtils from "./BookMeal.Utils";
+import { motion } from "framer-motion";
 
 const BookMeal = () => {
   const { classes } = getMealBookingStyles();
@@ -48,8 +49,9 @@ const BookMeal = () => {
           animationDuration={0.5}
           onClick={handlePrebookOpen("paper")}
           label="Most awaited"
-          isLoaderRequired={false}
-          isStatusFetchingRequired={false}
+          isLoaderRequired={isLoaderRequired}
+          isStatusFetchingRequired={true}
+          isStatusFetched={isStatusFetched}
         />
         {prebookOpen ? (
           <PrebookDialog
