@@ -32,7 +32,6 @@ const DeleteMemberDialogUtils = (open) => {
   useEffect(() => {
     const handleGetTotalMembers = async () => {
       const response = await getTotalMembers(location);
-      // console.log("Total members API response is this", response);
       setTotalMembers(response?.data?.data);
       setIsDataLoaded(true);
     };

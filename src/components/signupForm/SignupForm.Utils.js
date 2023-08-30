@@ -258,12 +258,14 @@ const SignupFormUtils = () => {
           setTimeout(() => {
             navigate("/");
           }, 2500);
-        } else if (response?.data?.status === snackbarMessages.FAILURE) {
+        } else if (
+          response?.response?.data?.status === snackbarMessages.FAILURE
+        ) {
           dispatch(setIsLoading(false));
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,
-              snackbarType: snackbarMessages.FAILURE,
+              snackbarType: snackbarMessages.ERROR,
               snackbarMessage: snackbarMessages.SIGNUP_FAILURE,
             })
           );

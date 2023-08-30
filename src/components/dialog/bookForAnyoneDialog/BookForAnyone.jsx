@@ -13,6 +13,7 @@ import {
   TextField,
   Typography,
   Skeleton,
+  Box,
 } from "@mui/material";
 import InviteMemberCard from "../../card/InviteMemberCard";
 import {
@@ -49,7 +50,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
 
   useEffect(() => {
     const handleAllMembers = async () => {
-      const response = await getMyBuddies(myData.email);
+      const response = await getMyBuddies(myData.email, myData.location);
       if (response?.data?.status === "success") {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
@@ -72,10 +73,8 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
     }
   };
 
-  console.log("children at book for anyone dialog", children);
-
   return (
-    <div>
+    <Box>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -191,7 +190,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 

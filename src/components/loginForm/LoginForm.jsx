@@ -59,24 +59,53 @@ const LoginForm = () => {
     password: password,
   };
 
-  const handleFormSubmit = async () => {
-    dispatch(setIsLoading(true));
-    const response = await handleMemberLogin(memberData);
-    // console.log(response);
-    if (response?.data?.status === "success") {
-      dispatch(setIsLoading(false));
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    if (email === "") {
       dispatch(
         setCustomSnackbar({
           snackbarOpen: true,
-          snackbarType: snackbarMessages.SUCCESS,
-          snackbarMessage: snackbarMessages.LOGIN_SUCCESSFULL,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: snackbarMessages.EMAIL_REQUIRED,
         })
       );
-      localStorage.setItem("memberToken", response.data.data.token);
-      dispatch(setMemberData(response.data.data.user));
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+    } else if (password === "") {
+      dispatch(
+        setCustomSnackbar({
+          snackbarOpen: true,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: "Enter your password",
+        })
+      );
+    } else {
+      dispatch(setIsLoading(true));
+      const response = await handleMemberLogin(memberData);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        dispatch(setIsLoading(false));
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage: snackbarMessages.LOGIN_SUCCESSFULL,
+          })
+        );
+        localStorage.setItem("memberToken", response?.data?.data?.token);
+        dispatch(setMemberData(response?.data?.data?.user));
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(setIsLoading(false));
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: snackbarMessages.LOGIN_FAILURE,
+          })
+        );
+      }
     }
   };
 
@@ -90,10 +119,7 @@ const LoginForm = () => {
           Please enter your details
         </Typography>
       </Stack>
-      <form
-        className={classes.getSignupFormStyles}
-        onSubmit={handleSubmit(handleFormSubmit)}
-      >
+      <form className={classes.getSignupFormStyles}>
         <Grid container rowSpacing={2} columnSpacing={1}>
           <Grid item lg={12} md={12} sm={12} xs={12}>
             <Stack>
@@ -197,6 +223,10 @@ const LoginForm = () => {
                     outline: "none",
                   },
                 }}
+                onClick={(event) => {
+                  handleFormSubmit(event);
+                }}
+                isLoaderRequired={false}
                 type="submit"
               />
             </motion.div>

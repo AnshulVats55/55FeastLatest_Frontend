@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getLastFiveDaysCount,
   getReversedDate,
@@ -12,6 +12,9 @@ import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
 
 const WeeklyDataUtils = () => {
+  const { location } = useSelector((state) => {
+    return state.memberDataReducer;
+  });
   const dispatch = useDispatch();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -20,7 +23,7 @@ const WeeklyDataUtils = () => {
 
   const handleLastFiveDaysCount = async () => {
     //handles last five days count
-    const response = await getLastFiveDaysCount();
+    const response = await getLastFiveDaysCount(location);
     // console.log("Response of get previous week count API", response);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       const fiveDaysCount = [],

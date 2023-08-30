@@ -85,17 +85,20 @@ export const getReversedDate = (date) => {
   return reversedDate;
 };
 
-export const getLastFiveDaysCount = async () => {
+export const getLastFiveDaysCount = async (adminLocation) => {
   try {
-    const response = await axios.get(`${BASE_URL}/bookmeal/week/count`, {
-      headers: {
-        Authorization: `Bearer ${MEMBER_TOKEN}`,
-        "Content-Type": "application/json",
-        referrerPolicy: "no-referrer",
-        mode: "no-mode",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    const response = await axios.get(
+      `${BASE_URL}/bookmeal/week/count?location=${adminLocation}`,
+      {
+        headers: {
+          Authorization: `Bearer ${MEMBER_TOKEN}`,
+          "Content-Type": "application/json",
+          referrerPolicy: "no-referrer",
+          mode: "no-mode",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
     return response;
   } catch (error) {
     return error;

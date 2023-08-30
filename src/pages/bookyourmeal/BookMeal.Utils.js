@@ -40,7 +40,7 @@ const BookMealUtils = () => {
     //here 12PM will be updated to 17PM
     email: memberData.email,
     date:
-      new Date().getHours() >= 17 && new Date().getHours() <= 23
+      new Date().getHours() >= 18 && new Date().getHours() <= 23
         ? nextDateFormatted
         : formattedDate,
   };
@@ -49,7 +49,7 @@ const BookMealUtils = () => {
     //here 12PM will be updated to 17PM
     email: memberData.email,
     date:
-      new Date().getHours() >= 17 && new Date().getHours() <= 23
+      new Date().getHours() >= 18 && new Date().getHours() <= 23
         ? nextDateFormatted
         : formattedDate,
   };
@@ -110,7 +110,7 @@ const BookMealUtils = () => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay === 0) {
-      if (currentHour >= 17 && currentHour <= 23) {
+      if (currentHour >= 18 && currentHour <= 23) {
         //booking allowed from 5PM(Sunday) to 9AM(Monday)
         setIsBookingOpen(true);
         return true;
@@ -124,7 +124,7 @@ const BookMealUtils = () => {
         //booking allowed from 7PM to 9AM the next day
         setIsBookingOpen(true);
         return true;
-      } else if (currentHour >= 10 && currentHour <= 23) {
+      } else if (currentHour >= 18 && currentHour <= 23) {
         setIsBookingOpen(true);
         return true;
       } else {

@@ -12,6 +12,7 @@ import {
   TextField,
   Stack,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import InviteMemberCard from "../../components/card/InviteMemberCard";
 import { handleMemberCountByDate } from "../../bookingMethods/BookingMethods";
@@ -54,6 +55,7 @@ const AdminDashboard = () => {
   const [addMemberScroll, setAddMemberScroll] = useState("paper");
   const [deleteMemberOpen, setDeleteMemberOpen] = useState(false);
   const [deleteMemberScroll, setDeleteMemberScroll] = useState("paper");
+  const [isFileLoading, setIsFileLoading] = useState(false);
   const {
     bookForAnyoneOpen,
     bookForAnyoneScroll,
@@ -69,7 +71,7 @@ const AdminDashboard = () => {
   const dateToGetTodaysCount = {
     //date to get todays count (count remains visible till 12PM on that day)
     date:
-      new Date().getHours() >= 12 && new Date().getHours() <= 23
+      new Date().getHours() >= 18 && new Date().getHours() <= 23
         ? nextDateFormatted
         : formattedDate,
   };
@@ -115,7 +117,10 @@ const AdminDashboard = () => {
   useEffect(() => {
     //get todaysCount according to date
     const getTodaysTotalCount = async () => {
-      const response = await handleMemberCountByDate(dateToGetTodaysCount);
+      const response = await handleMemberCountByDate(
+        dateToGetTodaysCount,
+        location
+      );
       console.log(
         "Response of today's count api----------------------->",
         response
@@ -139,19 +144,15 @@ const AdminDashboard = () => {
   }, [totalMembers]);
 
   useEffect(() => {
-    //gradually increases the value from 0 to todaysCount.length
-    const todaysCountPercentage =
-      todaysCount?.length > 0 ? (todaysCount?.length / totalMembers) * 100 : 0;
-
     let currentValue = 0;
-    const increment = todaysCountPercentage / 100;
+    const increment = todaysCount?.length / 100;
     const interval = setInterval(() => {
       currentValue += increment;
-      if (currentValue >= todaysCountPercentage) {
-        currentValue = todaysCountPercentage;
+      if (currentValue >= todaysCount?.length) {
+        currentValue = todaysCount?.length;
         clearInterval(interval);
       }
-      setTodaysTotalCount(currentValue);
+      setTodaysTotalCount(Math.round(currentValue));
     }, 10);
 
     return () => {
@@ -191,6 +192,7 @@ const AdminDashboard = () => {
     //handles member search
     setSearchTerm(event.target.value.toLowerCase());
   };
+
   const filteredUsers = todaysCount?.filter((member) =>
     member.fullName.toLowerCase().includes(searchTerm)
   );
@@ -198,7 +200,7 @@ const AdminDashboard = () => {
   const handleExportInExcel = (memberData) => {
     //handles exporting member list in excel
     const fileName =
-      new Date().getHours() >= 17 && new Date().getHours() <= 23
+      new Date().getHours() >= 18 && new Date().getHours() <= 23
         ? `Count for ${handleReversedDate(nextDateFormatted)}`
         : `Count for ${handleReversedDate(formattedDate)}`;
 
@@ -237,15 +239,19 @@ const AdminDashboard = () => {
 
   const handlePreviousMonthData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/bookmeal/month/count`, {
-        headers: {
-          Authorization: `Bearer ${MEMBER_TOKEN}`,
-          "Content-Type": "application/json",
-          referrerPolicy: "no-referrer",
-          mode: "no-mode",
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
+      setIsFileLoading(true);
+      const response = await axios.get(
+        `${BASE_URL}/bookmeal/month/count?location=${location}`,
+        {
+          headers: {
+            Authorization: `Bearer ${MEMBER_TOKEN}`,
+            "Content-Type": "application/json",
+            referrerPolicy: "no-referrer",
+            mode: "no-mode",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
       console.log(
         "MONTHLY DATA API RESPONSE------------->>>>>>>>>>>>>>>",
         response
@@ -264,6 +270,7 @@ const AdminDashboard = () => {
               snackbarMessage: snackbarMessages.FILE_DOWNLOAD_SUCCESSFULL,
             })
           );
+          setIsFileLoading(false);
         } catch (error) {
           dispatch(
             setCustomSnackbar({
@@ -272,10 +279,12 @@ const AdminDashboard = () => {
               snackbarMessage: snackbarMessages.FILE_DOWNLOAD_FAILURE,
             })
           );
+          setIsFileLoading(false);
         }
       }
       return response;
     } catch (error) {
+      setIsFileLoading(false);
       return error;
     }
   };
@@ -303,7 +312,7 @@ const AdminDashboard = () => {
           <Box className={classes.getBoxOneStyles}>
             <Stack className={classes.getStackOneStyles}>
               <Typography className={classes.getTextOneStyles}>
-                {new Date().getHours() >= 17 && new Date().getHours() <= 23
+                {new Date().getHours() >= 18 && new Date().getHours() <= 23
                   ? `Count for ${handleReversedDate(nextDateFormatted)}`
                   : `Count for ${handleReversedDate(formattedDate)}`}
               </Typography>
@@ -419,6 +428,7 @@ const AdminDashboard = () => {
                         children={"Monthly data"}
                         type=""
                         onClick={handlePreviousMonthData}
+                        isLoaderRequired={isFileLoading}
                         customStyles={{
                           width: "90% !important",
                           height: "40px",
@@ -520,13 +530,6 @@ const AdminDashboard = () => {
               </Typography>
               <Box className={classes.getDownloadButtonsContStyles}>
                 <motion.div
-                  // initial={{
-                  //   boxShadow: "0 0 0 0 rgba(239,93,54, 0.5)",
-                  // }}
-                  // animate={{
-                  //   boxShadow: "0 0 0 8px rgba(239,93,54, 0)",
-                  // }}
-                  // transition={{ duration: 2, repeat: Infinity }}
                   style={{
                     width: "90%",
                     background: "",
@@ -642,7 +645,7 @@ const AdminDashboard = () => {
                 ) : (
                   <Typography className={classes.getErrorMessageOneStyles}>
                     {`No member has booked a meal for ${
-                      new Date().getHours() >= 15 && new Date().getHours() <= 23
+                      new Date().getHours() >= 18 && new Date().getHours() <= 23
                         ? handleReversedDate(nextDateFormatted)
                         : handleReversedDate(formattedDate)
                     }`}
