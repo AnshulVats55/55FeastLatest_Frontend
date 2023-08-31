@@ -323,6 +323,9 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     "@media screen and (max-width: 399px)": {
       fontSize: "0.8rem",
     },
+    "@media screen and (max-width: 599px)": {
+      width: "90% !important",
+    },
   },
 
   bookForAnyoneBtnContStyles: {
@@ -330,5 +333,9 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     "@media screen and (max-width: 1199px)": {
       width: "90%",
     },
+  },
+
+  getCircularProgressStyles: {
+    color: "#ef5d36",
   },
 }));

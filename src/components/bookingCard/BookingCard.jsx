@@ -75,7 +75,7 @@ const BookingCard = ({
               </Button>
             ) : (
               <Button sx={getButtonStyles(isBooked)}>
-                Fetching status...&nbsp;
+                Fetching status&nbsp;
                 <CircularProgress size={15} thickness={4} color="inherit" />
               </Button>
             )

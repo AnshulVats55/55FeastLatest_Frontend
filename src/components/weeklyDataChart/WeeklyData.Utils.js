@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getLastFiveDaysCount,
@@ -15,16 +15,14 @@ const WeeklyDataUtils = () => {
   const { location } = useSelector((state) => {
     return state.memberDataReducer;
   });
-  const dispatch = useDispatch();
 
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const dispatch = useDispatch();
   const [lastFiveDaysCount, setLastFiveDaysCount] = useState([]);
   const [lastFiveDaysDate, setLastFiveDaysDate] = useState([]);
 
   const handleLastFiveDaysCount = async () => {
     //handles last five days count
     const response = await getLastFiveDaysCount(location);
-    // console.log("Response of get previous week count API", response);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       const fiveDaysCount = [],
         fiveDaysName = [],
@@ -36,7 +34,6 @@ const WeeklyDataUtils = () => {
       });
       setLastFiveDaysCount(fiveDaysCount);
       setLastFiveDaysDate(fiveDaysDate);
-      setIsDataLoaded(true);
     } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
       dispatch(
         setCustomSnackbar({
@@ -48,11 +45,13 @@ const WeeklyDataUtils = () => {
     }
   };
 
+  useEffect(() => {
+    handleLastFiveDaysCount();
+  }, []);
+
   return {
-    isDataLoaded,
     lastFiveDaysCount,
     lastFiveDaysDate,
-    handleLastFiveDaysCount,
   };
 };
 

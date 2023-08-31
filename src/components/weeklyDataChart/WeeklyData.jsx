@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable array-callback-return */
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { Box, Skeleton } from "@mui/material";
@@ -15,19 +15,11 @@ import WeeklyDataUtils from "./WeeklyData.Utils";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const WeeklyData = () => {
+const WeeklyData = ({ isDataLoaded }) => {
   const { classes } = getWeeklyDataChartStyles();
   const { initial, whileInView, transition } = getWeeklyDataChartAnimation;
-  const {
-    isDataLoaded,
-    lastFiveDaysCount,
-    lastFiveDaysDate,
-    handleLastFiveDaysCount,
-  } = WeeklyDataUtils();
-
-  useEffect(() => {
-    handleLastFiveDaysCount();
-  }, []);
+  const { lastFiveDaysCount, lastFiveDaysDate } =
+    WeeklyDataUtils();
 
   const data = {
     //date for doughnut chart

@@ -15,4 +15,8 @@ export const getProgressBarStyles = makeStyles()((theme) => ({
       width: "45%",
     },
   },
+
+  getCircularProgressStyles: {
+    color: "#ef5d36",
+  },
 }));

@@ -316,9 +316,20 @@ const AdminDashboard = () => {
                   ? `Count for ${handleReversedDate(nextDateFormatted)}`
                   : `Count for ${handleReversedDate(formattedDate)}`}
               </Typography>
-              <Typography className={classes.getTextTwoStyles}>
-                {`${Math.round(todaysTotalCount)}`}
-              </Typography>
+              {isDataLoaded ? (
+                <Typography className={classes.getTextTwoStyles}>
+                  {`${Math.round(todaysTotalCount)}`}
+                </Typography>
+              ) : (
+                <Typography className={classes.getTextTwoStyles}>
+                  <CircularProgress
+                    size={30}
+                    thickness={5}
+                    color="inherit"
+                    className={classes.getCircularProgressStyles}
+                  />
+                </Typography>
+              )}
             </Stack>
             <motion.div
               initial={{ rotate: 0 }}
@@ -342,6 +353,7 @@ const AdminDashboard = () => {
             <ProgressBar
               todaysCount={todaysCount?.length}
               totalMembers={totalMembers}
+              isDataLoaded={isDataLoaded}
             />
           </Box>
         </Grid>
@@ -691,7 +703,7 @@ const AdminDashboard = () => {
           xs={12}
           className={classes.getGridItemTwoPointTwoStyles}
         >
-          <WeeklyData />
+          <WeeklyData isDataLoaded={isDataLoaded} />
         </Grid>
       </Grid>
     </Grid>
