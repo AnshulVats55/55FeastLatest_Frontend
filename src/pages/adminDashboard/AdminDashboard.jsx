@@ -61,6 +61,7 @@ const AdminDashboard = () => {
     bookForAnyoneScroll,
     handleBookForAnyoneOpen,
     handleBookForAnyoneClose,
+    currentMonthName,
   } = AdminDashboardUtils();
   let animationDuration = 0.4;
 
@@ -252,12 +253,8 @@ const AdminDashboard = () => {
           },
         }
       );
-      console.log(
-        "MONTHLY DATA API RESPONSE------------->>>>>>>>>>>>>>>",
-        response
-      );
-      if (response?.data?.status === "success") {
-        const fileName = "July Data";
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        const fileName = `${currentMonthName} Data`;
         try {
           const worksheet = XLSX.utils.json_to_sheet(response.data.data);
           const workbook = XLSX.utils.book_new();
@@ -316,9 +313,20 @@ const AdminDashboard = () => {
                   ? `Count for ${handleReversedDate(nextDateFormatted)}`
                   : `Count for ${handleReversedDate(formattedDate)}`}
               </Typography>
-              <Typography className={classes.getTextTwoStyles}>
-                {`${Math.round(todaysTotalCount)}`}
-              </Typography>
+              {isDataLoaded ? (
+                <Typography className={classes.getTextTwoStyles}>
+                  {`${Math.round(todaysTotalCount)}`}
+                </Typography>
+              ) : (
+                <Typography className={classes.getTextTwoStyles}>
+                  <CircularProgress
+                    size={35}
+                    thickness={5}
+                    color="inherit"
+                    className={classes.circularProgressStyles}
+                  />
+                </Typography>
+              )}
             </Stack>
             <motion.div
               initial={{ rotate: 0 }}
@@ -342,6 +350,7 @@ const AdminDashboard = () => {
             <ProgressBar
               todaysCount={todaysCount?.length}
               totalMembers={totalMembers}
+              isDataLoaded={isDataLoaded}
             />
           </Box>
         </Grid>

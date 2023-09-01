@@ -2,15 +2,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const ProgressBarUtils = () => {
+export const textStyle = {
+  fontFamily: "Poppins, sans-serif !important",
+};
+
+const ProgressBarUtils = (todaysCount, totalMembers) => {
   const [progress, setProgress] = useState(0);
 
-  const handleProgressPercentage = (totalMembers, todaysCount) => {
+  const handleProgressPercentage = () => {
     //handles progress percentage
     const progressPercentage = (todaysCount / totalMembers) * 100;
-    console.log(progressPercentage);
     setProgress(0);
 
     let currentValue = 0;
@@ -31,10 +34,15 @@ const ProgressBarUtils = () => {
     };
   };
 
+  useEffect(() => {
+    if (todaysCount > 0) {
+      handleProgressPercentage(totalMembers, todaysCount);
+    }
+  }, [todaysCount, totalMembers]);
+
   return {
     progress,
     setProgress,
-    handleProgressPercentage,
   };
 };
 
