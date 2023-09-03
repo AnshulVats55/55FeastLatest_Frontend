@@ -4,6 +4,7 @@
 /* eslint-disable no-restricted-globals */
 import React, { useEffect, useRef } from "react";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -25,9 +26,9 @@ import {
   getCommonButtonCustomStyles,
 } from "./AddMemberDialog.Styles";
 import CommonButton from "../../button/CommonButton";
-import Loader from "../../loader/Loader";
 import { useSelector } from "react-redux";
 import AddMemberDialogUtils from "./AddMemberDialog.Utils";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const AddMemberDialog = ({ open, scroll, handleClose }) => {
   const { isLoading } = useSelector((state) => {
@@ -81,6 +82,12 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
         aria-describedby="scroll-dialog-description"
         className={classes.getDialogBoxStyles}
       >
+        <Box>
+          <CancelIcon
+            className={classes.cancelIconStyles}
+            onClick={handleClose}
+          />
+        </Box>
         <DialogTitle
           id="scroll-dialog-title"
           className={classes.getDialogTitleStyles}

@@ -36,22 +36,14 @@ const BookMealUtils = () => {
   const nextDate = getNextDate(new Date());
   const nextDateFormatted = handleFormattedDate(nextDate);
 
-  const mealBookingData = {
-    //here 12PM will be updated to 17PM
-    email: memberData.email,
-    date:
-      new Date().getHours() >= 18 && new Date().getHours() <= 23
-        ? nextDateFormatted
-        : formattedDate,
-  };
+  const dateToCheck =
+    new Date().getHours() >= 18 && new Date().getHours() <= 23
+      ? nextDateFormatted
+      : formattedDate;
 
-  const myData = {
-    //here 12PM will be updated to 17PM
+  const memberDataToBeSent = {
     email: memberData.email,
-    date:
-      new Date().getHours() >= 18 && new Date().getHours() <= 23
-        ? nextDateFormatted
-        : formattedDate,
+    date: dateToCheck,
   };
 
   useEffect(() => {
@@ -68,10 +60,7 @@ const BookMealUtils = () => {
         const allBookingDates = response?.data?.data;
         setAllBookedDates(allBookingDates);
         dispatch(getPrebookDates(allBookingDates));
-        if (
-          allBookingDates?.indexOf(formattedDate) > -1 ||
-          allBookingDates?.indexOf(nextDateFormatted) > -1
-        ) {
+        if (allBookingDates?.indexOf(dateToCheck) > -1) {
           setIsBooked(true);
         } else {
           setIsBooked(false);
@@ -171,7 +160,7 @@ const BookMealUtils = () => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       setIsLoaderRequired(true);
-      const response = await handleMemberCountBooking(mealBookingData);
+      const response = await handleMemberCountBooking(memberDataToBeSent);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsBooked(true);
         dispatch(
@@ -199,7 +188,7 @@ const BookMealUtils = () => {
 
   const handleMealCancellation = async () => {
     setIsLoaderRequired(true);
-    const response = await handleCancelMealBooking(myData);
+    const response = await handleCancelMealBooking(memberDataToBeSent);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       setIsBooked(false);
       dispatch(

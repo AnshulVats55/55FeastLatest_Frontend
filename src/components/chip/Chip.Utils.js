@@ -1,6 +1,8 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+/* eslint-disable no-restricted-globals */
+import { useState, useEffect } from "react";
 import { handleFormattedDate } from "../../common/CommonData";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +12,13 @@ import { setPrebookDates } from "../../store/slices/PrebookDatesSlice";
 import { handleCancelMealBooking } from "../../bookingMethods/BookingMethods";
 import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
 
-const ChipUtils = () => {
+const ChipUtils = (dateValue) => {
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
+  });
+
+  const prebookingDates = useSelector((state) => {
+    return state.FetchPrebookDatesReducer;
   });
 
   const currentDate = new Date();
@@ -24,6 +30,14 @@ const ChipUtils = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [isAlreadyBooked, setIsAlreadyBooked] = useState(false);
   const [isLoaderRequired, setLoaderRequired] = useState(false);
+
+  useEffect(() => {
+    console.log("dateValue in useEffect", dateValue);
+    //checking if date is already present in allBookedDates array
+    if (prebookingDates?.indexOf(getReversedDate(dateValue)) > -1) {
+      setIsAlreadyBooked(true);
+    }
+  }, [prebookingDates]);
 
   const checkPrebookingAvailabilty = (dateToBeChecked) => {
     //checks availabilty for prebooking

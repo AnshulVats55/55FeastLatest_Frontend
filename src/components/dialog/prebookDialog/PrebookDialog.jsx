@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import DateChip from "../../chip/Chip";
 import PrebookUtils from "./Prebook.Utils";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const PrebookDialog = ({ open, scroll, handleClose }) => {
   const { classes } = getPrebookDialogStyles();
@@ -39,6 +40,14 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
         aria-describedby="scroll-dialog-description"
         className={classes.getDialogBoxStyles}
       >
+        <Box>
+          <CancelIcon
+            className={classes.cancelIconStyles}
+            onClick={() => {
+              handlePrebookDialogClose();
+            }}
+          />
+        </Box>
         <DialogTitle
           id="scroll-dialog-title"
           className={classes.getDialogTitleStyles}

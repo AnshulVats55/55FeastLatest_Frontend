@@ -20,6 +20,7 @@ import {
   getMyBuddies,
   bookMealForBuddy,
 } from "../../../bookingMethods/BookingMethods";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const BookForAnyone = ({ open, scroll, handleClose, children }) => {
   const { classes } = getBookForAnyoneStyles();
@@ -83,6 +84,12 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
         aria-describedby="scroll-dialog-description"
         className={classes.getDialogBoxStyles}
       >
+        <Box>
+          <CancelIcon
+            className={classes.cancelIconStyles}
+            onClick={handleClose}
+          />
+        </Box>
         <DialogTitle
           id="scroll-dialog-title"
           className={classes.getDialogTitleStyles}

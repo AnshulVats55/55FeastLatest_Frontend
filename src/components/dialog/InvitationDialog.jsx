@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
   Skeleton,
+  Box,
 } from "@mui/material";
 import { getInvitationDialogStyles } from "./InvitationDialog.Styles";
 import InviteMemberCard from "../card/InviteMemberCard";
@@ -17,6 +18,7 @@ import { getNonInvitedMembers } from "../../api/invitationMethods/InvitationMeth
 import { useDispatch, useSelector } from "react-redux";
 import { handleInviteMembers } from "../../invitationMethods/InvitationMethods";
 import { setTotalMembers } from "../../store/slices/TotalMembersSlice";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   const adminData = useSelector((state) => {
@@ -47,7 +49,6 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
         adminData.email,
         adminData.location
       );
-      // console.log("non invited members", response);
       if (response?.data?.status === "success") {
         setNotInvited(response.data.data);
         setIsDataLoaded(true);
@@ -87,16 +88,15 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   ];
 
   const handleMemberSearch = (event) => {
-    //handles member search
     setSearchTerm(event.target.value.toLowerCase());
   };
+
   const filteredUsers = notInvited?.filter((member) =>
     member.fullName.toLowerCase().includes(searchTerm)
   );
 
   const handleInviteNewMember = async (memberEmail) => {
     const response = await handleInviteMembers(memberEmail);
-    // console.log(`${memberEmail} has been invited by you !`, response);
     return response;
   };
 
@@ -110,6 +110,12 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
         aria-describedby="scroll-dialog-description"
         className={classes.getDialogBoxStyles}
       >
+        <Box>
+          <CancelIcon
+            className={classes.cancelIconStyles}
+            onClick={handleClose}
+          />
+        </Box>
         <DialogTitle
           id="scroll-dialog-title"
           className={classes.getDialogTitleStyles}

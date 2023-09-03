@@ -17,6 +17,7 @@ import {
 import { getBookForBuddyDialogStyles } from "./BookForBuddy.Styles";
 import InviteMemberCard from "../../card/InviteMemberCard";
 import BookForBuddyUtils from "./BookForBuddy.Utils";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
   const { classes } = getBookForBuddyDialogStyles();
@@ -41,6 +42,12 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
         aria-describedby="scroll-dialog-description"
         className={classes.getDialogBoxStyles}
       >
+        <Box>
+          <CancelIcon
+            className={classes.cancelIconStyles}
+            onClick={handleClose}
+          />
+        </Box>
         <DialogTitle
           id="scroll-dialog-title"
           className={classes.getDialogTitleStyles}

@@ -2,36 +2,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useEffect } from "react";
 import { getChipStyles, getDateChipStyles } from "./Chip.Styles";
 import { Typography, Stack, Chip, CircularProgress, Box } from "@mui/material";
 import ChipUtils from "./Chip.Utils";
-import { useSelector } from "react-redux";
-import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 
 const DateChip = ({ dayName, dateValue }) => {
-  const prebookingDates = useSelector((state) => {
-    return state.FetchPrebookDatesReducer;
-  });
-
   const { classes } = getChipStyles();
+  const { dateChipStyles } = getDateChipStyles;
   const {
     isSelected,
     handleDateSelection,
     isAlreadyBooked,
-    setIsAlreadyBooked,
     handlePrebookCancellation,
     isLoaderRequired,
-  } = ChipUtils();
-  const { dateChipStyles } = getDateChipStyles;
-
-  useEffect(() => {
-    console.log("dateValue in useEffect", dateValue);
-    //checking if date is already present in allBookedDates array
-    if (prebookingDates?.indexOf(getReversedDate(dateValue)) > -1) {
-      setIsAlreadyBooked(true);
-    }
-  }, [prebookingDates]);
+  } = ChipUtils(dateValue);
 
   return (
     <Stack className={classes.getChipContStyles}>

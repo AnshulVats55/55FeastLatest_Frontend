@@ -108,6 +108,14 @@ export const getAddMemberDialogStyles = makeStyles()((theme) => ({
       fontSize: "0.9rem",
     },
   },
+
+  cancelIconStyles: {
+    color: "#ef5d36",
+    cursor: "pointer",
+    position: "absolute",
+    top: "1rem",
+    right: "1rem",
+  },
 }));
 
 export const getCommonButtonCustomStyles = {

@@ -7,7 +7,6 @@ export const getInvitationDialogStyles = makeStyles()((theme) => ({
 
   getDialogTitleStyles: {
     textAlign: "center",
-    // background:"orange",
     fontSize: "1.25rem",
     fontFamily: theme.typography.fontFamily,
     "@media screen and (max-width: 532px)": {
@@ -16,12 +15,10 @@ export const getInvitationDialogStyles = makeStyles()((theme) => ({
   },
 
   getDialogContentStyles: {
-    // background:'pink',
     border: "none",
   },
 
   getDialogContentTextStyles: {
-    // background:"green",
     border: "none",
     padding: "0.5rem 0rem",
     textAlign: "center",
@@ -36,7 +33,6 @@ export const getInvitationDialogStyles = makeStyles()((theme) => ({
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    // background:"cyan",
     border: "none",
     borderRadius: "5px",
     margin: "0.5rem 0rem",
@@ -123,5 +119,13 @@ export const getInvitationDialogStyles = makeStyles()((theme) => ({
     "@media screen and (max-width:409px)": {
       fontSize: "0.9rem",
     },
+  },
+
+  cancelIconStyles: {
+    color: "#ef5d36",
+    cursor: "pointer",
+    position: "absolute",
+    top: "1rem",
+    right: "1rem",
   },
 }));

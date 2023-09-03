@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -16,6 +17,7 @@ import {
 import InviteMemberCard from "../../card/InviteMemberCard";
 import { getDeleteMemberDialogStyles } from "./DeleteMemberDialog.Styles";
 import DeleteMemberDialogUtils from "./DeleteMemberDialog.Utils";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const DeleteMemberDialog = ({
   open,
@@ -45,6 +47,12 @@ const DeleteMemberDialog = ({
         aria-describedby="scroll-dialog-description"
         className={classes.getDialogBoxStyles}
       >
+        <Box>
+          <CancelIcon
+            className={classes.cancelIconStyles}
+            onClick={handleClose}
+          />
+        </Box>
         <DialogTitle
           id="scroll-dialog-title"
           className={classes.getDialogTitleStyles}

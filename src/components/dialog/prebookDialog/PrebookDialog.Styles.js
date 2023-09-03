@@ -94,4 +94,12 @@ export const getPrebookDialogStyles = makeStyles()((theme) => ({
   },
 
   getDatePickerStyles: {},
+
+  cancelIconStyles: {
+    color: "#ef5d36",
+    cursor: "pointer",
+    position: "absolute",
+    top: "1rem",
+    right: "1rem",
+  },
 }));
