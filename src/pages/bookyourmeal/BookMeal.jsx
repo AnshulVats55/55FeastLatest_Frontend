@@ -49,7 +49,8 @@ const BookMeal = () => {
           onClick={handlePrebookOpen("paper")}
           label="Most awaited"
           isLoaderRequired={false}
-          isStatusFetchingRequired={false}
+          isStatusFetchingRequired={true}
+          isStatusFetched={isStatusFetched}
         />
         {prebookOpen ? (
           <PrebookDialog

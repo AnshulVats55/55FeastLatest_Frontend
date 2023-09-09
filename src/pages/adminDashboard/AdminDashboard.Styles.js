@@ -50,7 +50,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     background: "#FFF",
     justifyContent: "space-around",
     alignItems: "center",
-    width: "90%",
+    width: "100%",
     height: "75%",
     border: "none",
     borderRadius: "10px",
@@ -58,11 +58,11 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     "@media screen and (max-width: 599px)": {
       padding: "0.5rem 0rem",
     },
-    transition: "0.3s ease-in-out",
     cursor: "pointer",
     "&:hover": {
       boxShadow:
-        "rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.05) 0px 8px 8px",
+        "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+      borderBottom: "2px solid #ef5d36",
     },
   },
 
@@ -109,7 +109,6 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     padding: "0.5rem",
     border: "none",
     borderRadius: "35px",
-    // boxShadow: "rgba(0, 0, 0, 0.25) 0px 5px 15px",
     "@media screen and (max-width: 599px)": {
       fontSize: "2.5rem",
     },
@@ -119,17 +118,17 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     display: "flex",
     background: "#FFF",
     justifyContent: "center",
-    width: "90%",
+    width: "100%",
     height: "75%",
     textAlign: "center",
     border: "none",
     borderRadius: "10px",
     margin: "1rem 0rem 0rem",
-    transition: "0.3s ease-in-out",
     cursor: "pointer",
     "&:hover": {
       boxShadow:
-        "rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.05) 0px 8px 8px",
+        "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+      borderBottom: "2px solid #ef5d36",
     },
   },
 
@@ -138,7 +137,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     background: "#FFF",
     justifyContent: "center",
     alignItems: "center",
-    width: "90%",
+    width: "100%",
     height: "75%",
     textAlign: "center",
     border: "none",
@@ -150,11 +149,11 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     "@media screen and (max-width: 599px)": {
       padding: "0.5rem 0rem",
     },
-    transition: "0.3s ease-in-out",
     cursor: "pointer",
     "&:hover": {
       boxShadow:
-        "rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.05) 0px 8px 8px",
+        "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+      borderBottom: "2px solid #ef5d36",
     },
   },
 
@@ -163,7 +162,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     background: "#FFF",
     justifyContent: "center",
     alignItems: "center",
-    width: "90%",
+    width: "100%",
     height: "75%",
     textAlign: "center",
     border: "none",
@@ -175,11 +174,11 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     "@media screen and (max-width: 599px)": {
       padding: "0.5rem 0rem",
     },
-    transition: "0.3s ease-in-out",
     cursor: "pointer",
     "&:hover": {
       boxShadow:
-        "rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.05) 0px 8px 8px",
+        "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+      borderBottom: "2px solid #ef5d36",
     },
   },
 
