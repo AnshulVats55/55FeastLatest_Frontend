@@ -7,7 +7,7 @@ import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { useState } from "react";
 import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
 
 const InviteMemberCardUtils = () => {
   const formattedDate = handleFormattedDate(new Date());

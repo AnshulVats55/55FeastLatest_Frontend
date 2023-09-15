@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect, useRef } from "react";
-import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
+import { handleFormattedDate, getNextDate } from "../../../common/CommonData.js";
 import {
   getMyBuddies,
   bookMealForBuddy,

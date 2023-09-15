@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import CommonLayout from "../../pages/commonLayout/CommonLayout";
@@ -16,8 +15,11 @@ import Reviews from "../reviews/Reviews";
 import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
 import OrangeImage from "../../assets/orange image.png";
+import RoutesUtils from "./Routes.Utils";
 
 const AllRoutes = () => {
+  const {} = RoutesUtils();
+
   return (
     <Router>
       <CustomSnackbar />

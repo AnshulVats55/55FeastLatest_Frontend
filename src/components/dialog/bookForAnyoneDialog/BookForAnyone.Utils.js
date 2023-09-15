@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
-import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
+import { handleFormattedDate, getNextDate } from "../../../common/CommonData.js";
 import { useDispatch } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";

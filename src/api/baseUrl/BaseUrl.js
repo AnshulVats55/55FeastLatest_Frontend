@@ -1,3 +1,3 @@
-const BASE_URL = "https://five5feast.onrender.com";
+const BASE_URL = "https://light-jay-leg-warmers.cyclic.cloud";
 
 export default BASE_URL;

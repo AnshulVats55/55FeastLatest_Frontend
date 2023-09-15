@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import InviteMemberCard from "../../components/card/InviteMemberCard";
 import { handleMemberCountByDate } from "../../bookingMethods/BookingMethods";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ProgressBar from "../../components/progressBar/ProgressBar";
 import { useDispatch, useSelector } from "react-redux";

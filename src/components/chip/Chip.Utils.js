@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { handleFormattedDate } from "../../common/CommonData";
+import { handleFormattedDate } from "../../common/CommonData.js";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";

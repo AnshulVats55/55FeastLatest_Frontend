@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-globals */
 import { useEffect, useState, useRef } from "react";
 import { addDays, isWeekend } from "date-fns";
-import { handleFormattedDate } from "../../../common/CommonData";
+import { handleFormattedDate } from "../../../common/CommonData.js";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";

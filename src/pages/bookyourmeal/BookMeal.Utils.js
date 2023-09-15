@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
 import {
   handleMemberCountBooking,
   handleCancelMealBooking,

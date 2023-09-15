@@ -96,7 +96,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
 
   const handleInviteNewMember = async (memberEmail) => {
     const response = await handleInviteMembers(memberEmail);
-    // console.log(`${memberEmail} has been invited by you !`, response);
+    console.log(`${memberEmail} has been invited by you !`, response);
     return response;
   };
 
