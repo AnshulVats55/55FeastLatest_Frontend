@@ -13,7 +13,6 @@ import { getMenuItemStyles, getMenuSwiperAnimation } from "./MenuSwiper.Styles";
 import MenuSwiperUtils from "./MenuSwiper.Utils";
 
 export default function MenuSwiper({ heading, caption, swiperType }) {
-  console.log("Swiper type at swiper", swiperType);
   const { classes } = getMenuItemStyles();
   const { initial, whileInView, transition } = getMenuSwiperAnimation;
   const { isDataLoaded, lunchItems, snacksItems } = MenuSwiperUtils();
@@ -53,9 +52,12 @@ export default function MenuSwiper({ heading, caption, swiperType }) {
             className={classes.getMainContStyles}
           >
             {swiperType === "Lunch"
-              ? lunchItems?.map((item) => {
+              ? lunchItems?.map((item, index) => {
                   return (
-                    <SwiperSlide className={classes.getFoodItemImageContStyles}>
+                    <SwiperSlide
+                      key={index}
+                      className={classes.getFoodItemImageContStyles}
+                    >
                       <img
                         src={item.itemImage}
                         alt=""
@@ -67,9 +69,12 @@ export default function MenuSwiper({ heading, caption, swiperType }) {
                     </SwiperSlide>
                   );
                 })
-              : snacksItems?.map((item) => {
+              : snacksItems?.map((item, index) => {
                   return (
-                    <SwiperSlide className={classes.getFoodItemImageContStyles}>
+                    <SwiperSlide
+                      key={index}
+                      className={classes.getFoodItemImageContStyles}
+                    >
                       <img
                         src={item.itemImage}
                         alt=""
@@ -119,9 +124,12 @@ export default function MenuSwiper({ heading, caption, swiperType }) {
             modules={[EffectCoverflow, Pagination]}
             className={classes.getMainContStyles}
           >
-            {snacksItems?.map((item) => {
+            {snacksItems?.map((item, index) => {
               return (
-                <SwiperSlide className={classes.getFoodItemImageContStyles}>
+                <SwiperSlide
+                  key={index}
+                  className={classes.getFoodItemImageContStyles}
+                >
                   <Skeleton>
                     <img
                       src={item.itemImage}

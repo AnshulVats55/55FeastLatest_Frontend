@@ -26,11 +26,11 @@
       "purpose": "maskable"
     }
   ],
-  "start_url": "https://fiftyfive-feast.netlify.app/",
+  "start_url": "https://feastapp-60d7c.web.app/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "description": "Welcome to \"55Feast\" !",
   "display_override": ["standalone", "window-controls-overlay"],
-  "prefer_related_applications": "false"
+  "prefer_related_applications": false
 }
