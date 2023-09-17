@@ -57,14 +57,9 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     letterSpacing: ".3rem",
     color: "#FFF",
     textDecoration: "none",
-    // fontSize: "1.5rem",
     "&:hover": {
       color: "#FFF",
     },
-    // "@media screen and (max-width: 399px)": {
-    //   maxWidth: "150px",
-    // },
-    // background:"pink",
   },
 
   getBrandLogoStylesOne: {
@@ -77,10 +72,6 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     "&:hover": {
       color: "#FFF",
     },
-    // "@media screen and (max-width: 399px)": {
-    //   maxWidth: "150px",
-    // },
-    // background:"pink",
   },
 
   getNavLinksContStylesOne: {

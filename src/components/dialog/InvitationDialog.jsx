@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -47,7 +48,6 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
         adminData.email,
         adminData.location
       );
-      // console.log("non invited members", response);
       if (response?.data?.status === "success") {
         setNotInvited(response.data.data);
         setIsDataLoaded(true);
@@ -61,28 +61,28 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   const memberData = [
     //member's dummy data
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
   ];
 
@@ -96,12 +96,11 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
 
   const handleInviteNewMember = async (memberEmail) => {
     const response = await handleInviteMembers(memberEmail);
-    console.log(`${memberEmail} has been invited by you !`, response);
     return response;
   };
 
   return (
-    <div>
+    <Box>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -209,7 +208,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 

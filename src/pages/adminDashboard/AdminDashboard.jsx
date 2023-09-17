@@ -122,10 +122,6 @@ const AdminDashboard = () => {
         dateToGetTodaysCount,
         location
       );
-      console.log(
-        "Response of today's count api----------------------->",
-        response
-      );
       setTodaysCount(response?.data?.data);
       setIsDataLoaded(true);
     };
@@ -137,7 +133,6 @@ const AdminDashboard = () => {
     //get total members according to location
     const handleGetTotalMembers = async () => {
       const response = await getTotalMembers(location);
-      console.log("Total members in office", response);
       setTotalMembers(response?.data?.data?.length);
     };
 
@@ -164,28 +159,28 @@ const AdminDashboard = () => {
   const memberData = [
     //member's dummy data
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
   ];
 

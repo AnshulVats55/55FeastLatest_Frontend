@@ -3,7 +3,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect, useRef } from "react";
-import { handleFormattedDate, getNextDate } from "../../../common/CommonData.js";
+import {
+  handleFormattedDate,
+  getNextDate,
+} from "../../../common/CommonData.js";
 import {
   getMyBuddies,
   bookMealForBuddy,
@@ -16,7 +19,6 @@ const BookForBuddyUtils = ({ open }) => {
   const myData = useSelector((state) => {
     return state.memberDataReducer;
   });
-  console.log("My data", myData);
 
   const dispatch = useDispatch();
 
@@ -49,7 +51,6 @@ const BookForBuddyUtils = ({ open }) => {
   useEffect(() => {
     const handleMyBuddies = async () => {
       const response = await getMyBuddies(myData.email, myData.location);
-      console.log("Response of my buddies api is this ------------>", response);
       if (response?.data?.status === "success") {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
@@ -116,7 +117,7 @@ const BookForBuddyUtils = ({ open }) => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings open at 5PM !");
+        handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
@@ -158,7 +159,6 @@ const BookForBuddyUtils = ({ open }) => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);
-      console.log(`Meal booked for my buddy ${buddyData.email}`, response);
       return response;
     }
   };

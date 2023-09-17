@@ -20,7 +20,6 @@ const BookMealUtils = () => {
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
   });
-  console.log("member emai", memberData.email);
 
   const [bookForBuddyOpen, setBookForBuddyOpen] = useState(false);
   const [prebookOpen, setPrebookOpen] = useState(false);
@@ -36,22 +35,14 @@ const BookMealUtils = () => {
   const nextDate = getNextDate(new Date());
   const nextDateFormatted = handleFormattedDate(nextDate);
 
-  const mealBookingData = {
-    //here 12PM will be updated to 17PM
-    email: memberData.email,
-    date:
-      new Date().getHours() >= 18 && new Date().getHours() <= 23
-        ? nextDateFormatted
-        : formattedDate,
-  };
+  const dateToBeUsed =
+    new Date().getHours() >= 18 && new Date().getHours() <= 23
+      ? nextDateFormatted
+      : formattedDate;
 
-  const myData = {
-    //here 12PM will be updated to 17PM
+  const memberDataToBeUsed = {
     email: memberData.email,
-    date:
-      new Date().getHours() >= 18 && new Date().getHours() <= 23
-        ? nextDateFormatted
-        : formattedDate,
+    date: dateToBeUsed,
   };
 
   useEffect(() => {
@@ -62,16 +53,13 @@ const BookMealUtils = () => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(memberData.email);
-      console.log("Response of booking status API", response);
+      console.log("STATUS", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
         const allBookingDates = response?.data?.data;
         setAllBookedDates(allBookingDates);
         dispatch(getPrebookDates(allBookingDates));
-        if (
-          allBookingDates?.indexOf(formattedDate) > -1 ||
-          allBookingDates?.indexOf(nextDateFormatted) > -1
-        ) {
+        if (allBookingDates?.indexOf(formattedDate) > -1) {
           setIsBooked(true);
         } else {
           setIsBooked(false);
@@ -116,7 +104,7 @@ const BookMealUtils = () => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings will open at 5PM !");
+        handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
@@ -171,7 +159,7 @@ const BookMealUtils = () => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       setIsLoaderRequired(true);
-      const response = await handleMemberCountBooking(mealBookingData);
+      const response = await handleMemberCountBooking(memberDataToBeUsed);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsBooked(true);
         dispatch(
@@ -199,7 +187,7 @@ const BookMealUtils = () => {
 
   const handleMealCancellation = async () => {
     setIsLoaderRequired(true);
-    const response = await handleCancelMealBooking(myData);
+    const response = await handleCancelMealBooking(memberDataToBeUsed);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       setIsBooked(false);
       dispatch(

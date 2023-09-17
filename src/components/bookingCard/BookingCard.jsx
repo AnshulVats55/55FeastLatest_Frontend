@@ -16,6 +16,7 @@ import {
 } from "./BookingCard.Styles";
 import { motion } from "framer-motion";
 import BookingkCardUtils from "./BookingkCard.Utils";
+import MealBookingTimer from "../timers/MealBookingTimer";
 
 const BookingCard = ({
   image,
@@ -29,6 +30,7 @@ const BookingCard = ({
   isLoaderRequired,
   isStatusFetchingRequired,
   isStatusFetched,
+  isCountdownRequired,
 }) => {
   const { classes } = getBookingCardStyles();
   const { isDataLoaded } = BookingkCardUtils();
@@ -60,35 +62,40 @@ const BookingCard = ({
           <Typography className={classes.getCaptionStyles}>
             {caption}
           </Typography>
-          {isStatusFetchingRequired ? (
-            isStatusFetched ? (
-              <Button
+          <Box>
+            {isStatusFetchingRequired ? (
+              isStatusFetched ? (
+                <Button
+                  onClick={onClick ? onClick : null}
+                  isLoaderRequired={isLoaderRequired}
+                  isStatusFetched={isStatusFetched}
+                  sx={getButtonStyles(isBooked)}
+                >
+                  {actionName}&nbsp;
+                  {isLoaderRequired && (
+                    <CircularProgress size={15} thickness={4} color="inherit" />
+                  )}
+                </Button>
+              ) : (
+                <Button sx={getButtonStyles(isBooked)}>
+                  Fetching status...&nbsp;
+                  <CircularProgress size={15} thickness={4} color="inherit" />
+                </Button>
+              )
+            ) : (
+              <CommonButton
+                children={actionName}
+                type=""
+                customStyles={customStyles(isBooked)}
                 onClick={onClick ? onClick : null}
                 isLoaderRequired={isLoaderRequired}
                 isStatusFetched={isStatusFetched}
-                sx={getButtonStyles(isBooked)}
-              >
-                {actionName}&nbsp;
-                {isLoaderRequired && (
-                  <CircularProgress size={15} thickness={4} color="inherit" />
-                )}
-              </Button>
-            ) : (
-              <Button sx={getButtonStyles(isBooked)}>
-                Fetching status...&nbsp;
-                <CircularProgress size={15} thickness={4} color="inherit" />
-              </Button>
-            )
-          ) : (
-            <CommonButton
-              children={actionName}
-              type=""
-              customStyles={customStyles(isBooked)}
-              onClick={onClick ? onClick : null}
-              isLoaderRequired={isLoaderRequired}
-              isStatusFetched={isStatusFetched}
-            />
-          )}
+              />
+            )}
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <MealBookingTimer isCountdownRequired={isCountdownRequired} />
+          </Box>
         </>
       ) : (
         <>

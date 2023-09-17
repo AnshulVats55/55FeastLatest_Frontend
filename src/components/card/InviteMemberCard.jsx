@@ -65,11 +65,8 @@ const InviteMemberCard = ({
     }
   }, [isAlreadyBooked]);
 
-  console.log("formatted date at invite member card", dateToBeChecked);
-
   useEffect(() => {
     //if meal is already booked, set the flag to "true"
-    console.log("all dates booked array", allDatesBooked);
     if (allDatesBooked?.indexOf(dateToBeChecked) > -1) {
       setIsAlreadyBooked(true);
     }

@@ -39,9 +39,7 @@ const ChipUtils = () => {
   };
 
   const handleDateSelection = async (dateToBeChecked) => {
-    // console.log("date to be checked", dateToBeChecked);
     const isBookingOpen = checkPrebookingAvailabilty(dateToBeChecked);
-    // console.log("isbookingopen", isBookingOpen);
     if (isBookingOpen === true) {
       setIsSelected(!isSelected);
       dispatch(setPrebookDates(currentFormattedDate));

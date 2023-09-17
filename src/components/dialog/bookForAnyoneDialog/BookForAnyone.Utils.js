@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
-import { handleFormattedDate, getNextDate } from "../../../common/CommonData.js";
+import {
+  handleFormattedDate,
+  getNextDate,
+} from "../../../common/CommonData.js";
 import { useDispatch } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
@@ -84,7 +87,7 @@ const BookForAnyoneUtils = () => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings not allowed on weekend !");
+        handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
@@ -92,13 +95,6 @@ const BookForAnyoneUtils = () => {
         //booking allowed from 12AM to 12AM the next day for admins
         setIsBookingOpen(true);
         return true;
-        // } else if (currentHour >= 18 && currentHour <= 23) {
-        //   setIsBookingOpen(true);
-        //   return true;
-        // } else {
-        //   setIsBookingOpen(false);
-        //   handleBookingNotifications("Bookings closed for today !");
-        // return false;
       }
     } else if (currentDay === 5) {
       if (currentHour >= 0 && currentHour <= 17) {

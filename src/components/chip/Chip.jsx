@@ -26,7 +26,6 @@ const DateChip = ({ dayName, dateValue }) => {
   const { dateChipStyles } = getDateChipStyles;
 
   useEffect(() => {
-    console.log("dateValue in useEffect", dateValue);
     //checking if date is already present in allBookedDates array
     if (prebookingDates?.indexOf(getReversedDate(dateValue)) > -1) {
       setIsAlreadyBooked(true);

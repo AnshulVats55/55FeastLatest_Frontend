@@ -24,7 +24,6 @@ const WeeklyDataUtils = () => {
   const handleLastFiveDaysCount = async () => {
     //handles last five days count
     const response = await getLastFiveDaysCount(location);
-    // console.log("Response of get previous week count API", response);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       const fiveDaysCount = [],
         fiveDaysName = [],

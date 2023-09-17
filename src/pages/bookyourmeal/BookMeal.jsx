@@ -51,6 +51,7 @@ const BookMeal = () => {
           isLoaderRequired={false}
           isStatusFetchingRequired={true}
           isStatusFetched={isStatusFetched}
+          isCountdownRequired={false}
         />
         {prebookOpen ? (
           <PrebookDialog
@@ -81,6 +82,7 @@ const BookMeal = () => {
           label="Try it out"
           isLoaderRequired={false}
           isStatusFetchingRequired={false}
+          isCountdownRequired={true}
         />
         {bookForBuddyOpen ? (
           <BookForBuddyDialog
@@ -114,6 +116,7 @@ const BookMeal = () => {
           isLoaderRequired={isLoaderRequired}
           isStatusFetchingRequired={true}
           isStatusFetched={isStatusFetched}
+          isCountdownRequired={true}
         />
       </Grid>
     </Grid>
