@@ -46,42 +46,28 @@ const MealBookingTimerUtils = () => {
     const calculateTimeRemaining = () => {
       const now = new Date();
       const currentDay = now.getDay();
-      const currentHour = now.getHours();
 
-      let openingHour = 0; //booking opening hour
-      let closingHour = 0; //booking closing hour
+      let openingHour = 0;
 
       if (currentDay === 0) {
-        // Sunday
-        openingHour = 18; //6 PM
-        closingHour = 9; //9 AM (next day)
+        openingHour = 18;
       } else if (currentDay >= 1 && currentDay <= 4) {
-        // Monday to Wednesday
-        openingHour = 18; //6 PM
-        closingHour = 9; //9 AM (next day)
-      }
-      // Friday (closingHour = 9 AM)
-      else if (currentDay === 4 && currentHour < 9) {
-        closingHour = 9;
+        openingHour = 18;
       }
 
       const openingTime = new Date();
       openingTime.setHours(openingHour, 0, 0, 0);
 
-      const closingTime = new Date();
-      closingTime.setHours(closingHour, 0, 0, 0);
-
-      if (now < openingTime) {
-        // If the current time is before the opening time, calculating time until opening.
+      if (now.getHours() < openingHour) {
         const timeDiff = openingTime - now;
         setTimeRemaining(formatTime(timeDiff));
-      } else if (now >= openingTime && now < closingTime) {
-        // If the current time is within the booking window, calculating time until closing.
-        const timeDiff = closingTime - now;
-        setTimeRemaining(formatTime(timeDiff));
-      } else {
-        // Booking window is closed.
-        setTimeRemaining("00:00:00");
+      } else if (now.getHours() >= openingHour && now.getHours() <= 23) {
+        const remainingHours = 23 - now.getHours() + 9;
+        const date = new Date();
+        date.setDate(new Date().getDate() + 1);
+        date.setHours(remainingHours, 0, 0, 0);
+        const targetTime = date - now;
+        setTimeRemaining(formatTime(targetTime));
       }
     };
 
