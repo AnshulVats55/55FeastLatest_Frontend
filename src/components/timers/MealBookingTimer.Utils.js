@@ -46,28 +46,34 @@ const MealBookingTimerUtils = () => {
     const calculateTimeRemaining = () => {
       const now = new Date();
       const currentDay = now.getDay();
-
-      let openingHour = 0;
-
-      if (currentDay === 0) {
-        openingHour = 18;
-      } else if (currentDay >= 1 && currentDay <= 4) {
-        openingHour = 18;
-      }
-
-      const openingTime = new Date();
-      openingTime.setHours(openingHour, 0, 0, 0);
-
-      if (now.getHours() < openingHour) {
-        const timeDiff = openingTime - now;
-        setTimeRemaining(formatTime(timeDiff));
-      } else if (now.getHours() >= openingHour && now.getHours() <= 23) {
-        const remainingHours = 23 - now.getHours() + 9;
-        const date = new Date();
-        date.setDate(new Date().getDate() + 1);
-        date.setHours(remainingHours, 0, 0, 0);
-        const targetTime = date - now;
-        setTimeRemaining(formatTime(targetTime));
+      let targetTime;
+      const temp = new Date();
+      if (currentDay >= 1 && currentDay <= 4) {//from monday to thursday
+        if (now.getHours() >= 0 && now.getHours() < 9) {//from 12AM to 9AM
+          temp.setHours(9, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        } else if (now.getHours() >= 9 && now.getHours() < 18) {//from 9AM to 6PM
+          temp.setHours(18, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        } else if (now.getHours() >= 18 && now.getHours() <= 23) {//from 6PM to 12AM
+          const remainingHours = 24 - now.getHours();
+          temp.setHours(remainingHours, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        }
+      } else if (currentDay === 5) {//for friday
+        if (now.getHours() >= 0 && now.getHours() < 9) {//from 12AM to 9AM
+          temp.setHours(9, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        } else if (now.getHours() >= 9) {//greater than 9AM
+          temp.setDate(now.getDate() + 2);
+          temp.setHours(18, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        }
       }
     };
 

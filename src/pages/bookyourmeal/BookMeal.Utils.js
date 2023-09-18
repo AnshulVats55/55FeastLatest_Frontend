@@ -30,6 +30,7 @@ const BookMealUtils = () => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [allBookedDates, setAllBookedDates] = useState([]);
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
+  const [isMealCancellationOpen, setIsMealCancellationOpen] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -185,29 +186,65 @@ const BookMealUtils = () => {
     }
   };
 
+  const checkMealCancellationAvailability = () => {
+    const currentDateTime = new Date();
+    const currentDay = currentDateTime.getDay();
+    const currentHour = currentDateTime.getHours();
+
+    if (currentDay >= 1 && currentDay <= 4) {
+      if (currentHour >= 0 && currentHour < 10) {
+        //cancellation allowed from 12AM to 10AM the next day
+        setIsMealCancellationOpen(true);
+        return true;
+      } else if (currentHour >= 18 && currentHour <= 23) {
+        setIsMealCancellationOpen(true);
+        return true;
+      } else {
+        setIsMealCancellationOpen(false);
+        handleBookingNotifications("Time limit excedded !");
+        return false;
+      }
+    } else if (currentDay === 5) {
+      if (currentHour >= 0 && currentHour < 10) {
+        //cancellation allowed from 12AM(Friday) to 10AM(Friday)
+        setIsMealCancellationOpen(true);
+        return true;
+      } else {
+        setIsMealCancellationOpen(false);
+        handleBookingNotifications("Time limit excedded !");
+        return false;
+      }
+    }
+  };
+
   const handleMealCancellation = async () => {
-    setIsLoaderRequired(true);
-    const response = await handleCancelMealBooking(memberDataToBeUsed);
-    if (response?.data?.status === snackbarMessages.SUCCESS) {
-      setIsBooked(false);
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.SUCCESS,
-          snackbarMessage:
-            snackbarMessages.MEMBER_MEAL_CANCELLATION_SUCCESSFULL,
-        })
-      );
-      setIsLoaderRequired(false);
-    } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.MEMBER_MEAL_CANCELLATION_FAILURE,
-        })
-      );
-      setIsLoaderRequired(false);
+    const isCancellationAllowed = checkMealCancellationAvailability();
+    if (isCancellationAllowed) {
+      setIsLoaderRequired(true);
+      const response = await handleCancelMealBooking(memberDataToBeUsed);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setIsBooked(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage:
+              snackbarMessages.MEMBER_MEAL_CANCELLATION_SUCCESSFULL,
+          })
+        );
+        setIsLoaderRequired(false);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: snackbarMessages.MEMBER_MEAL_CANCELLATION_FAILURE,
+          })
+        );
+        setIsLoaderRequired(false);
+      }
     }
   };
 
