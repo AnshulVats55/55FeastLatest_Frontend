@@ -45,32 +45,57 @@ const MealBookingTimerUtils = () => {
   useEffect(() => {
     const calculateTimeRemaining = () => {
       const now = new Date();
-      const currentDay = now.getDay();
+      const currentDay = now.getDay(); //2
       let targetTime;
-      const temp = new Date();
-      if (currentDay >= 1 && currentDay <= 4) {//from monday to thursday
-        if (now.getHours() >= 0 && now.getHours() < 9) {//from 12AM to 9AM
+      const temp = new Date(); //
+      if (currentDay >= 1 && currentDay <= 4) {
+        //from monday to thursday
+        if (now.getHours() >= 0 && now.getHours() < 9) {
+          //from 12AM to 9AM
           temp.setHours(9, 0, 0, 0);
           targetTime = temp - now;
           setTimeRemaining(formatTime(targetTime));
-        } else if (now.getHours() >= 9 && now.getHours() < 18) {//from 9AM to 6PM
+        } else if (now.getHours() >= 9 && now.getHours() < 18) {
+          //from 9AM to 6PM
+          temp.setHours(18, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        } else if (now.getHours() >= 18 && now.getHours() <= 23) {
+          //from 6PM to 9AM, the next day
+          temp.setHours(33, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        }
+      } else if (currentDay === 5) {
+        //for friday
+        if (now.getHours() >= 0 && now.getHours() < 9) {
+          //from 12AM to 9AM
+          temp.setHours(9, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        } else if (now.getHours() >= 9) {
+          //greater than 9AM
+          temp.setDate(now.getDate() + 2);
+          temp.setHours(18, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        }
+      } else if (currentDay === 6) {
+        //for saturday
+        if (now.getHours() >= 0) {
+          temp.setDate(now.getDate() + 1);
+          temp.setHours(18, 0, 0, 0);
+          targetTime = temp - now;
+          setTimeRemaining(formatTime(targetTime));
+        }
+      } else if (currentDay === 0) {
+        //for sunday
+        if (now.getHours() >= 0 && now.getHours() < 18) {//from 12AM to 6PM
           temp.setHours(18, 0, 0, 0);
           targetTime = temp - now;
           setTimeRemaining(formatTime(targetTime));
         } else if (now.getHours() >= 18 && now.getHours() <= 23) {//from 6PM to 12AM
-          const remainingHours = 24 - now.getHours();
-          temp.setHours(remainingHours, 0, 0, 0);
-          targetTime = temp - now;
-          setTimeRemaining(formatTime(targetTime));
-        }
-      } else if (currentDay === 5) {//for friday
-        if (now.getHours() >= 0 && now.getHours() < 9) {//from 12AM to 9AM
-          temp.setHours(9, 0, 0, 0);
-          targetTime = temp - now;
-          setTimeRemaining(formatTime(targetTime));
-        } else if (now.getHours() >= 9) {//greater than 9AM
-          temp.setDate(now.getDate() + 2);
-          temp.setHours(18, 0, 0, 0);
+          temp.setHours(33, 0, 0, 0);
           targetTime = temp - now;
           setTimeRemaining(formatTime(targetTime));
         }

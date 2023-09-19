@@ -4,7 +4,10 @@
 /* eslint-disable no-restricted-globals */
 import { useEffect, useState, useRef } from "react";
 import { addDays, isWeekend } from "date-fns";
-import { handleFormattedDate } from "../../../common/CommonData.js";
+import {
+  handleFormattedDate,
+  getNextDate,
+} from "../../../common/CommonData.js";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";
@@ -31,6 +34,9 @@ const PrebookUtils = (open, handleClose) => {
 
   const dispatch = useDispatch();
   const todaysDate = new Date();
+  if (new Date().getHours() >= 18 && new Date().getHours() <= 23) {
+    todaysDate.setDate(new Date().getDate() + 1);
+  }
   const [openDatesForPrebook, setOpenDatesForPrebook] = useState([]);
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
 

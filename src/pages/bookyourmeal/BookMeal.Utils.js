@@ -20,6 +20,10 @@ const BookMealUtils = () => {
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
   });
+  const prebookTooltip =
+    "Meal cancellation restrictions don't apply to pre-booking for upcoming days !";
+  const bookForBuddyTooltip = "You can cancel your buddy's meal till 10AM !";
+  const mealBookingTooltip = "You can cancel your meal till 10AM !";
 
   const [bookForBuddyOpen, setBookForBuddyOpen] = useState(false);
   const [prebookOpen, setPrebookOpen] = useState(false);
@@ -60,7 +64,7 @@ const BookMealUtils = () => {
         const allBookingDates = response?.data?.data;
         setAllBookedDates(allBookingDates);
         dispatch(getPrebookDates(allBookingDates));
-        if (allBookingDates?.indexOf(formattedDate) > -1) {
+        if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
           setIsBooked(true);
         } else {
           setIsBooked(false);
@@ -262,6 +266,9 @@ const BookMealUtils = () => {
     handleMealBooking,
     handleMealCancellation,
     isStatusFetched,
+    prebookTooltip,
+    bookForBuddyTooltip,
+    mealBookingTooltip,
   };
 };
 

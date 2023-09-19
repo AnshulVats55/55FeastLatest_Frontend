@@ -1,8 +1,9 @@
 import MealBookingTimerUtils from "./MealBookingTimer.Utils";
 import { getMealBookingTimerStyles } from "./MealBookingTimer.Styles";
 import { Box, Typography } from "@mui/material";
+import CustomTooltip from "../tooltip/Tooltip";
 
-const MealBookingTimer = ({ isCountdownRequired }) => {
+const MealBookingTimer = ({ isCountdownRequired, tooltipTitle }) => {
   const { timeRemaining, isBookingOpen } = MealBookingTimerUtils();
   const { classes } = getMealBookingTimerStyles();
 
@@ -19,6 +20,7 @@ const MealBookingTimer = ({ isCountdownRequired }) => {
           Start Prebooking your meal now
         </Typography>
       )}
+      <CustomTooltip tooltipTitle={tooltipTitle} />
     </Box>
   );
 };

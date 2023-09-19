@@ -329,6 +329,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
 
   bookForAnyoneBtnContStyles: {
     width: "100%",
+    marginBottom: "0.5rem",
     "@media screen and (max-width: 1199px)": {
       width: "90%",
     },

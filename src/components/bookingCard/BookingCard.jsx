@@ -31,6 +31,7 @@ const BookingCard = ({
   isStatusFetchingRequired,
   isStatusFetched,
   isCountdownRequired,
+  tooltipTitle,
 }) => {
   const { classes } = getBookingCardStyles();
   const { isDataLoaded } = BookingkCardUtils();
@@ -94,7 +95,10 @@ const BookingCard = ({
             )}
           </Box>
           <Box sx={{ width: "100%" }}>
-            <MealBookingTimer isCountdownRequired={isCountdownRequired} />
+            <MealBookingTimer
+              isCountdownRequired={isCountdownRequired}
+              tooltipTitle={tooltipTitle}
+            />
           </Box>
         </>
       ) : (

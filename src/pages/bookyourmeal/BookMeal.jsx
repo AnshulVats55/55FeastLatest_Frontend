@@ -28,6 +28,9 @@ const BookMeal = () => {
     handleMealBooking,
     handleMealCancellation,
     isStatusFetched,
+    prebookTooltip,
+    bookForBuddyTooltip,
+    mealBookingTooltip,
   } = BookMealUtils();
 
   return (
@@ -52,6 +55,7 @@ const BookMeal = () => {
           isStatusFetchingRequired={true}
           isStatusFetched={isStatusFetched}
           isCountdownRequired={false}
+          tooltipTitle={prebookTooltip}
         />
         {prebookOpen ? (
           <PrebookDialog
@@ -83,6 +87,7 @@ const BookMeal = () => {
           isLoaderRequired={false}
           isStatusFetchingRequired={false}
           isCountdownRequired={true}
+          tooltipTitle={bookForBuddyTooltip}
         />
         {bookForBuddyOpen ? (
           <BookForBuddyDialog
@@ -117,6 +122,7 @@ const BookMeal = () => {
           isStatusFetchingRequired={true}
           isStatusFetched={isStatusFetched}
           isCountdownRequired={true}
+          tooltipTitle={mealBookingTooltip}
         />
       </Grid>
     </Grid>
