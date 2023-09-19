@@ -6,7 +6,6 @@ export const getBookingCardStyles = makeStyles()((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    border: "none",
     borderRadius: "10px",
     margin: "2rem 0rem",
     cursor: "pointer",
@@ -36,6 +35,7 @@ export const getBookingCardStyles = makeStyles()((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     padding: "0rem 2rem",
+    zIndex:"0"
   },
 
   getCardLabelStyles: {

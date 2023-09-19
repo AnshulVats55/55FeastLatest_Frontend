@@ -1,20 +1,25 @@
 import { useState } from "react";
 
 const TooltipUtils = () => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleTooltipOpen = () => {
-    setTooltipOpen(true);
+  const handleOpenTooltip = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleTooltipClose = () => {
-    setTooltipOpen(false);
+  const handleCloseTooltip = () => {
+    setAnchorEl(null);
   };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   return {
-    tooltipOpen,
-    handleTooltipOpen,
-    handleTooltipClose,
+    handleOpenTooltip,
+    handleCloseTooltip,
+    anchorEl,
+    open,
+    id,
   };
 };
 
