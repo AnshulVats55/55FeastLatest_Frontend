@@ -14,17 +14,17 @@ export const getBookingCardStyles = makeStyles()((theme) => ({
         "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
       borderBottom: "2px solid #ef5d36",
     },
-    "@media screen and (max-width: 1099px)": {
+    "@media screen and (max-width: 1100px)": {
       width: "90%",
     },
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       width: "70%",
     },
-    "@media screen and (max-width: 599px)": {
+    "@media screen and (max-width: 600px)": {
       width: "80%",
       margin: "2rem 0rem 1rem 0rem",
     },
-    "@media screen and (max-width: 399px)": {
+    "@media screen and (max-width: 400px)": {
       width: "85%",
     },
   },
@@ -104,7 +104,7 @@ export const getCommonButtonCustomStyles = {
       "&:focus": {
         outline: "none",
       },
-      "@media screen and (max-width: 399px)": {
+      "@media screen and (max-width: 400px)": {
         fontSize: "0.85rem",
       },
     };
@@ -113,7 +113,6 @@ export const getCommonButtonCustomStyles = {
   getButtonStyles: (isBooked) => {
     return {
       transition: "0.25s ease-in",
-      border: "none",
       fontFamily: "Poppins, sans-serif",
       padding: "0.25rem 0.75rem",
       textTransform: "none",
@@ -133,7 +132,7 @@ export const getCommonButtonCustomStyles = {
       "&:focus": {
         outline: "none",
       },
-      "@media screen and (max-width: 399px)": {
+      "@media screen and (max-width: 400px)": {
         fontSize: "0.85rem",
       },
     };

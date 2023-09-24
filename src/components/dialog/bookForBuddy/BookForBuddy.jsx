@@ -80,6 +80,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                   const memberId = member._id;
                   return (
                     <InviteMemberCard
+                      key={index}
                       indexNumber={index + 1}
                       memberName={member.fullName}
                       memberEmail={member.email}
@@ -121,6 +122,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                     sx={{ minWidth: "100% !important" }}
                   >
                     <InviteMemberCard
+                      key={index}
                       indexNumber={index + 1}
                       memberName={member.memberName}
                       memberEmail={member.memberEmail}

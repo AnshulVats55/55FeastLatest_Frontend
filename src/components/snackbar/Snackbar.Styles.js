@@ -43,7 +43,7 @@ export const getSnackbarStyles = makeStyles()((theme)=>({
         color:'white',
         fontSize:"1rem",
         fontFamily: theme.typography.fontFamily,
-        "@media screen and (max-width: 899px)": {
+        "@media screen and (max-width: 900px)": {
             fontSize:"0.9rem",
         },
         "@media screen and (max-width: 599px)": {
@@ -52,7 +52,7 @@ export const getSnackbarStyles = makeStyles()((theme)=>({
         "@media screen and (max-width: 523px)": {
             fontSize:"0.8rem",
         },
-        "@media screen and (max-width: 399px)": {
+        "@media screen and (max-width: 400px)": {
             fontSize:"0.75rem",
         },
     },

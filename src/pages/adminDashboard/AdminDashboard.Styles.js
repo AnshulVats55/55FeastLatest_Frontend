@@ -143,7 +143,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     border: "none",
     borderRadius: "10px",
     margin: "1rem 0rem 0rem",
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       alignItems: "center",
     },
     "@media screen and (max-width: 599px)": {
@@ -168,7 +168,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     border: "none",
     borderRadius: "10px",
     margin: "1rem 0rem 0rem",
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       alignItems: "center",
     },
     "@media screen and (max-width: 599px)": {
@@ -203,7 +203,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     border: "none",
     borderRadius: "10px",
     height: "100%",
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       background: "#f2f3f9",
       marginBottom: "1rem",
     },
@@ -245,7 +245,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     "::-webkit-scrollbar": {
       background: "transparent",
       width: "0.65rem",
-      "@media screen and (max-width: 899px)": {
+      "@media screen and (max-width: 900px)": {
         width: "0.6rem",
       },
     },
@@ -287,7 +287,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
         color: "#ef5d36",
       },
     },
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       margin: "1rem auto 1rem",
     },
   },
@@ -319,7 +319,7 @@ export const getAdminDashboardStyles = makeStyles()((theme) => ({
     "&:focus": {
       outline: "none",
     },
-    "@media screen and (max-width: 399px)": {
+    "@media screen and (max-width: 400px)": {
       fontSize: "0.8rem",
     },
     "@media screen and (max-width: 599px)": {

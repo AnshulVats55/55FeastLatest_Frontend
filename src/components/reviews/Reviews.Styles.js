@@ -16,7 +16,7 @@ export const getReviewsStyles = makeStyles()((theme) => ({
     "@media screen and (max-width: 599px)": {
       margin: "35vh 0rem 5rem 0rem",
     },
-    "@media screen and (max-width: 399px)": {
+    "@media screen and (max-width: 400px)": {
       margin: "40vh 0rem 5rem 0rem",
     },
   },
@@ -26,7 +26,7 @@ export const getReviewsStyles = makeStyles()((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     margin: "3rem 0rem",
-    "@media screen and (max-width: 399px)": {
+    "@media screen and (max-width: 400px)": {
       margin: "0rem",
     },
   },

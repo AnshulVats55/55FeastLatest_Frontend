@@ -17,6 +17,15 @@ export const getSignupFormStyles = makeStyles()((theme) => ({
     },
   },
 
+  getBrandLogoStyles: {
+    "@media screen and (max-width: 599px)": {
+      width: "22.5%",
+    },
+    "@media screen and (max-width: 599px)": {
+      width:"30%",
+    },
+  },
+
   getTextOneStyles: {
     fontSize: "2.5rem",
     fontFamily: theme.typography.fontFamily,

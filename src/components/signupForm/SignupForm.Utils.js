@@ -32,6 +32,7 @@ const SignupFormUtils = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState("paper");
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -102,7 +103,7 @@ const SignupFormUtils = () => {
     const brandName = () => /@fiftyfivetech/.test(email);
     const regex = /^[A-Za-z0-9]+[._]?[A-Za-z0-9]+@fiftyfivetech\.io$/;
     if (regex.test(email)) {
-      message.text = "Email Id is correct";
+      message.text = "Email Id is valid";
       message.status = true;
     } else if (!checkAtTheRate()) {
       message.text = "Email Id must contain @";
@@ -239,14 +240,16 @@ const SignupFormUtils = () => {
         setCustomSnackbar({
           snackbarOpen: true,
           snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.PASSWORD_REQUIRED,
+          snackbarMessage: snackbarMessages.PASSWORD_REQUIRED_FOR_SIGNUP,
         })
       );
     } else {
       if (emailValidator(email).status && passwordCheck(password).status) {
         dispatch(setIsLoading(true));
         const response = await handleMemberSignup(memberData);
+        console.log("SIGNUP", response);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
+          setIsDisabled(true);
           dispatch(setIsLoading(false));
           dispatch(
             setCustomSnackbar({
@@ -255,9 +258,7 @@ const SignupFormUtils = () => {
               snackbarMessage: snackbarMessages.SIGNUP_SUCCESSFULL,
             })
           );
-          setTimeout(() => {
-            navigate("/");
-          }, 2500);
+          navigate("/");
         } else if (
           response?.response?.data?.status === snackbarMessages.FAILURE
         ) {
@@ -266,7 +267,7 @@ const SignupFormUtils = () => {
             setCustomSnackbar({
               snackbarOpen: true,
               snackbarType: snackbarMessages.ERROR,
-              snackbarMessage: snackbarMessages.SIGNUP_FAILURE,
+              snackbarMessage: response?.response?.data?.message,
             })
           );
         }
@@ -306,6 +307,7 @@ const SignupFormUtils = () => {
     passwordErrorMsg,
     setPasswordErrorMsg,
     passwordCheck,
+    isDisabled,
   };
 };
 

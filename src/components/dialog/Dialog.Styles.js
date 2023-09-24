@@ -22,7 +22,7 @@ export const getDialogStyles = makeStyles()((theme)=>({
         "&:focus": {
             outline:"none",
         },
-        "@media screen and (max-width: 899px)": {
+        "@media screen and (max-width: 900px)": {
             marginLeft:"0px",
         },
         "@media screen and (max-width:409px)": {

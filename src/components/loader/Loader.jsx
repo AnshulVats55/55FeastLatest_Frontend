@@ -23,7 +23,7 @@ const Loader = () => {
           width: "100px",
           height: "100px",
           border: "none",
-          "@media screen and (maxWidth: 399px)": {
+          "@media screen and (maxWidth: 400px)": {
             width: "75px",
             height: "75px",
           },

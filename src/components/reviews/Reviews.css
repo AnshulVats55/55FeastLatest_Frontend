@@ -6,7 +6,7 @@
   font-weight: 600;
 }
 
-@media screen and (max-width: 899px) {
+@media screen and (max-width: 900px) {
   .content .textStyles {
     font-size: 7rem;
   }
@@ -24,7 +24,7 @@
     }
   }
 
-@media screen and (max-width: 399px) {
+@media screen and (max-width: 400px) {
   .content .textStyles {
     font-size: 4.5rem;
   }

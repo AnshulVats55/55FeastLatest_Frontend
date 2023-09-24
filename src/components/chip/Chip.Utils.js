@@ -63,7 +63,7 @@ const ChipUtils = () => {
       date: getReversedDate(dateToBeChecked),
     };
     if (currentReversedDate === dateToBeChecked) {
-      if (currentHours >= 0 && currentHours <= 8 && isAlreadyBooked === true) {
+      if (currentHours >= 0 && currentHours < 10 && isAlreadyBooked === true) {
         setLoaderRequired(true);
         const response = await handleCancelMealBooking(prebookData);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
@@ -94,7 +94,7 @@ const ChipUtils = () => {
           setCustomSnackbar({
             snackbarOpen: true,
             snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: "Time limit exceeded !",
+            snackbarMessage: "Can't cancel after 10AM !",
           })
         );
         setLoaderRequired(false);

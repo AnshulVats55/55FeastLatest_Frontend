@@ -143,10 +143,8 @@ const Navbar = () => {
           snackbarMessage: snackbarMessages.LOGOUT_SUCCESSFULL,
         })
       );
-      setTimeout(() => {
-        navigate("/");
-        window.location.reload();
-      }, 1500);
+      navigate("/");
+      window.location.reload();
       dispatch(setIsLoading(false));
     } else {
       dispatch(
@@ -296,7 +294,7 @@ const Navbar = () => {
                 sx={{
                   fontSize: "1.5rem !important",
                   display: { xs: "flex", md: "none" },
-                  "@media screen and (max-width: 399px)": {
+                  "@media screen and (max-width: 400px)": {
                     fontSize: "1.10rem !important",
                   },
                 }}

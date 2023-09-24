@@ -72,14 +72,27 @@ const BookMealUtils = () => {
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
-        setIsStatusFetched(true);
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: snackbarMessages.MEMBER_MEAL_STATUS,
-          })
-        );
+        if (
+          response?.response?.data?.message === snackbarMessages.USER_NOT_VALID
+        ) {
+          setIsStatusFetched(true);
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.BOOK_YOUR_FIRST_MEAL,
+            })
+          );
+        } else {
+          setIsStatusFetched(true);
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.MEMBER_MEAL_STATUS,
+            })
+          );
+        }
       }
     };
     getMemberBookingStatus();
@@ -205,7 +218,7 @@ const BookMealUtils = () => {
         return true;
       } else {
         setIsMealCancellationOpen(false);
-        handleBookingNotifications("Time limit excedded !");
+        handleBookingNotifications("Can't cancel after 10AM !");
         return false;
       }
     } else if (currentDay === 5) {
@@ -215,7 +228,7 @@ const BookMealUtils = () => {
         return true;
       } else {
         setIsMealCancellationOpen(false);
-        handleBookingNotifications("Time limit excedded !");
+        handleBookingNotifications("Can't cancel after 10AM !");
         return false;
       }
     }

@@ -159,6 +159,7 @@ const BookForBuddyUtils = ({ open }) => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);
+      console.log("BFB", response);
       return response;
     }
   };

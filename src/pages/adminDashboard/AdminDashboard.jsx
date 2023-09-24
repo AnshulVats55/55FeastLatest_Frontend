@@ -431,7 +431,7 @@ const AdminDashboard = () => {
                             "&:focus": {
                               outline: "none",
                             },
-                            "@media screen and (max-width: 399px)": {
+                            "@media screen and (max-width: 400px)": {
                               fontSize: "0.8rem",
                             },
                           }}
@@ -475,7 +475,7 @@ const AdminDashboard = () => {
                             "&:focus": {
                               outline: "none",
                             },
-                            "@media screen and (max-width: 399px)": {
+                            "@media screen and (max-width: 400px)": {
                               fontSize: "0.8rem",
                             },
                           }}
@@ -521,7 +521,7 @@ const AdminDashboard = () => {
                             "@media screen and (max-width: 1199px)": {
                               width: "90% !important",
                             },
-                            "@media screen and (max-width: 399px)": {
+                            "@media screen and (max-width: 400px)": {
                               fontSize: "0.8rem",
                             },
                           }}

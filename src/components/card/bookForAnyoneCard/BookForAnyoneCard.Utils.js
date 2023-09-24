@@ -62,7 +62,9 @@ const BookForAnyoneCardUtils = () => {
             })
           );
         }
-      } else if (response?.response?.data?.status === "failure") {
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
         if (response?.response?.data?.message === "Internal server error") {
           dispatch(
             setCustomSnackbar({

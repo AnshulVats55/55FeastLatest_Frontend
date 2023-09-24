@@ -10,7 +10,7 @@ export const getAnimatedImageStyles = makeStyles()(() => ({
 
   getAnimatedImageStyles: {
     width: "65%",
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       width: "75%",
     },
   },
