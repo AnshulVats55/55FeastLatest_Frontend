@@ -49,6 +49,7 @@ const SignupForm = () => {
     gender,
     setGender,
     profilePicture,
+    profilePictureName,
     location,
     setLocation,
     email,
@@ -169,6 +170,7 @@ const SignupForm = () => {
             xs={12}
             sx={{
               display: "flex",
+              flexDirection: "column",
               justifyContent: "flex-start",
               alignItems: "center",
             }}
@@ -191,6 +193,14 @@ const SignupForm = () => {
                 Choose Picture
               </label>
             </motion.div>
+            <Typography
+              sx={{
+                fontSize: "0.8rem",
+                marginTop: "0.25rem",
+              }}
+            >
+              {profilePictureName && `Image selected: ${profilePictureName}`}
+            </Typography>
             <input
               id="files"
               type="file"

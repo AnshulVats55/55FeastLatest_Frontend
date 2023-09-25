@@ -26,6 +26,7 @@ const SignupFormUtils = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
+  const [profilePictureName, setProfilePictureName] = useState("");
   const [emailErrorMsg, setEmailErrorMsg] = useState({});
   const [passwordErrorMsg, setPasswordErrorMsg] = useState({});
   const [isProfilePicAttached, setIsProfilePicAttached] = useState(false);
@@ -67,8 +68,10 @@ const SignupFormUtils = () => {
 
   const handleProfilePictureChange = (event) => {
     const profilePic = event.target.files;
+    console.log(profilePic);
     if (profilePic && profilePic.length > 0) {
       getBase64(profilePic[0]);
+      setProfilePictureName(profilePic[0]?.name);
       setIsProfilePicAttached(true);
       setOpen(true);
     }
@@ -285,6 +288,7 @@ const SignupFormUtils = () => {
     gender,
     setGender,
     profilePicture,
+    profilePictureName,
     location,
     setLocation,
     email,
