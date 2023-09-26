@@ -11,9 +11,10 @@ export const getTooltipStyles = {
 
   getIconStyles: {
     color: "#EF5D36",
-    fontSize: "1.50rem",
+    fontSize: "1.25rem",
     cursor: "pointer",
-    marginRight: "0.25rem",
+    marginRight: "0.10rem",
+    borderRadius: "1rem",
   },
 
   getPopoverStyles: {
