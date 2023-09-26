@@ -22,8 +22,9 @@ const BookMealUtils = () => {
   });
   const prebookTooltip =
     "Meal cancellation restrictions don't apply to pre-booking for upcoming days !";
-  const bookForBuddyTooltip = "You can cancel your buddy's meal till 10AM !";
-  const mealBookingTooltip = "You can cancel your meal till 10AM !";
+  const bookForBuddyTooltip =
+    "You can't cancel your buddy's meal even if you booked it !";
+  const mealBookingTooltip = "You can cancel your meal only till 10AM !";
 
   const [bookForBuddyOpen, setBookForBuddyOpen] = useState(false);
   const [prebookOpen, setPrebookOpen] = useState(false);
