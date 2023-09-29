@@ -23,6 +23,7 @@ const InviteMemberCard = ({
   memberEmail,
   memberId,
   children,
+  isCancellationAllowed,
   animationDuration,
   isDataLoaded,
   handleAction,
@@ -173,7 +174,9 @@ const InviteMemberCard = ({
                 children={
                   isStatusCheckRequired
                     ? isAlreadyBooked
-                      ? "Cancel"
+                      ? isCancellationAllowed
+                        ? "Cancel"
+                        : "Booked"
                       : children
                     : children
                 }

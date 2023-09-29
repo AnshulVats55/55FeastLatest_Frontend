@@ -18,12 +18,14 @@ export const getSignupFormStyles = makeStyles()((theme) => ({
   },
 
   getBrandLogoStyles: {
-    "@media screen and (max-width: 599px)": {
+    width: "28%",
+    "@media screen and (max-width: 899px)": {
       width: "22.5%",
     },
     "@media screen and (max-width: 599px)": {
-      width:"30%",
+      width: "30%",
     },
+    background: "#EF5D36",
   },
 
   getTextOneStyles: {

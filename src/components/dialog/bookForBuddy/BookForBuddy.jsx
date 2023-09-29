@@ -87,6 +87,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                       memberId={memberId}
                       animationDuration={animationDuration}
                       children={children}
+                      isCancellationAllowed={false}
                       isDataLoaded={isDataLoaded}
                       isDashboard={false}
                       isEmailChopRequired={true}

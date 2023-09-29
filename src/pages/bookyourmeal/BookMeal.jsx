@@ -113,7 +113,7 @@ const BookMeal = () => {
           image={SoloImage}
           heading="Let’s Simplify Hunger"
           caption="Reserve your lunch spot now without a fuss!"
-          actionName={isBooked ? "Cancel booking" : "Book your meal"}
+          actionName={isBooked ? "Cancel booking" : "Rapid booking"}
           animationDuration={0.7}
           onClick={isBooked ? handleMealCancellation : handleMealBooking}
           isBooked={isBooked}

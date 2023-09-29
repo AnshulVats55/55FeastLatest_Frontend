@@ -15,10 +15,8 @@ import Reviews from "../reviews/Reviews";
 import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
 import OrangeImage from "../../assets/orange image.png";
-import RoutesUtils from "./Routes.Utils";
 
 const AllRoutes = () => {
-  const {} = RoutesUtils();
 
   return (
     <Router>

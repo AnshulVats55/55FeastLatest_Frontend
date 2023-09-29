@@ -27,7 +27,7 @@ import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { setIsLoading } from "../../store/slices/LoaderSlice";
 import Loader from "../loader/Loader";
 import snackbarMessages from "../../Constants";
-import BrandLogo from "../../../src/assets/55FeastLogo.png";
+import BrandLogo from "../../../src/assets/55FeastLogoNew.png";
 
 const LoginForm = () => {
   const { classes } = getLoginFormStyles();

@@ -128,6 +128,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                       memberId={memberId}
                       animationDuration={animationDuration}
                       children={children}
+                      isCancellationAllowed={true}
                       isDataLoaded={isDataLoaded}
                       isDashboard={false}
                       isEmailChopRequired={true}

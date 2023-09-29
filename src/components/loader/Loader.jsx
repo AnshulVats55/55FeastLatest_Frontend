@@ -8,7 +8,8 @@ import {
   getLoaderAnimations,
 } from "./Loader.Styles";
 import { motion } from "framer-motion";
-import BrandLogo from "../../assets/55FeastLogo.png";
+// import BrandLogo from "../../assets/55FeastLogo.png";
+import BrandLogo from "../../../src/assets/55FeastLogoNew.png";
 
 const Loader = () => {
   const { classes } = getCircularProgressStyles();

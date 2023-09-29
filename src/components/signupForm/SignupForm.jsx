@@ -29,7 +29,7 @@ import CustomDialog from "../dialog/Dialog";
 import { motion } from "framer-motion";
 import Loader from "../loader/Loader";
 import SignupFormUtils from "./SignupForm.Utils";
-import BrandLogo from "../../../src/assets/55FeastLogo.png";
+import BrandLogo from "../../../src/assets/55FeastLogoNew.png";
 
 const SignupForm = () => {
   const { classes } = getSignupFormStyles();
