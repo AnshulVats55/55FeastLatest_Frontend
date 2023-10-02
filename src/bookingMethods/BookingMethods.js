@@ -1,7 +1,6 @@
 import axios from "axios";
 import MEMBER_TOKEN from "../api/memberToken/MemberToken";
 import BASE_URL from "../api/baseUrl/BaseUrl";
-import { useSelector } from "react-redux";
 
 export const handleMemberCountBooking = async (memberData) => {
   //books single meal of next day for a member
@@ -66,15 +65,19 @@ export const handleMemberBookingStatus = async (memberEmail) => {
 
 export const handleMemberCountByDate = async (date, adminLocation) => {
   try {
-    const response = await axios.post(`${BASE_URL}/bookmeal/date/count?location=${adminLocation}`, date, {
-      headers: {
-        Authorization: `Bearer ${MEMBER_TOKEN}`,
-        "Content-Type": "application/json",
-        referrerPolicy: "no-referrer",
-        mode: "no-mode",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    const response = await axios.post(
+      `${BASE_URL}/bookmeal/date/count?location=${adminLocation}`,
+      date,
+      {
+        headers: {
+          Authorization: `Bearer ${MEMBER_TOKEN}`,
+          "Content-Type": "application/json",
+          referrerPolicy: "no-referrer",
+          mode: "no-mode",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
     return response;
   } catch (error) {
     return error;

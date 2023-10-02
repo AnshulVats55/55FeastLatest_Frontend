@@ -4,13 +4,20 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from "react";
 import { getHomePageStyles } from "./Home.Styles";
-import { Grid, Typography, Button, Skeleton } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Button,
+  Skeleton,
+  FormControlLabel,
+} from "@mui/material";
 import InvitationDialog from "../dialog/InvitationDialog";
 import MenuSwiper from "../swiper/MenuSwiper";
 import LunchImage from "../../assets/lunch image.png";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import OneSignal from "react-onesignal";
 
 const Home = () => {
   const { classes } = getHomePageStyles();
@@ -53,6 +60,18 @@ const Home = () => {
       setIsDataLoaded(true);
     }, 1500);
   }, [isDataLoaded]);
+
+  const initializeOneSignal = async () => {
+    await OneSignal.init({
+      appId: "ce31820a-68e6-4169-ad98-bc68562e36e6",
+      allowLocalhostAsSecureOrigin: true,
+    });
+    OneSignal.Slidedown.promptPush();
+  };
+
+  useEffect(() => {
+    initializeOneSignal();
+  }, []);
 
   const imageVariants = {
     bounce: {
@@ -150,6 +169,14 @@ const Home = () => {
                     >
                       Invite Members
                     </Button>
+                    {/* <Button
+                      onClick={() => {
+                        onHandleTag("prebook");
+                      }}
+                      className={classes.getInviteButtonStyles}
+                    >
+                      Notify user
+                    </Button> */}
                     {inviteOpen ? (
                       <InvitationDialog
                         open={inviteOpen}

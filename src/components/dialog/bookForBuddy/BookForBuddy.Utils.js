@@ -16,8 +16,8 @@ import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
 
 const BookForBuddyUtils = ({ open }) => {
-  const myData = useSelector((state) => {
-    return state.memberDataReducer;
+  const { email, location } = useSelector((state) => {
+    return state?.memberDataReducer;
   });
 
   const dispatch = useDispatch();
@@ -50,8 +50,9 @@ const BookForBuddyUtils = ({ open }) => {
 
   useEffect(() => {
     const handleMyBuddies = async () => {
-      const response = await getMyBuddies(myData.email, myData.location);
-      if (response?.data?.status === "success") {
+      const response = await getMyBuddies(email, location);
+      console.log("MY BUDDIES", response);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
       }
@@ -165,6 +166,7 @@ const BookForBuddyUtils = ({ open }) => {
   };
 
   return {
+    email,
     animationDuration,
     isDataLoaded,
     setSearchTerm,

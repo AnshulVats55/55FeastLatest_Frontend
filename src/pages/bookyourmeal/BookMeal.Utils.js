@@ -49,6 +49,7 @@ const BookMealUtils = () => {
   const memberDataToBeUsed = {
     email: memberData.email,
     date: dateToBeUsed,
+    bookedBy: memberData.email,
   };
 
   useEffect(() => {
@@ -62,14 +63,19 @@ const BookMealUtils = () => {
       console.log("STATUS", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
-        const allBookingDates = response?.data?.data;
+        const allBookingDates = response?.data?.data?.map((bookingData) => {
+          if (bookingData?.date !== undefined) {
+            return bookingData?.date;
+          }
+        });
+        console.log("ALREADY BOOKED DATES", allBookingDates);
         setAllBookedDates(allBookingDates);
         dispatch(getPrebookDates(allBookingDates));
-        if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
-          setIsBooked(true);
-        } else {
-          setIsBooked(false);
-        }
+        allBookingDates.map((bookedDate) => {
+          if (bookedDate === dateToBeUsed) {
+            setIsBooked(true);
+          }
+        });
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
@@ -211,7 +217,7 @@ const BookMealUtils = () => {
 
     if (currentDay >= 1 && currentDay <= 4) {
       if (currentHour >= 0 && currentHour < 10) {
-        //cancellation allowed from 12AM to 10AM the next day
+        //cancellation allowed from 12AM to 10AM
         setIsMealCancellationOpen(true);
         return true;
       } else if (currentHour >= 18 && currentHour <= 23) {

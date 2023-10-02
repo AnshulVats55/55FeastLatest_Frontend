@@ -21,6 +21,7 @@ import BookForBuddyUtils from "./BookForBuddy.Utils";
 const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
   const { classes } = getBookForBuddyDialogStyles();
   const {
+    email,
     animationDuration,
     isDataLoaded,
     memberData,
@@ -95,9 +96,11 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                       isStatusCheckRequired={true}
                       isButtonDisableRequired={true}
                       handleAction={() => {
+                        console.log("FUNCTION TRIGGERED");
                         const response = handleBookForBuddy({
-                          email: member.email,
+                          email: member?.email,
                           date: date,
+                          bookedBy: email,
                         });
                         return response;
                       }}
