@@ -249,10 +249,10 @@ const SignupFormUtils = () => {
     } else {
       if (emailValidator(email).status && passwordCheck(password).status) {
         dispatch(setIsLoading(true));
+        setIsDisabled(true);
         const response = await handleMemberSignup(memberData);
         // console.log("SIGNUP", response);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
-          setIsDisabled(true);
           dispatch(setIsLoading(false));
           dispatch(
             setCustomSnackbar({
@@ -266,6 +266,7 @@ const SignupFormUtils = () => {
           response?.response?.data?.status === snackbarMessages.FAILURE
         ) {
           dispatch(setIsLoading(false));
+          setIsDisabled(false);
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,

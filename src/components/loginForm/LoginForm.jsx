@@ -82,10 +82,9 @@ const LoginForm = () => {
       );
     } else {
       dispatch(setIsLoading(true));
+      setIsDisabled(true);
       const response = await handleMemberLogin(memberData);
-      // console.log("LOGIN", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
-        setIsDisabled(true);
         dispatch(setIsLoading(false));
         dispatch(
           setCustomSnackbar({
@@ -103,6 +102,7 @@ const LoginForm = () => {
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
         dispatch(setIsLoading(false));
+        setIsDisabled(false);
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
