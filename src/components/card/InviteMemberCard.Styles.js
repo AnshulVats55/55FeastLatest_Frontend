@@ -74,11 +74,27 @@ export const getInviteMemberCardStyles = makeStyles()((theme) => ({
 }));
 
 export const getInviteButtonCustomStyles = {
-  customStyles: (isActionButtonRequired, isAlreadyBooked) => {
+  customStyles: (
+    isActionButtonRequired,
+    isAlreadyBooked,
+    isButtonDisableRequired
+  ) => {
     return {
-      background: isAlreadyBooked ? "red" : "transparent",
-      color: isAlreadyBooked ? "#FFF" : "#ef5d36",
-      borderColor: isAlreadyBooked ? "red" : "#ef5d36",
+      background: isAlreadyBooked
+        ? isButtonDisableRequired
+          ? "lightgreen"
+          : "red"
+        : "transparent",
+      color: isAlreadyBooked
+        ? isButtonDisableRequired
+          ? "#000"
+          : "#FFF"
+        : "#ef5d36",
+      borderColor: isAlreadyBooked
+        ? isButtonDisableRequired
+          ? "#4CAF50"
+          : "#ef5d36"
+        : "",
       display: isActionButtonRequired ? "flex" : "none",
       "&:hover": {
         background: isAlreadyBooked ? "transparent" : "#ef5d36",

@@ -107,7 +107,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
               Book a lunch count for any member and help them to avail lunch
               without a miss
             </Typography>
-            <TextField
+            {/* <TextField
               type="search"
               placeholder="Search for any member..."
               variant="outlined"
@@ -115,7 +115,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
               className={classes.root}
               inputProps={{ className: classes.input }}
               onChange={handleMemberSearch}
-            />
+            /> */}
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {

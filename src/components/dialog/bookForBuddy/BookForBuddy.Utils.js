@@ -130,7 +130,7 @@ const BookForBuddyUtils = ({ open }) => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings closed for today !");
+        handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay === 5) {
@@ -159,7 +159,7 @@ const BookForBuddyUtils = ({ open }) => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);
-      console.log("BFB", response);
+      // console.log("BFB", response);
       return response;
     }
   };

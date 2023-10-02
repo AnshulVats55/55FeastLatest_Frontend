@@ -190,7 +190,11 @@ const InviteMemberCard = ({
                       : actionBeingPerformed(handleAction)
                     : actionBeingPerformed(handleAction);
                 }}
-                styles={customStyles(isActionButtonRequired, isAlreadyBooked)}
+                styles={customStyles(
+                  isActionButtonRequired,
+                  isAlreadyBooked,
+                  isButtonDisableRequired
+                )}
                 isButtonDisableRequired={
                   isAlreadyBooked ? isButtonDisableRequired : false
                 }

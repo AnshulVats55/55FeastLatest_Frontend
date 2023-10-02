@@ -59,16 +59,27 @@ const BookMealUtils = () => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(memberData.email);
-      console.log("STATUS", response);
+      // console.log("STATUS", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
-        const allBookingDates = response?.data?.data;
-        setAllBookedDates(allBookingDates);
-        dispatch(getPrebookDates(allBookingDates));
-        if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
-          setIsBooked(true);
+        if (response?.data?.message === snackbarMessages.BOOK_YOUR_FIRST_MEAL) {
+          setIsStatusFetched(true);
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: response.data.message,
+            })
+          );
         } else {
-          setIsBooked(false);
+          const allBookingDates = response?.data?.data;
+          setAllBookedDates(allBookingDates);
+          dispatch(getPrebookDates(allBookingDates));
+          if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
+            setIsBooked(true);
+          } else {
+            setIsBooked(false);
+          }
         }
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
@@ -136,7 +147,7 @@ const BookMealUtils = () => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings closed for today !");
+        handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay === 5) {

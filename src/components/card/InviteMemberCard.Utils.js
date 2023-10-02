@@ -18,6 +18,7 @@ const InviteMemberCardUtils = () => {
     new Date().getHours() >= 18 && new Date().getHours() <= 23
       ? nextDateFormatted
       : formattedDate;
+      // console.log("DTBC", dateToBeChecked);
 
   const dispatch = useDispatch();
 
@@ -121,8 +122,9 @@ const InviteMemberCardUtils = () => {
 
   const getBookingStatusOfMember = async (memberEmail) => {
     const response = await handleMemberBookingStatus(memberEmail);
+    // console.log("----->>>>>", response);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
-      setAllDatesBooked(response.data.data);
+      setAllDatesBooked(response?.data?.data);
     }
   };
 
