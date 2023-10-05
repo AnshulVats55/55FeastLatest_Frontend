@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
   Typography,
   Skeleton,
   Box,
@@ -30,6 +29,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
     descriptionElementRef,
     filteredUsers,
     handleBookForBuddy,
+    todaysCount,
   } = BookForBuddyUtils(open);
 
   return (
@@ -66,7 +66,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
               Book a lunch count for your buddy and invite them to have lunch
               with you
             </Typography>
-            <TextField
+            {/* <TextField
               type="search"
               placeholder="Search for your buddy..."
               variant="outlined"
@@ -74,11 +74,14 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
               className={classes.root}
               inputProps={{ className: classes.input }}
               onChange={handleMemberSearch}
-            />
+            /> */}
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {
                   const memberId = member._id;
+                  const isMembersTodaysMealBooked = !!todaysCount?.find(
+                    ({ email }) => member?.email === email
+                  );
                   return (
                     <InviteMemberCard
                       key={index}
@@ -95,9 +98,9 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
                       isButtonDisableRequired={true}
-                      handleAction={() => {
-                        console.log("FUNCTION TRIGGERED");
-                        const response = handleBookForBuddy({
+                      isAlreadyBooked={isMembersTodaysMealBooked}
+                      handleAction={async () => {
+                        const response = await handleBookForBuddy({
                           email: member?.email,
                           date: date,
                           bookedBy: email,

@@ -68,7 +68,7 @@ const SignupFormUtils = () => {
 
   const handleProfilePictureChange = (event) => {
     const profilePic = event.target.files;
-    console.log(profilePic);
+    // console.log(profilePic);
     if (profilePic && profilePic.length > 0) {
       getBase64(profilePic[0]);
       setProfilePictureName(profilePic[0]?.name);
@@ -249,10 +249,10 @@ const SignupFormUtils = () => {
     } else {
       if (emailValidator(email).status && passwordCheck(password).status) {
         dispatch(setIsLoading(true));
+        setIsDisabled(true);
         const response = await handleMemberSignup(memberData);
-        console.log("SIGNUP", response);
+        // console.log("SIGNUP", response);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
-          setIsDisabled(true);
           dispatch(setIsLoading(false));
           dispatch(
             setCustomSnackbar({
@@ -266,6 +266,7 @@ const SignupFormUtils = () => {
           response?.response?.data?.status === snackbarMessages.FAILURE
         ) {
           dispatch(setIsLoading(false));
+          setIsDisabled(false);
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,

@@ -6,14 +6,13 @@ import { useDispatch } from "react-redux";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { useState } from "react";
-import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
+// import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
 import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
 
-const InviteMemberCardUtils = () => {
+const InviteMemberCardUtils = (isAlreadyBooked) => {
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
   const nextDateFormatted = handleFormattedDate(nextDate);
-
   const dateToBeChecked =
     new Date().getHours() >= 18 && new Date().getHours() <= 23
       ? nextDateFormatted
@@ -21,9 +20,9 @@ const InviteMemberCardUtils = () => {
 
   const dispatch = useDispatch();
 
-  const [allDatesBooked, setAllDatesBooked] = useState([]);
-  const [isAlreadyBooked, setIsAlreadyBooked] = useState(false);
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
+  const [isMealBooked, setIsMealBooked] = useState(false);
+  const [isTodaysMealBooked, setIsTodaysMealBooked] = useState(true);
 
   const handleMemberName = (memberName) => {
     //chops member name
@@ -61,7 +60,8 @@ const InviteMemberCardUtils = () => {
             })
           );
         } else if (response?.data?.message === "Meal booked successfully") {
-          setIsAlreadyBooked(true);
+          setIsMealBooked(true);
+          setIsTodaysMealBooked(true);
           setIsLoaderRequired(false);
           dispatch(
             setCustomSnackbar({
@@ -119,24 +119,17 @@ const InviteMemberCardUtils = () => {
     }
   };
 
-  const getBookingStatusOfMember = async (memberEmail) => {
-    const response = await handleMemberBookingStatus(memberEmail);
-    if (response?.data?.status === snackbarMessages.SUCCESS) {
-      setAllDatesBooked(response.data.data);
-    }
-  };
-
   return {
     dateToBeChecked,
-    allDatesBooked,
-    isAlreadyBooked,
-    setIsAlreadyBooked,
     handleMemberName,
     handleMemberEmail,
     actionBeingPerformed,
-    getBookingStatusOfMember,
     isLoaderRequired,
     setIsLoaderRequired,
+    isMealBooked,
+    setIsMealBooked,
+    isTodaysMealBooked,
+    setIsTodaysMealBooked,
   };
 };
 

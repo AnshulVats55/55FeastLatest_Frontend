@@ -74,16 +74,58 @@ export const getInviteMemberCardStyles = makeStyles()((theme) => ({
 }));
 
 export const getInviteButtonCustomStyles = {
-  customStyles: (isActionButtonRequired, isAlreadyBooked) => {
+  customStyles: (
+    isActionButtonRequired,
+    isAlreadyBooked,
+    isMealBooked,
+    isTodaysMealBooked,
+    isButtonDisableRequired
+  ) => {
     return {
-      background: isAlreadyBooked ? "red" : "transparent",
-      color: isAlreadyBooked ? "#FFF" : "#ef5d36",
-      borderColor: isAlreadyBooked ? "red" : "#ef5d36",
+      background:
+        isAlreadyBooked && isTodaysMealBooked
+          ? isButtonDisableRequired
+            ? "lightgreen"
+            : "red"
+          : isMealBooked
+          ? "red"
+          : "transparent",
+      color:
+        isAlreadyBooked && isTodaysMealBooked
+          ? isButtonDisableRequired
+            ? "#000"
+            : "#FFF"
+          : isMealBooked
+          ? "#FFF"
+          : "#ef5d36",
+      borderColor:
+        isAlreadyBooked && isTodaysMealBooked
+          ? isButtonDisableRequired
+            ? "#4CAF50"
+            : "red"
+          : isMealBooked
+          ? "red"
+          : "#ef5d36",
       display: isActionButtonRequired ? "flex" : "none",
       "&:hover": {
-        background: isAlreadyBooked ? "transparent" : "#ef5d36",
-        color: isAlreadyBooked ? "red" : "#FFF",
-        borderColor: isAlreadyBooked ? "red" : "#ef5d36",
+        background:
+          isAlreadyBooked && isTodaysMealBooked
+            ? "transparent"
+            : isMealBooked
+            ? "transparent"
+            : "#ef5d36",
+        color:
+          isAlreadyBooked && isTodaysMealBooked
+            ? "red"
+            : isMealBooked
+            ? "red"
+            : "#FFF",
+        borderColor:
+          isAlreadyBooked && isTodaysMealBooked
+            ? "red"
+            : isMealBooked
+            ? "red"
+            : "#ef5d36",
       },
       "@media screen and (max-width: 615px)": {
         fontSize: "0.8rem",
