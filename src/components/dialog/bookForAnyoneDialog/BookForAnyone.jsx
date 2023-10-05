@@ -29,11 +29,11 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
     setIsDataLoaded,
     searchTerm,
     myBuddies,
-    setMyBuddies,
     memberData,
     date,
     handleMemberSearch,
     checkMealBookingAvailability,
+    todaysCount,
   } = BookForAnyoneUtils();
 
   let animationDuration = 0.4;
@@ -48,23 +48,11 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
     }
   }, [open]);
 
-  useEffect(() => {
-    const handleAllMembers = async () => {
-      const response = await getMyBuddies(myData.email, myData.location);
-      if (response?.data?.status === "success") {
-        setMyBuddies(response?.data?.data);
-        setIsDataLoaded(true);
-      }
-    };
-
-    handleAllMembers();
-  }, []);
-
   const filteredUsers = myBuddies?.filter((member) =>
     member.fullName.toLowerCase().includes(searchTerm)
   );
 
-  const handleBookForBuddy = async (buddyData) => {
+  const handleBookForAnyone = async (buddyData) => {
     //handles meal booking for buddies
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
@@ -120,6 +108,9 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {
                   const memberId = member._id;
+                  let isMembersTodaysMealBooked = !!todaysCount.find(
+                    ({ email }) => member?.email === email
+                  );
                   return (
                     <InviteMemberCard
                       indexNumber={index + 1}
@@ -135,8 +126,9 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
                       isButtonDisableRequired={false}
+                      isAlreadyBooked={isMembersTodaysMealBooked}
                       handleAction={() => {
-                        const response = handleBookForBuddy({
+                        const response = handleBookForAnyone({
                           email: member.email,
                           date: date,
                         });

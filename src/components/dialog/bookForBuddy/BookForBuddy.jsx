@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
   Typography,
   Skeleton,
   Box,
@@ -29,6 +28,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
     descriptionElementRef,
     filteredUsers,
     handleBookForBuddy,
+    todaysCount,
   } = BookForBuddyUtils(open);
 
   return (
@@ -78,6 +78,9 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {
                   const memberId = member._id;
+                  const isMembersTodaysMealBooked = !!todaysCount?.find(
+                    ({ email }) => member?.email === email
+                  );
                   return (
                     <InviteMemberCard
                       key={index}
@@ -94,9 +97,10 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
                       isButtonDisableRequired={true}
-                      handleAction={() => {
-                        const response = handleBookForBuddy({
-                          email: member.email,
+                      isAlreadyBooked={isMembersTodaysMealBooked}
+                      handleAction={async () => {
+                        const response = await handleBookForBuddy({
+                          email: member?.email,
                           date: date,
                         });
                         return response;

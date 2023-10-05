@@ -10,6 +10,8 @@ import {
 import {
   getMyBuddies,
   bookMealForBuddy,
+  handleMemberCountByDate,
+  getCountsByDate,
 } from "../../../bookingMethods/BookingMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
@@ -26,6 +28,7 @@ const BookForBuddyUtils = ({ open }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [myBuddies, setMyBuddies] = useState([]);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [todaysCount, setTodaysCount] = useState([]);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -51,13 +54,38 @@ const BookForBuddyUtils = ({ open }) => {
   useEffect(() => {
     const handleMyBuddies = async () => {
       const response = await getMyBuddies(myData.email, myData.location);
-      if (response?.data?.status === "success") {
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        console.log("Error");
       }
     };
 
     handleMyBuddies();
+  }, []);
+
+  useEffect(() => {
+    const handleGetCountsByDate = async () => {
+      const response = await getCountsByDate(date, myData?.location);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setTodaysCount(response?.data?.data);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Error fetching buddies !",
+          })
+        );
+      }
+    };
+
+    handleGetCountsByDate();
   }, []);
 
   const memberData = [
@@ -159,7 +187,6 @@ const BookForBuddyUtils = ({ open }) => {
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);
-      // console.log("BFB", response);
       return response;
     }
   };
@@ -174,6 +201,7 @@ const BookForBuddyUtils = ({ open }) => {
     descriptionElementRef,
     filteredUsers,
     handleBookForBuddy,
+    todaysCount,
   };
 };
 
