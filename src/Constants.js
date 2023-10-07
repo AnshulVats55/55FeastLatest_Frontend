@@ -64,6 +64,7 @@ const TRY_AGAIN = "Please try again !";
 const MEMBER_MEAL_STATUS = "Error fetching status !";
 const USER_NOT_VALID = "user not valid";
 const BOOK_YOUR_FIRST_MEAL = "Book your first meal";
+const BOOKED_DATES_FETCHED = "booked dates fetched successfully";
 
 export default {
   SUCCESS,

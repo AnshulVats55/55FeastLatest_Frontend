@@ -52,7 +52,7 @@ const BookForBuddyUtils = ({ open }) => {
 
   useEffect(() => {
     const handleMyBuddies = async () => {
-      const response = await getMyBuddies(myData.email, myData.location);
+      const response = await getMyBuddies(email, location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
@@ -68,7 +68,7 @@ const BookForBuddyUtils = ({ open }) => {
 
   useEffect(() => {
     const handleGetCountsByDate = async () => {
-      const response = await getCountsByDate(date, myData?.location);
+      const response = await getCountsByDate(date, location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setTodaysCount(response?.data?.data);
       } else if (

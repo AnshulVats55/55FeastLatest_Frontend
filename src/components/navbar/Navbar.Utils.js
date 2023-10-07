@@ -175,6 +175,7 @@ const NavbarUtils = () => {
   };
 
   return {
+    navigate,
     isAdmin,
     photo,
     gender,

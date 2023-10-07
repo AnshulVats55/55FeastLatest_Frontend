@@ -59,8 +59,8 @@ const BookMealUtils = () => {
   useEffect(() => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
-      const response = await handleMemberBookingStatus(memberData.email);
-      // console.log("STATUS", response);
+      const response = await handleMemberBookingStatus(memberData?.email);
+      console.log("STATUS", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
         if (response?.data?.message === snackbarMessages.BOOK_YOUR_FIRST_MEAL) {

@@ -30,6 +30,7 @@ import NotificationCard from "../notificationCard/NotificationCard";
 const Navbar = () => {
   const { classes } = getNavbarStyles();
   const {
+    navigate,
     isAdmin,
     photo,
     gender,
@@ -281,7 +282,7 @@ const Navbar = () => {
                   background: "",
                 }}
               >
-                <Badge
+                {/* <Badge
                   badgeContent={isNotificationTriggered ? "New" : "0"}
                   color="success"
                   className={classes.getBadgeStyles}
@@ -328,8 +329,13 @@ const Navbar = () => {
                       />
                     )}
                   </Popover>
-                </Badge>
-                <IconButton sx={{ p: 0, marginRight: "1rem" }}>
+                </Badge> */}
+                <IconButton
+                  sx={{ p: 0, marginRight: "1rem" }}
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
                   <Avatar
                     src={
                       photo
@@ -383,7 +389,7 @@ const Navbar = () => {
                 alignItems: "center",
               }}
             >
-              <Badge
+              {/* <Badge
                 color="success"
                 className={classes.getBadgeStyles}
                 badgeContent={isNotificationTriggered ? "1" : "0"}
@@ -430,7 +436,7 @@ const Navbar = () => {
                     />
                   )}
                 </Popover>
-              </Badge>
+              </Badge> */}
               <IconButton
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, marginRight: "0.5rem" }}
