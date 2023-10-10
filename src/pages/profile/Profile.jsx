@@ -36,6 +36,7 @@ const UserProfile = () => {
     chipTypographyStyles,
     bookYourMealButtonStyles,
     tableColumnTypographyStyles,
+    headerGridItemStyles,
   } = getUserProfileStyles;
 
   return (
@@ -78,7 +79,7 @@ const UserProfile = () => {
               icon={
                 <ModeEdit sx={iconTwoStyles(optionSelected)} color="inherit" />
               }
-              label="Reviews"
+              label={<Typography sx={chipTypographyStyles}>Reviews</Typography>}
               variant="outlined"
               clickable
               sx={chipTwoStyles(optionSelected)}
@@ -96,20 +97,20 @@ const UserProfile = () => {
         </Box>
       </Grid>
       {optionSelected === "history" && (
-        <Grid container item xs={12} sx={{ background: "" }}>
-          <Grid item lg={1} md={1} sm={0} xs={0}>
+        <Grid container item xs={12} sx={{ marginTop: "0.5rem" }}>
+          <Grid item lg={1} md={1} sm={1} xs={2.5}>
             <Typography sx={tableColumnTypographyStyles}>Profile</Typography>
           </Grid>
-          <Grid item lg={2} md={2} sm={4} xs={4}>
+          <Grid item lg={2} md={2} sm={2} xs={3.5}>
             <Typography sx={tableColumnTypographyStyles}>Date</Typography>
           </Grid>
-          <Grid item lg={3} md={3} sm={3} xs={0}>
+          <Grid item lg={3} md={3} sm={3} xs={4}>
             <Typography sx={tableColumnTypographyStyles}>Booked by</Typography>
           </Grid>
-          <Grid item lg={4} md={4} sm={5} xs={8}>
+          <Grid item lg={4} md={4} sm={4} xs={0} sx={headerGridItemStyles}>
             <Typography sx={tableColumnTypographyStyles}>Email</Typography>
           </Grid>
-          <Grid item lg={2} md={2} sm={0} xs={0}>
+          <Grid item lg={2} md={2} sm={2} xs={2}>
             <Typography sx={tableColumnTypographyStyles}>Status</Typography>
           </Grid>
         </Grid>

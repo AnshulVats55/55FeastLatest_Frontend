@@ -16,9 +16,6 @@ export const BookingHistoryTableStyles = {
     display: "flex",
     alignItems: "center",
     padding: "0.5rem 0.25rem",
-    "@media screen and (max-width: 900px)": {
-      display: "none",
-    },
   },
 
   avatarStyles: {
@@ -43,29 +40,29 @@ export const BookingHistoryTableStyles = {
     display: "flex",
     alignItems: "center",
     padding: "0.5rem 0rem",
-    "@media screen and (max-width: 600px)": {
-      display: "none",
-    },
   },
 
   gridItemFourStyles: {
     display: "flex",
     alignItems: "center",
     padding: "0.5rem 0rem",
+    "@media screen and (max-width: 600px)": {
+      display: "none",
+    },
   },
 
   gridItemFiveStyles: {
     display: "flex",
     alignItems: "center",
     padding: "0.5rem 0rem",
-    "@media screen and (max-width: 900px)": {
-      display: "none",
-    },
   },
 
   typographyStyles: {
     fontSize: "0.9rem",
     fontFamily: "Poppins, sans-serif",
+    "@media screen and (max-width: 400px)": {
+      fontSize: "0.8rem",
+    },
   },
 
   statusTextStyles: {
@@ -78,5 +75,13 @@ export const BookingHistoryTableStyles = {
     fontFamily: "Poppins, sans-serif",
     border: "none",
     borderRadius: "0.25rem",
+    "@media screen and (max-width: 600px)": {
+      fontSize: "0.80rem",
+      padding: "0.09rem 0.40rem",
+    },
+    "@media screen and (max-width: 400px)": {
+      fontSize: "0.75rem",
+      padding: "0.09rem 0.30rem",
+    },
   },
 };

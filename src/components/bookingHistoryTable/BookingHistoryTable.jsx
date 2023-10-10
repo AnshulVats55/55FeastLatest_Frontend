@@ -28,6 +28,9 @@ const BookingHistoryTable = ({ isDataLoaded, memberBookingData }) => {
     gridItemFiveStyles,
     typographyStyles,
     statusTextStyles,
+    headerGridItemOneStyles,
+    headerGridItemThreeStyles,
+    headerGridItemFiveStyles,
   } = BookingHistoryTableStyles;
 
   return (
@@ -37,27 +40,27 @@ const BookingHistoryTable = ({ isDataLoaded, memberBookingData }) => {
           memberBookingData.map((memberData, index) => {
             return (
               <Grid container item xs={12} sx={gridContStyles} key={index}>
-                <Grid item lg={1} md={1} sm={0} xs={0} sx={gridItemOneStyles}>
+                <Grid item lg={1} md={1} sm={1} xs={2.5} sx={gridItemOneStyles}>
                   <Avatar sx={avatarStyles}>
                     {memberData?.bookedBy.substring(0, 1)}
                   </Avatar>
                 </Grid>
-                <Grid item lg={2} md={2} sm={4} xs={4} sx={gridItemTwoStyles}>
+                <Grid item lg={2} md={2} sm={2} xs={3.5} sx={gridItemTwoStyles}>
                   <Typography sx={typographyStyles}>
                     {memberData?.date?.split("-").reverse().join("-")}
                   </Typography>
                 </Grid>
-                <Grid item lg={3} md={3} sm={3} xs={0} sx={gridItemThreeStyles}>
+                <Grid item lg={3} md={3} sm={3} xs={4} sx={gridItemThreeStyles}>
                   <Typography sx={typographyStyles}>
                     {memberData?.bookedBy}
                   </Typography>
                 </Grid>
-                <Grid item lg={4} md={4} sm={5} xs={8} sx={gridItemFourStyles}>
+                <Grid item lg={4} md={4} sm={4} xs={0} sx={gridItemFourStyles}>
                   <Typography sx={typographyStyles}>
                     {memberData?.bookedByEmail}
                   </Typography>
                 </Grid>
-                <Grid item lg={2} md={2} sm={0} xs={0} sx={gridItemFiveStyles}>
+                <Grid item lg={2} md={2} sm={2} xs={2} sx={gridItemFiveStyles}>
                   <Typography sx={statusTextStyles}>Availed</Typography>
                 </Grid>
               </Grid>

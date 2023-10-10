@@ -60,7 +60,6 @@ const BookMealUtils = () => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(memberData?.email);
-      console.log("STATUS", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
         if (response?.data?.message === snackbarMessages.BOOK_YOUR_FIRST_MEAL) {
@@ -73,7 +72,9 @@ const BookMealUtils = () => {
             })
           );
         } else {
-          const allBookingDates = response?.data?.data;
+          const allBookingDates = response?.data?.data.map((data) => {
+            return data?.date;
+          });
           setAllBookedDates(allBookingDates);
           dispatch(getPrebookDates(allBookingDates));
           if (allBookingDates?.indexOf(dateToBeUsed) > -1) {

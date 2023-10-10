@@ -71,6 +71,9 @@ export const getUserProfileStyles = {
     return {
       color: optionSelected === "history" ? "#EF5D36" : "",
       fontSize: "1.25rem",
+      "@media screen and (max-width: 400px)": {
+        fontSize: "1rem",
+      },
     };
   },
 
@@ -87,12 +90,18 @@ export const getUserProfileStyles = {
     return {
       color: optionSelected === "reviews" ? "#EF5D36" : "",
       fontSize: "1.25rem",
+      "@media screen and (max-width: 400px)": {
+        fontSize: "0.8rem",
+      },
     };
   },
 
   chipTypographyStyles: {
     fontSize: "1rem",
     fontFamily: "Poppins, sans-serif",
+    "@media screen and (max-width: 400px)": {
+      fontSize: "0.8rem",
+    },
   },
 
   bookYourMealButtonStyles: {
@@ -113,11 +122,32 @@ export const getUserProfileStyles = {
     "&:focus": {
       outline: "none",
     },
+    "@media screen and (max-width: 900px)": {
+      fontSize: "0.95rem",
+    },
+    "@media screen and (max-width: 600px)": {
+      fontSize: "0.9rem",
+    },
+    "@media screen and (max-width:400px)": {
+      fontSize: "0.80rem",
+    },
+    "@media screen and (max-width:360px)": {
+      fontSize: "0.75rem",
+    },
   },
 
   tableColumnTypographyStyles: {
     fontSize: "1rem",
     fontWeight: 500,
     fontFamily: "Poppins, sans-serif",
+    "@media screen and (max-width: 400px)": {
+      fontSize: "0.9rem",
+    },
+  },
+
+  headerGridItemStyles: {
+    "@media screen and (max-width: 600px)": {
+      display: "none",
+    },
   },
 };
