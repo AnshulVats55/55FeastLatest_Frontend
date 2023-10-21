@@ -63,20 +63,53 @@ export const NewAdminDashboardStyles = {
   },
 
   gridItemFiveStyles: {
-    background:"lightblue",
+    background: "lightblue",
   },
 
   gridItemSixStyles: {
-    background: "lightgreen",
-    height: "30vh",
-    maxHeight: "30vh",
+    background: "#FFF",
+    padding: "0rem 0.75rem",
+    background:"",
+    alignSelf: "start",
   },
 
   gridItemSevenStyles: {
-    padding:"0.25rem 0.5rem",
+    padding: "0.25rem 0.75rem",
+    maxHeight: "30vh",
+    width: "100%",
+    border:"none",
   },
 
   gridItemEightStyles: {
+    background: "",
+  },
 
+  boxOneStyles: {
+    width: "100%",
+    height: "50vh",
+    maxHeight: "50vh",
+    background: "#FFF",
+    boxShadow:
+      "rgba(145, 158, 171, 0.3) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px",
+    border: "none",
+    borderRadius: "0.5rem",
+    overflowY: "scroll",
+    "&::-webkit-scrollbar": { display: "none" },
+    marginBottom: "1rem",
+  },
+
+  boxTwoStyles: {
+    
+  },
+
+  typographyOneStyles: {
+    background: "#FFEAE4",
+    color:"#EF5D36",
+    fontSize: "0.85rem",
+    fontWeight: 500,
+    padding:"0.25rem 0.75rem",
+    border:"none",
+    borderRadius: "0.25rem",
+    marginBottom:"0.5rem",
   },
 };

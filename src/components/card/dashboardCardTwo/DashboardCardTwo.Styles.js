@@ -4,27 +4,13 @@ export const DashboardCardTwoStyles = {
       display: "flex",
       alignItems: "center",
       padding: "0.5rem",
-      border: "none",
       borderRadius: "0.5rem",
       cursor: "pointer",
       transition: "0.3s ease-in-out",
-      background:
-        index === 0
-          ? "#ECF3FE"
-          : index === 1
-          ? "#FEF5E5"
-          : index === 2
-          ? "#FDEDE8"
-          : index === 3
-          ? "#E6FEFB"
-          : index === 4
-          ? "#EBF2FF"
-          : index === 5
-          ? "#FCEBFF"
-          : "",
-      "&:hover": {
-        // boxShadow: "rgba(0, 0, 0, 0.15) 0px 3px 3px 0px",
-      },
+      background: "#FFF",
+      boxShadow:
+        "rgba(145, 158, 171, 0.3) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px",
+      border: "none",
     };
   },
 

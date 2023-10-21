@@ -1,17 +1,18 @@
 export const DailyCountCardStyles = {
   topContStyles: {
-    background: "violet",
+    // background: "pink",
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
-    border: "none",
-    borderRadius: "0.5rem",
+    borderBottom:"1px solid #E5EAEF",
     padding: "0.25rem 0",
+    cursor:"pointer",
   },
 
   typographyOneStyles: {
     fontSize: "0.9rem",
     fontWeight: 500,
+    fontFamily: "Poppins, sans-serif",
   },
 
   avatarStyles: {
@@ -24,7 +25,6 @@ export const DailyCountCardStyles = {
 
   boxOneStyles: {
     width: "5%",
-    // background: "orange",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -33,7 +33,6 @@ export const DailyCountCardStyles = {
 
   boxTwoStyles: {
     width: "10%",
-    // background: "blue",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -42,7 +41,6 @@ export const DailyCountCardStyles = {
 
   boxThreeStyles: {
     width: "70%",
-    // background: "brown",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -52,7 +50,6 @@ export const DailyCountCardStyles = {
 
   boxFourStyles: {
     width: "15%",
-    // background: "pink",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -62,16 +59,33 @@ export const DailyCountCardStyles = {
   typographyTwoStyles: {
     fontSize: "0.9rem",
     fontWeight: 500,
+    fontFamily: "Poppins, sans-serif",
   },
 
   typographyThreeStyles: {
     fontSize: "0.7rem",
-    color: "#DADADA",
+    color: "C1C1C1",
     fontWeight: 400,
+    fontFamily: "Poppins, sans-serif",
   },
 
   typographyFourStyles: {
-    fontSize: "0.8rem",
+    fontSize: "0.7rem",
     fontWeight: 400,
+    background: "#DEFFDF",
+    color: "#4CAF50",
+    padding: "0.1rem 0.5rem",
+    border: "1px solid #4FAC50",
+    fontFamily: "Poppins, sans-serif",
+    border: "none",
+    borderRadius: "0.25rem",
+    "@media screen and (max-width: 600px)": {
+      fontSize: "0.80rem",
+      padding: "0.09rem 0.40rem",
+    },
+    "@media screen and (max-width: 400px)": {
+      fontSize: "0.75rem",
+      padding: "0.09rem 0.30rem",
+    },
   },
 };

@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import DashboardCardOne from "../../components/card/dashboardCardOne/DashboardCardOne";
 import DashboardCardTwo from "../../components/card/dashboardCardTwo/DashboardCardTwo";
 import DailyCountCard from "../../components/card/DailyCountCard/DailyCountCard";
+import WeeklyDataGraph from "../../components/weeklyDataGraph/WeeklyDataGraph";
 
 const NewAdminDashboard = () => {
   const { bookingDataArray, adminActionsArray, dailyDataArray } =
@@ -17,6 +18,9 @@ const NewAdminDashboard = () => {
     gridItemSixStyles,
     gridItemSevenStyles,
     gridItemEightStyles,
+    boxOneStyles,
+    boxTwoStyles,
+    typographyOneStyles,
   } = NewAdminDashboardStyles;
 
   return (
@@ -67,31 +71,28 @@ const NewAdminDashboard = () => {
         To be decided
       </Grid>
       <Grid container item lg={6} md={6} xs={12} sx={gridItemSixStyles}>
-        {dailyDataArray?.map((dailyData, index) => {
-          return (
-            <Grid item xs={12} key={index} sx={gridItemSevenStyles}>
-              <DailyCountCard
-                id={index + 1}
-                memberName={dailyData.memberName}
-                memberEmail={dailyData.memberEmail}
-                status={dailyData.status}
-              />
-            </Grid>
-          );
-        })}
+        <Box sx={boxTwoStyles}>
+          <Typography sx={typographyOneStyles}>
+            Member's joining today
+          </Typography>
+        </Box>
+        <Box sx={boxOneStyles}>
+          {dailyDataArray?.map((dailyData, index) => {
+            return (
+              <Grid item xs={12} key={index} sx={gridItemSevenStyles}>
+                <DailyCountCard
+                  id={index + 1}
+                  memberName={dailyData.memberName}
+                  memberEmail={dailyData.memberEmail}
+                  status={dailyData.status}
+                />
+              </Grid>
+            );
+          })}
+        </Box>
       </Grid>
-      <Grid
-        item
-        lg={6}
-        md={6}
-        xs={12}
-        sx={{
-          background: "orange",
-          overflowY: "scroll",
-          "&::-webkit-scrollbar": { display: "none" },
-        }}
-      >
-        Daily count table
+      <Grid item lg={6} md={6} xs={12} sx={gridItemEightStyles}>
+        <WeeklyDataGraph />
       </Grid>
     </Grid>
   );
