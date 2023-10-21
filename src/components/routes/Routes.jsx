@@ -15,6 +15,7 @@ import Reviews from "../reviews/Reviews";
 import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
 import OrangeImage from "../../assets/orange image.png";
+import NewAdminDashboard from "../../pages/newAdminDashboard/NewAdminDashboard";
 
 const AllRoutes = () => {
 
@@ -39,6 +40,11 @@ const AllRoutes = () => {
               exact
               path="/dashboard"
               element={<CommonLayout component={<AdminDashboard />} />}
+            />
+            <Route
+              exact
+              path="/admin"
+              element={<CommonLayout component={<NewAdminDashboard />} />}
             />
             <Route
               exact

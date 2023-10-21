@@ -4,12 +4,10 @@
 /* eslint-disable no-restricted-globals */
 import { Box, Typography } from "@mui/material";
 import { getReviewsStyles } from "./Reviews.Styles";
-import ReviewsUtils from "./Reviews.Utils";
 import "./Reviews.css";
 
 const Reviews = () => {
   const { classes } = getReviewsStyles();
-  const {} = ReviewsUtils();
 
   return (
     <Box className={classes.getTopContStyles}>

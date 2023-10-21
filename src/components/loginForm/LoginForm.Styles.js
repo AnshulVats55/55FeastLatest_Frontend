@@ -19,7 +19,7 @@ export const getLoginFormStyles = makeStyles()((theme) => ({
 
   getBrandLogoStyles: {
     width: "28%",
-    "@media screen and (max-width: 599px)": {
+    "@media screen and (max-width: 899px)": {
       width: "22.5%",
     },
     "@media screen and (max-width: 599px)": {
