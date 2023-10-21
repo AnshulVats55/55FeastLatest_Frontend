@@ -51,5 +51,7 @@ export const getMonthName = () => {
       return "November";
     case 11:
       return "December";
+    default:
+      return "";
   }
 };
