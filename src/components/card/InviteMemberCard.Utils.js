@@ -49,7 +49,7 @@ const InviteMemberCardUtils = (isAlreadyBooked) => {
     try {
       setIsLoaderRequired(true);
       const response = await handleAction();
-      if (response?.data?.status === "success") {
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
         if (response?.data?.message === "Invited successfully") {
           setIsLoaderRequired(false);
           dispatch(

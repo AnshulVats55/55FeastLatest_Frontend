@@ -20,11 +20,10 @@ import BookForBuddyUtils from "./BookForBuddy.Utils";
 const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
   const { classes } = getBookForBuddyDialogStyles();
   const {
+    email,
     animationDuration,
     isDataLoaded,
-    memberData,
     date,
-    handleMemberSearch,
     descriptionElementRef,
     filteredUsers,
     handleBookForBuddy,
@@ -65,15 +64,6 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
               Book a lunch count for your buddy and invite them to have lunch
               with you
             </Typography>
-            {/* <TextField
-              type="search"
-              placeholder="Search for your buddy..."
-              variant="outlined"
-              multiline
-              className={classes.root}
-              inputProps={{ className: classes.input }}
-              onChange={handleMemberSearch}
-            /> */}
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {
@@ -102,6 +92,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                         const response = await handleBookForBuddy({
                           email: member?.email,
                           date: date,
+                          bookedBy: email,
                         });
                         return response;
                       }}
@@ -120,26 +111,18 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                 </Typography>
               )
             ) : (
-              memberData?.map((member, index) => {
-                return (
-                  <Skeleton
-                    animation="wave"
-                    sx={{ minWidth: "100% !important" }}
-                  >
-                    <InviteMemberCard
+              Array(6)
+                .fill()
+                .map((data, index) => {
+                  return (
+                    <Skeleton
+                      variant="rectangular"
+                      animation="wave"
                       key={index}
-                      indexNumber={index + 1}
-                      memberName={member.memberName}
-                      memberEmail={member.memberEmail}
-                      animationDuration={animationDuration}
-                      children="Book"
-                      isDataLoaded={isDataLoaded}
-                      isButtonRequired={true}
-                      isEmailChopRequired={true}
-                    />
-                  </Skeleton>
-                );
-              })
+                      className={classes.skeletonStyles}
+                    ></Skeleton>
+                  );
+                })
             )}
           </DialogContentText>
         </DialogContent>

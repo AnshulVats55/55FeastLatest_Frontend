@@ -14,7 +14,7 @@ import {
   Skeleton,
 } from "@mui/material";
 import InviteMemberCard from "../../card/InviteMemberCard";
-import { getDeleteMemberDialogStyles } from "./DeleteMemberDialog.Styles";
+import { DeleteMemberDialogStyles } from "./DeleteMemberDialog.Styles";
 import DeleteMemberDialogUtils from "./DeleteMemberDialog.Utils";
 
 const DeleteMemberDialog = ({
@@ -24,12 +24,18 @@ const DeleteMemberDialog = ({
   children,
   placeholder,
 }) => {
-  const { classes } = getDeleteMemberDialogStyles();
+  const {
+    getDialogTitleStyles,
+    getDialogContentStyles,
+    getDialogContentTextStyles,
+    root,
+    getCloseButtonStyles,
+    skeletonStyles,
+  } = DeleteMemberDialogStyles;
   const {
     isDataLoaded,
     animationDuration,
     descriptionElementRef,
-    memberData,
     filteredUsers,
     handleMemberSearch,
     handleDeleteExistingMember,
@@ -43,23 +49,19 @@ const DeleteMemberDialog = ({
         scroll={scroll}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
-        className={classes.getDialogBoxStyles}
       >
-        <DialogTitle
-          id="scroll-dialog-title"
-          className={classes.getDialogTitleStyles}
-        >
+        <DialogTitle id="scroll-dialog-title" sx={getDialogTitleStyles}>
           Delete Members
         </DialogTitle>
         <DialogContent
           dividers={scroll === "paper"}
-          className={classes.getDialogContentStyles}
+          sx={getDialogContentStyles}
         >
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
-            className={classes.getDialogContentTextStyles}
+            sx={getDialogContentTextStyles}
           >
             <Typography
               sx={{
@@ -77,7 +79,7 @@ const DeleteMemberDialog = ({
               placeholder={placeholder}
               variant="outlined"
               multiline
-              className={classes.root}
+              sx={root}
               onChange={handleMemberSearch}
             />
             {isDataLoaded ? (
@@ -116,32 +118,23 @@ const DeleteMemberDialog = ({
                 </Typography>
               )
             ) : (
-              memberData.map((member, index) => {
-                return (
-                  <Skeleton
-                    animation="wave"
-                    sx={{ minWidth: "100% !important" }}
-                  >
-                    <InviteMemberCard
-                      indexNumber={index + 1}
-                      memberName={member.memberName}
-                      memberEmail={member.memberEmail}
-                      animationDuration={animationDuration}
-                      children="Invite"
-                      isDataLoaded={isDataLoaded}
-                      isDashboard={false}
-                    />
-                  </Skeleton>
-                );
-              })
+              Array(6)
+                .fill()
+                .map((data, index) => {
+                  return (
+                    <Skeleton
+                      variant="rectangular"
+                      animation="wave"
+                      key={index}
+                      sx={skeletonStyles}
+                    ></Skeleton>
+                  );
+                })
             )}
           </DialogContentText>
         </DialogContent>
-        <DialogActions className={classes.getDialogActionStyles}>
-          <Button
-            onClick={handleClose}
-            className={classes.getCloseButtonStyles}
-          >
+        <DialogActions>
+          <Button onClick={handleClose} sx={getCloseButtonStyles}>
             Close
           </Button>
         </DialogActions>

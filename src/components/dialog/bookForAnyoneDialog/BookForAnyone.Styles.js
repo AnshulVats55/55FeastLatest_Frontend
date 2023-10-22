@@ -117,4 +117,10 @@ export const getBookForAnyoneStyles = makeStyles()((theme) => ({
       fontSize: "0.9rem",
     },
   },
+
+  skeletonStyles: {
+    height: "2.5rem",
+    margin: "0.5rem",
+    borderRadius: "0.25rem",
+  },
 }));

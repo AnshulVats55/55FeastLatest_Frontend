@@ -10,7 +10,6 @@ import {
 import {
   getMyBuddies,
   bookMealForBuddy,
-  handleMemberCountByDate,
   getCountsByDate,
 } from "../../../bookingMethods/BookingMethods";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,8 +17,8 @@ import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
 
 const BookForBuddyUtils = ({ open }) => {
-  const myData = useSelector((state) => {
-    return state.memberDataReducer;
+  const { email, location } = useSelector((state) => {
+    return state?.memberDataReducer;
   });
 
   const dispatch = useDispatch();
@@ -53,7 +52,7 @@ const BookForBuddyUtils = ({ open }) => {
 
   useEffect(() => {
     const handleMyBuddies = async () => {
-      const response = await getMyBuddies(myData.email, myData.location);
+      const response = await getMyBuddies(email, location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
@@ -69,7 +68,7 @@ const BookForBuddyUtils = ({ open }) => {
 
   useEffect(() => {
     const handleGetCountsByDate = async () => {
-      const response = await getCountsByDate(date, myData?.location);
+      const response = await getCountsByDate(date, location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setTodaysCount(response?.data?.data);
       } else if (
@@ -87,39 +86,6 @@ const BookForBuddyUtils = ({ open }) => {
 
     handleGetCountsByDate();
   }, []);
-
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-  ];
-
-  const handleMemberSearch = (event) => {
-    //handles member search
-    setSearchTerm(event.target.value.toLowerCase());
-  };
 
   const handleBookingNotifications = (notificationMessage) => {
     //dispatches notifications based on response
@@ -179,11 +145,10 @@ const BookForBuddyUtils = ({ open }) => {
   };
 
   const filteredUsers = myBuddies?.filter((member) =>
-    member.fullName.toLowerCase().includes(searchTerm)
+    member?.fullName?.toLowerCase().includes(searchTerm)
   );
 
   const handleBookForBuddy = async (buddyData) => {
-    //handles meal booking for buddies
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);
@@ -192,12 +157,11 @@ const BookForBuddyUtils = ({ open }) => {
   };
 
   return {
+    email,
     animationDuration,
     isDataLoaded,
     setSearchTerm,
-    memberData,
     date,
-    handleMemberSearch,
     descriptionElementRef,
     filteredUsers,
     handleBookForBuddy,

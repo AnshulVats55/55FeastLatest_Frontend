@@ -29,4 +29,18 @@ export const WeeklyDataGraphStyles = {
     border: "none",
     borderRadius: "0.25rem",
   },
+
+  boxFourStyles: {
+    background: "#FFF",
+    width: "100%",
+    height: "50vh",
+    maxHeight: "50vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  circularProgressStyles: {
+    color: "#5D87FF",
+  },
 };

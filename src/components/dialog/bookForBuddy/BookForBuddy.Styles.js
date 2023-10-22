@@ -7,18 +7,15 @@ export const getBookForBuddyDialogStyles = makeStyles()((theme) => ({
 
   getDialogTitleStyles: {
     textAlign: "center",
-    // background:"orange",
     fontSize: "1.25rem",
     fontFamily: theme.typography.fontFamily,
   },
 
   getDialogContentStyles: {
-    // background:'pink',
     border: "none",
   },
 
   getDialogContentTextStyles: {
-    // background:"green",
     border: "none",
     padding: "0.5rem 0rem",
     textAlign: "center",
@@ -33,7 +30,6 @@ export const getBookForBuddyDialogStyles = makeStyles()((theme) => ({
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    // background:"cyan",
     border: "none",
     borderRadius: "5px",
     margin: "0.5rem 0rem",
@@ -120,5 +116,11 @@ export const getBookForBuddyDialogStyles = makeStyles()((theme) => ({
     "@media screen and (max-width:409px)": {
       fontSize: "0.9rem",
     },
+  },
+
+  skeletonStyles: {
+    height: "2.5rem",
+    margin: "0.5rem",
+    borderRadius: "0.25rem",
   },
 }));

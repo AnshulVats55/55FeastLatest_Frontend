@@ -142,7 +142,6 @@ export const getNavbarStyles = makeStyles()((theme) => ({
   },
 
   getListItemStylesOne: {
-    // marginTop: "2rem",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -198,5 +197,27 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     fontFamily: theme.typography.fontFamily,
     color: "#FFF",
     fontSize: "1rem",
+  },
+
+  getBadgeStyles: {
+    marginRight: "1.15rem",
+    "& .MuiBadge-badge": {
+      fontSize: "0.7rem",
+    },
+    "@media screen and (max-width: 899px)": {
+      marginRight: "0.9rem",
+      "& .MuiBadge-badge": {
+        fontSize: "0.6rem",
+      },
+    },
+  },
+
+  getNotificationIconStyles: {
+    fontSize: "1.75rem",
+    cursor: "pointer",
+    color: "#FFF",
+    "@media screen and (max-width: 899px)": {
+      fontSize: "1.5rem",
+    },
   },
 }));

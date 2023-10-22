@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -14,149 +13,52 @@ import {
   List,
   ListItem,
   Box,
+  Badge,
+  Popover,
 } from "@mui/material";
-import {
-  Home,
-  RestaurantMenu,
-  RateReview,
-  Close,
-  Logout,
-  EmojiPeople,
-} from "@mui/icons-material";
-import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import { Close, CircleNotifications } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { getNavbarStyles } from "./Navbar.Styles";
 import CommonButton from "../button/CommonButton";
 import { motion } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
-import snackbarMessages from "../../Constants";
 import MaleAvatar from "../../assets/male avatar.jpg";
 import FemaleAvatar from "../../assets/female avatar.jpg";
-import { setIsLoading } from "../../store/slices/LoaderSlice";
 import Loader from "../loader/Loader";
+import NavbarUtils from "./Navbar.Utils";
+import NotificationCard from "../notificationCard/NotificationCard";
 
 const Navbar = () => {
   const { classes } = getNavbarStyles();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { isAdmin, photo, gender, firstName, lastName } = useSelector(
-    (state) => {
-      return state.memberDataReducer;
-    }
-  );
-
-  const memberName = firstName + " " + lastName;
-
-  const isLoading = useSelector((state) => {
-    return state.loaderReducer.isLoading;
-  });
-
-  const memberNavigationLinks = [
-    {
-      text: "Home",
-      icon: <Home className={classes.getListItemIconStyles} />,
-      url: "/",
-    },
-    {
-      text: "Book your meal",
-      icon: <RestaurantMenu className={classes.getListItemIconStyles} />,
-      url: "/bookyourmeal",
-    },
-    {
-      text: "Reviews",
-      icon: <RateReview className={classes.getListItemIconStyles} />,
-      url: "/reviews",
-    },
-  ];
-
-  const adminNavigationLinks = [
-    {
-      text: "Home",
-      icon: <Home className={classes.getListItemIconStyles} />,
-      url: "/",
-    },
-    {
-      text: "Book your meal",
-      icon: <RestaurantMenu className={classes.getListItemIconStyles} />,
-      url: "/bookyourmeal",
-    },
-    {
-      text: "Dashboard",
-      icon: (
-        <DashboardCustomizeIcon className={classes.getListItemIconStyles} />
-      ),
-      url: "/dashboard",
-    },
-    {
-      text: "Reviews",
-      icon: <RateReview className={classes.getListItemIconStyles} />,
-      url: "/reviews",
-    },
-  ];
-
-  const actionLinks = [
-    {
-      text: `${memberName}`,
-      icon: <EmojiPeople className={classes.getListItemIconStyles} />,
-    },
-    {
-      text: "Logout",
-      icon: <Logout className={classes.getListItemIconStyles} />,
-    },
-  ];
-
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-  const toggleDrawer = (open) => () => {
-    setOpenDrawer(open);
-  };
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const handleLogout = () => {
-    dispatch(setIsLoading(true));
-    localStorage.removeItem("memberToken");
-    if (localStorage.getItem("memberToken") === null) {
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.SUCCESS,
-          snackbarMessage: snackbarMessages.LOGOUT_SUCCESSFULL,
-        })
-      );
-      navigate("/");
-      window.location.reload();
-      dispatch(setIsLoading(false));
-    } else {
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.LOGOUT_FAILURE,
-        })
-      );
-      dispatch(setIsLoading(false));
-    }
-  };
+  const {
+    navigate,
+    isAdmin,
+    photo,
+    gender,
+    memberName,
+    isLoading,
+    memberNavigationLinks,
+    adminNavigationLinks,
+    actionLinks,
+    anchorElNav,
+    anchorElUser,
+    toggleDrawer,
+    handleOpenNavMenu,
+    handleCloseNavMenu,
+    handleOpenUserMenu,
+    handleCloseUserMenu,
+    handleLogout,
+    handleOpenNotifications,
+    handleOpenMobileNotifications,
+    handleCloseNotifications,
+    handleCloseMobileNotifications,
+    isPopoverOpen,
+    isMobilePopoverOpen,
+    popoverOpen,
+    mobilePopoverOpen,
+    idOne,
+    idTwo,
+    isNotificationTriggered,
+  } = NavbarUtils();
 
   return (
     <AppBar className={classes.getAppbarStyles}>
@@ -281,7 +183,6 @@ const Navbar = () => {
             </Box>
             <Box
               sx={{
-                // background: "orange",
                 width: "100%",
                 justifyContent: "center",
                 display: { xs: "flex", md: "none" },
@@ -378,9 +279,63 @@ const Navbar = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  background: "",
                 }}
               >
-                <IconButton sx={{ p: 0, marginRight: "1rem" }}>
+                {/* <Badge
+                  badgeContent={isNotificationTriggered ? "New" : "0"}
+                  color="success"
+                  className={classes.getBadgeStyles}
+                >
+                  <CircleNotifications
+                    color="inherit"
+                    className={classes.getNotificationIconStyles}
+                    aria-describedby={idOne}
+                    onClick={handleOpenNotifications}
+                  />
+                  <Popover
+                    id={idOne}
+                    open={popoverOpen}
+                    anchorEl={isPopoverOpen}
+                    onClose={handleCloseNotifications}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    sx={{
+                      background: "transparent",
+                      "& .MuiPaper-root": {
+                        width: 300,
+                        maxHeight: 350,
+                        padding: "0.5rem 0.5rem",
+                        overflowY: "scroll",
+                        "&::-webkit-scrollbar": {
+                          display: "none",
+                        },
+                      },
+                    }}
+                  >
+                    {isNotificationTriggered ? (
+                      <NotificationCard
+                        memberName={memberName}
+                        notificationTitle="Book your meal"
+                        notificationBody="Book your meal now! Bookings are open till 9AM morning"
+                      />
+                    ) : (
+                      <NotificationCard
+                        memberName={memberName}
+                        notificationTitle="Hurray!"
+                        notificationBody="You've no new notifications"
+                      />
+                    )}
+                  </Popover>
+                </Badge> */}
+                <IconButton
+                  sx={{ p: 0, marginRight: "1rem" }}
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
                   <Avatar
                     src={
                       photo
@@ -434,6 +389,54 @@ const Navbar = () => {
                 alignItems: "center",
               }}
             >
+              {/* <Badge
+                color="success"
+                className={classes.getBadgeStyles}
+                badgeContent={isNotificationTriggered ? "1" : "0"}
+              >
+                <CircleNotifications
+                  color="inherit"
+                  className={classes.getNotificationIconStyles}
+                  aria-describedby={idTwo}
+                  onClick={handleOpenMobileNotifications}
+                />
+                <Popover
+                  id={idTwo}
+                  open={mobilePopoverOpen}
+                  anchorEl={isMobilePopoverOpen}
+                  onClose={handleCloseMobileNotifications}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  sx={{
+                    background: "transparent",
+                    "& .MuiPaper-root": {
+                      width: 250,
+                      maxHeight: 300,
+                      padding: "0.5rem 0.5rem",
+                      overflowY: "scroll",
+                      "&::-webkit-scrollbar": {
+                        display: "none",
+                      },
+                    },
+                  }}
+                >
+                  {isNotificationTriggered ? (
+                    <NotificationCard
+                      memberName={memberName}
+                      notificationTitle="Book your meal"
+                      notificationBody="Book your meal now! Bookings are open till 9AM morning"
+                    />
+                  ) : (
+                    <NotificationCard
+                      memberName={memberName}
+                      notificationTitle="Hurray!"
+                      notificationBody="You've no new notifications"
+                    />
+                  )}
+                </Popover>
+              </Badge> */}
               <IconButton
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, marginRight: "0.5rem" }}

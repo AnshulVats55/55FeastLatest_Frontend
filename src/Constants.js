@@ -53,8 +53,6 @@ const MEMBER_ADDED_FAILURE = "Error adding member !";
 const MEMBER_EMAIL_ALREADY_EXISTS = "Email already exists !";
 const MEMBER_DELETE_SUCCESSFULL = "Member deleted successfully !";
 const MEMBER_DELETE_FAILURE = "Error deleting member !";
-const MEMBER_DELETED_SUCCESSFULL = "Member deleted successfully !";
-const MEMBER_DELETED_FAILURE = "Error deleting member !";
 const FILE_DOWNLOAD_SUCCESSFULL = "File downloaded successfully !";
 const NO_MEMBER_IN_LIST = "No member in list !";
 const FILE_DOWNLOAD_FAILURE = "Error downloading file !";
@@ -64,6 +62,8 @@ const TRY_AGAIN = "Please try again !";
 const MEMBER_MEAL_STATUS = "Error fetching status !";
 const USER_NOT_VALID = "user not valid";
 const BOOK_YOUR_FIRST_MEAL = "Book your first meal";
+const BOOKED_DATES_FETCHED = "booked dates fetched successfully";
+const ERROR_FECTHING_ALL_MEMBERS = "Error fetching members !";
 
 export default {
   SUCCESS,
@@ -115,8 +115,6 @@ export default {
   MEMBER_ADDED_FAILURE,
   MEMBER_DELETE_SUCCESSFULL,
   MEMBER_DELETE_FAILURE,
-  MEMBER_DELETED_SUCCESSFULL,
-  MEMBER_DELETED_FAILURE,
   FILE_DOWNLOAD_SUCCESSFULL,
   NO_MEMBER_IN_LIST,
   FILE_DOWNLOAD_FAILURE,
@@ -127,4 +125,6 @@ export default {
   MEMBER_MEAL_STATUS,
   USER_NOT_VALID,
   BOOK_YOUR_FIRST_MEAL,
+  BOOKED_DATES_FETCHED,
+  ERROR_FECTHING_ALL_MEMBERS,
 };

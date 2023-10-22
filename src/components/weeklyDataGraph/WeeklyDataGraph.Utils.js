@@ -1,4 +1,53 @@
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getLastFiveDaysCount,
+  getReversedDate,
+} from "../../invitationMethods/InvitationMethods";
+import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
+import snackbarMessages from "../../Constants";
+
 const WeeklyDataGraphUtils = () => {
+  const { location } = useSelector((state) => {
+    return state.memberDataReducer;
+  });
+
+  const dispatch = useDispatch();
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [lastFiveDaysCount, setLastFiveDaysCount] = useState([]);
+  const [lastFiveDaysDate, setLastFiveDaysDate] = useState([]);
+
+  const handleLastFiveDaysCount = async () => {
+    const response = await getLastFiveDaysCount(location);
+    if (response?.data?.status === snackbarMessages.SUCCESS) {
+      const fiveDaysCount = [],
+        fiveDaysName = [],
+        fiveDaysDate = [];
+      response?.data?.data.map((count) => {
+        fiveDaysCount.push(count?.count);
+        fiveDaysName.push(count?.day);
+        fiveDaysDate.push(getReversedDate(count?.date));
+      });
+      setLastFiveDaysCount(fiveDaysCount);
+      setLastFiveDaysDate(fiveDaysDate);
+      setIsDataLoaded(true);
+    } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
+      setIsDataLoaded(true);
+      dispatch(
+        setCustomSnackbar({
+          snackbarOpen: true,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: snackbarMessages.DATA_FETCHED_FAILURE,
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    handleLastFiveDaysCount();
+  }, []);
+
   const chartData = {
     chart: {
       id: "apexchart-example",
@@ -17,7 +66,7 @@ const WeeklyDataGraphUtils = () => {
       },
     },
     xaxis: {
-      categories: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+      categories: isDataLoaded ? lastFiveDaysDate : [],
       axisBorder: {
         show: false,
       },
@@ -46,7 +95,7 @@ const WeeklyDataGraphUtils = () => {
     series: [
       {
         name: "Total members",
-        data: [30, 40, 25, 35, 49],
+        data: isDataLoaded ? lastFiveDaysCount : [],
         type: "bar",
       },
     ],
@@ -92,6 +141,7 @@ const WeeklyDataGraphUtils = () => {
 
   return {
     chartData,
+    isDataLoaded,
   };
 };
 

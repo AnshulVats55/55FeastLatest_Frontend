@@ -3,16 +3,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getTotalMembers,
   handleDeleteMember,
 } from "../../../invitationMethods/InvitationMethods";
+import snackbarMessages from "../../../Constants";
+import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 
 const DeleteMemberDialogUtils = (open) => {
   const { location } = useSelector((state) => {
     return state.memberDataReducer;
   });
+
+  const dispatch = useDispatch();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,48 +36,30 @@ const DeleteMemberDialogUtils = (open) => {
   useEffect(() => {
     const handleGetTotalMembers = async () => {
       const response = await getTotalMembers(location);
-      setTotalMembers(response?.data?.data);
-      setIsDataLoaded(true);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setTotalMembers(response?.data?.data);
+        setIsDataLoaded(true);
+      } else if (response?.data?.data?.status === snackbarMessages.FAILURE) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: snackbarMessages.ERROR_FECTHING_ALL_MEMBERS,
+          })
+        );
+        setIsDataLoaded(true);
+      }
     };
 
     handleGetTotalMembers();
   }, []);
 
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-  ];
-
   const handleMemberSearch = (event) => {
-    //handles member search
     setSearchTerm(event.target.value.toLowerCase());
   };
 
   const filteredUsers = totalMembers?.filter((member) =>
-    member.fullName.toLowerCase().includes(searchTerm)
+    member?.fullName?.toLowerCase().includes(searchTerm)
   );
 
   const handleDeleteExistingMember = async (memberEmail) => {
@@ -85,7 +71,6 @@ const DeleteMemberDialogUtils = (open) => {
     isDataLoaded,
     animationDuration,
     descriptionElementRef,
-    memberData,
     filteredUsers,
     handleMemberSearch,
     handleDeleteExistingMember,

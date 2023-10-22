@@ -2,8 +2,31 @@ import { DashboardCardTwoStyles } from "./DashboardCardTwo.Styles";
 import { Box, Typography } from "@mui/material";
 import CommonButton from "../../button/CommonButton";
 import { motion } from "framer-motion";
+import DashboardCardTwoUtils from "./DashboardCardTwo.Utils";
+import BookForAnyone from "../../dialog/bookForAnyoneDialog/BookForAnyone";
+import AddMemberDialog from "../../dialog/addMemberDialog/AddMemberDialog";
+import DeleteMemberDialog from "../../dialog/deleteMemberDialog/DeleteMemberDialog";
 
 const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
+  const {
+    todaysCount,
+    bookForAnyoneOpen,
+    bookForAnyoneScroll,
+    handleBookForAnyoneOpen,
+    handleBookForAnyoneClose,
+    addMemberOpen,
+    addMemberScroll,
+    handleAddMemberOpen,
+    handleAddMemberClose,
+    deleteMemberOpen,
+    deleteMemberScroll,
+    handleDeleteMemberOpen,
+    handleDeleteMemberClose,
+    isFileLoading,
+    isDailyDataLoading,
+    handleExportInExcel,
+    handlePreviousMonthData,
+  } = DashboardCardTwoUtils();
   const { boxOneStyles, boxTwoStyles, cardLabelStyles, buttonStyles } =
     DashboardCardTwoStyles;
 
@@ -19,12 +42,62 @@ const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
           <Typography sx={cardLabelStyles(index)}>{cardLabel}</Typography>
           <CommonButton
             children={buttonChildren}
-            isLoaderRequired={false}
+            isLoaderRequired={
+              index === 0
+                ? isDailyDataLoading
+                : index === 3
+                ? isFileLoading
+                : false
+            }
             type=""
-            onClick={() => {}}
+            onClick={
+              index === 0
+                ? () => handleExportInExcel(todaysCount)
+                : index === 1
+                ? handleBookForAnyoneOpen("paper")
+                : index === 2
+                ? handleAddMemberOpen("paper")
+                : index === 3
+                ? handlePreviousMonthData
+                : index === 4
+                ? null
+                : index === 5
+                ? handleDeleteMemberOpen("paper")
+                : null
+            }
             isDisabled={false}
             customStyles={buttonStyles}
           />
+          {addMemberOpen ? (
+            <AddMemberDialog
+              open={addMemberOpen}
+              scroll={addMemberScroll}
+              handleClose={handleAddMemberClose}
+            />
+          ) : (
+            <></>
+          )}
+          {deleteMemberOpen ? (
+            <DeleteMemberDialog
+              open={deleteMemberOpen}
+              scroll={deleteMemberScroll}
+              handleClose={handleDeleteMemberClose}
+              children="Delete"
+              placeholder="Search member to delete..."
+            />
+          ) : (
+            <></>
+          )}
+          {bookForAnyoneOpen ? (
+            <BookForAnyone
+              open={bookForAnyoneOpen}
+              scroll={bookForAnyoneScroll}
+              handleClose={handleBookForAnyoneClose}
+              children="Book"
+            />
+          ) : (
+            <></>
+          )}
         </Box>
       </Box>
     </motion.div>

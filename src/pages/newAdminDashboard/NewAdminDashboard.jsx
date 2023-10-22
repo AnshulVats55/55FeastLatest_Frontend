@@ -1,26 +1,41 @@
 import NewAdminDashboardUtils from "./NewAdminDashboard.Utils";
 import { NewAdminDashboardStyles } from "./NewAdminDashboard.Styles";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Skeleton, TextField } from "@mui/material";
 import DashboardCardOne from "../../components/card/dashboardCardOne/DashboardCardOne";
 import DashboardCardTwo from "../../components/card/dashboardCardTwo/DashboardCardTwo";
 import DailyCountCard from "../../components/card/DailyCountCard/DailyCountCard";
 import WeeklyDataGraph from "../../components/weeklyDataGraph/WeeklyDataGraph";
+import NoResultMatchesImage from "../../assets/no-result-matches.png";
+import NoBookingsImage from "../../assets/no-booking.png";
+import { motion } from "framer-motion";
 
 const NewAdminDashboard = () => {
-  const { bookingDataArray, adminActionsArray, dailyDataArray } =
-    NewAdminDashboardUtils();
+  const {
+    bookingDataArray,
+    adminActionsArray,
+    isDataLoaded,
+    handleMemberSearch,
+    filteredUsers,
+    todaysCount,
+    dateToBeChecked,
+    imageVariants,
+    handleReversedDate,
+  } = NewAdminDashboardUtils();
   const {
     gridItemOneStyles,
-    gridItemTwoStyles,
     gridItemThreeStyles,
     gridItemFourStyles,
-    gridItemFiveStyles,
     gridItemSixStyles,
     gridItemSevenStyles,
     gridItemEightStyles,
     boxOneStyles,
-    boxTwoStyles,
     typographyOneStyles,
+    skeletonStyles,
+    root,
+    boxTwoStyles,
+    typographyTwoStyles,
+    imageContOneStyles,
+    imageOneStyles,
   } = NewAdminDashboardStyles;
 
   return (
@@ -45,13 +60,13 @@ const NewAdminDashboard = () => {
           </Grid>
         );
       })}
-      <Grid container item lg={8} md={6} xs={12} sx={gridItemThreeStyles}>
+      <Grid container item xs={12} sx={gridItemThreeStyles}>
         {adminActionsArray?.map((adminAction, index) => {
           return (
             <Grid
               item
               lg={4}
-              md={6}
+              md={4}
               sm={6}
               xs={12}
               key={index}
@@ -67,28 +82,90 @@ const NewAdminDashboard = () => {
           );
         })}
       </Grid>
-      <Grid item lg={4} md={6} xs={12} sx={gridItemFiveStyles}>
-        To be decided
-      </Grid>
       <Grid container item lg={6} md={6} xs={12} sx={gridItemSixStyles}>
-        <Box sx={boxTwoStyles}>
+        <Box>
           <Typography sx={typographyOneStyles}>
             Member's joining today
           </Typography>
         </Box>
+        <TextField
+          type="search"
+          placeholder="Search members for today's count..."
+          variant="outlined"
+          multiline
+          sx={root}
+          onChange={handleMemberSearch}
+        />
         <Box sx={boxOneStyles}>
-          {dailyDataArray?.map((dailyData, index) => {
-            return (
-              <Grid item xs={12} key={index} sx={gridItemSevenStyles}>
-                <DailyCountCard
-                  id={index + 1}
-                  memberName={dailyData.memberName}
-                  memberEmail={dailyData.memberEmail}
-                  status={dailyData.status}
-                />
-              </Grid>
-            );
-          })}
+          {isDataLoaded ? (
+            todaysCount && todaysCount.length > 0 ? (
+              filteredUsers && filteredUsers.length > 0 ? (
+                filteredUsers?.map((dailyData, index) => {
+                  return (
+                    <Grid item xs={12} key={index} sx={gridItemSevenStyles}>
+                      <DailyCountCard
+                        id={index + 1}
+                        memberName={dailyData.memberName}
+                        memberEmail={dailyData.memberEmail}
+                        status={dailyData.status}
+                      />
+                    </Grid>
+                  );
+                })
+              ) : (
+                <Box sx={boxTwoStyles}>
+                  <Typography sx={typographyTwoStyles}>
+                    No results match with what you searched for
+                  </Typography>
+                  <motion.div
+                    style={imageContOneStyles}
+                    variants={imageVariants}
+                    initial="bounce"
+                    animate="bounce"
+                  >
+                    <img
+                      src={NoResultMatchesImage}
+                      alt="no_booking"
+                      style={imageOneStyles}
+                    />
+                  </motion.div>
+                </Box>
+              )
+            ) : (
+              <Box sx={boxTwoStyles}>
+                <Typography
+                  sx={typographyTwoStyles}
+                >{`No member has booked a meal for ${handleReversedDate(
+                  dateToBeChecked
+                )}`}</Typography>
+                <motion.div
+                  style={imageContOneStyles}
+                  variants={imageVariants}
+                  initial="bounce"
+                  animate="bounce"
+                >
+                  <img
+                    src={NoBookingsImage}
+                    alt="no_booking"
+                    style={imageOneStyles}
+                  />
+                </motion.div>
+              </Box>
+            )
+          ) : (
+            Array(6)
+              .fill()
+              .map((data, index) => {
+                return (
+                  <Skeleton
+                    variant="rectangular"
+                    animation="wave"
+                    key={index}
+                    sx={skeletonStyles}
+                  ></Skeleton>
+                );
+              })
+          )}
         </Box>
       </Grid>
       <Grid item lg={6} md={6} xs={12} sx={gridItemEightStyles}>

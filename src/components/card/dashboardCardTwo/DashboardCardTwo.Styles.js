@@ -37,6 +37,7 @@ export const DashboardCardTwoStyles = {
           ? "#FE53F1"
           : "",
       fontSize: "0.8rem",
+      fontWeight: 500,
       margin: "0rem 1rem",
     };
   },

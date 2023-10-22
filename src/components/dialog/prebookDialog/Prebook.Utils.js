@@ -29,7 +29,8 @@ const PrebookUtils = (open, handleClose) => {
 
   const memberData = {
     email: email,
-    bookedDates: prebookedDates,
+    dates: prebookedDates,
+    bookedBy: email,
   };
 
   const dispatch = useDispatch();
@@ -131,9 +132,16 @@ const PrebookUtils = (open, handleClose) => {
     } else {
       setIsLoaderRequired(true);
       const response = await handleMealPrebooking(memberData);
+      console.log("RESP OF PRE-BOOKING API", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(removeAllDates());
-        dispatch(getPrebookDates(response?.data?.data?.bookedDates));
+        const allPreBookedDates = response?.data?.data?.bookedDates?.map(
+          (bookedData) => {
+            return bookedData?.date;
+          }
+        );
+        console.log("ALL PREBOOKED DATES", allPreBookedDates);
+        dispatch(getPrebookDates(allPreBookedDates));
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
@@ -142,14 +150,12 @@ const PrebookUtils = (open, handleClose) => {
           })
         );
         setIsLoaderRequired(false);
-      } else if (
-        response?.response?.data?.status === snackbarMessages.FAILURE
-      ) {
+      } else if (response?.data?.status === snackbarMessages.FAILURE) {
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
             snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: snackbarMessages.PREBOOKING_FAILURE,
+            snackbarMessage: response?.message,
           })
         );
         setIsLoaderRequired(false);

@@ -1,12 +1,11 @@
 export const DailyCountCardStyles = {
   topContStyles: {
-    // background: "pink",
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
-    borderBottom:"1px solid #E5EAEF",
+    borderBottom: "1px solid #E5EAEF",
     padding: "0.25rem 0",
-    cursor:"pointer",
+    cursor: "pointer",
   },
 
   typographyOneStyles: {
@@ -21,6 +20,11 @@ export const DailyCountCardStyles = {
     width: "2rem",
     height: "2rem",
     fontSize: "1.10rem",
+    "@media screen and (max-width: 450px)": {
+      display: "none",
+      width: "0",
+      height: "0",
+    },
   },
 
   boxOneStyles: {
@@ -29,6 +33,9 @@ export const DailyCountCardStyles = {
     justifyContent: "flex-start",
     alignItems: "center",
     paddingLeft: "1rem",
+    "@media screen and (max-width: 450px)": {
+      padding: "0 0.30rem 0 0",
+    },
   },
 
   boxTwoStyles: {
@@ -37,6 +44,10 @@ export const DailyCountCardStyles = {
     justifyContent: "flex-start",
     alignItems: "center",
     padding: "0 0.25rem",
+    "@media screen and (max-width: 450px)": {
+      display: "none",
+      width: "0%",
+    },
   },
 
   boxThreeStyles: {
@@ -46,6 +57,11 @@ export const DailyCountCardStyles = {
     justifyContent: "center",
     alignItems: "flex-start",
     padding: "0 0.25rem",
+    "@media screen and (max-width: 450px)": {
+      padding: "0",
+      width: "80%",
+    },
+    // background: "lightgreen",
   },
 
   boxFourStyles: {
@@ -53,13 +69,17 @@ export const DailyCountCardStyles = {
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
-    padding: "0 0.25rem",
+    padding: "0 0.5rem 0 0.25rem",
+    // background: "lightblue",
   },
 
   typographyTwoStyles: {
     fontSize: "0.9rem",
     fontWeight: 500,
     fontFamily: "Poppins, sans-serif",
+    "@media screen and (max-width: 450px)": {
+      fontSize: "0.8rem",
+    },
   },
 
   typographyThreeStyles: {
@@ -67,6 +87,9 @@ export const DailyCountCardStyles = {
     color: "C1C1C1",
     fontWeight: 400,
     fontFamily: "Poppins, sans-serif",
+    "@media screen and (max-width: 450px)": {
+      fontSize: "0.65rem",
+    },
   },
 
   typographyFourStyles: {
@@ -83,8 +106,11 @@ export const DailyCountCardStyles = {
       fontSize: "0.80rem",
       padding: "0.09rem 0.40rem",
     },
+    "@media screen and (max-width: 450px)": {
+      fontSize: "0.70rem",
+    },
     "@media screen and (max-width: 400px)": {
-      fontSize: "0.75rem",
+      fontSize: "0.65rem",
       padding: "0.09rem 0.30rem",
     },
   },

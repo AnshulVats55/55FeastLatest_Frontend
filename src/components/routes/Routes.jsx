@@ -16,9 +16,9 @@ import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
 import OrangeImage from "../../assets/orange image.png";
 import NewAdminDashboard from "../../pages/newAdminDashboard/NewAdminDashboard";
+import UserProfile from "../../pages/profile/Profile";
 
 const AllRoutes = () => {
-
   return (
     <Router>
       <CustomSnackbar />
@@ -50,6 +50,11 @@ const AllRoutes = () => {
               exact
               path="/reviews"
               element={<CommonLayout component={<Reviews />} />}
+            />
+            <Route
+              exact
+              path="/profile"
+              element={<CommonLayout component={<UserProfile />} />}
             />
           </Routes>
         </>

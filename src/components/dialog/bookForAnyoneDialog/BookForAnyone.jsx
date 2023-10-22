@@ -149,28 +149,18 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                 </Typography>
               )
             ) : (
-              memberData?.map((member, index) => {
-                return (
-                  <Skeleton
-                    animation="wave"
-                    sx={{ minWidth: "100% !important" }}
-                  >
-                    <InviteMemberCard
-                      indexNumber={index + 1}
-                      memberName={member.memberName}
-                      memberEmail={member.memberEmail}
-                      animationDuration={animationDuration}
-                      children={children}
-                      isDataLoaded={isDataLoaded}
-                      isDashboard={true}
-                      isEmailChopRequired={true}
-                      isActionButtonRequired={true}
-                      isStatusCheckRequired={true}
-                      isButtonDisableRequired={false}
-                    />
-                  </Skeleton>
-                );
-              })
+              Array(6)
+                .fill()
+                .map((data, index) => {
+                  return (
+                    <Skeleton
+                      variant="rectangular"
+                      animation="wave"
+                      key={index}
+                      className={classes.skeletonStyles}
+                    ></Skeleton>
+                  );
+                })
             )}
           </DialogContentText>
         </DialogContent>

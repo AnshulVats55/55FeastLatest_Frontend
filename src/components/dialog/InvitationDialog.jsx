@@ -58,40 +58,12 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
     handleGetNonInvitedMembers();
   }, []);
 
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-  ];
-
   const handleMemberSearch = (event) => {
-    //handles member search
     setSearchTerm(event.target.value.toLowerCase());
   };
+
   const filteredUsers = notInvited?.filter((member) =>
-    member.fullName.toLowerCase().includes(searchTerm)
+    member?.fullName?.toLowerCase().includes(searchTerm)
   );
 
   const handleInviteNewMember = async (memberEmail) => {
@@ -178,24 +150,18 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
                 </Typography>
               )
             ) : (
-              memberData.map((member, index) => {
-                return (
-                  <Skeleton
-                    animation="wave"
-                    sx={{ minWidth: "100% !important" }}
-                  >
-                    <InviteMemberCard
-                      indexNumber={index + 1}
-                      memberName={member.memberName}
-                      memberEmail={member.memberEmail}
-                      animationDuration={animationDuration}
-                      children="Invite"
-                      isDataLoaded={isDataLoaded}
-                      isDashboard={false}
-                    />
-                  </Skeleton>
-                );
-              })
+              Array(6)
+                .fill()
+                .map((data, index) => {
+                  return (
+                    <Skeleton
+                      variant="rectangular"
+                      animation="wave"
+                      key={index}
+                      className={classes.skeletonStyles}
+                    ></Skeleton>
+                  );
+                })
             )}
           </DialogContentText>
         </DialogContent>

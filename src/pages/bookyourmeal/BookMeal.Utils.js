@@ -49,6 +49,7 @@ const BookMealUtils = () => {
   const memberDataToBeUsed = {
     email: memberData.email,
     date: dateToBeUsed,
+    bookedBy: memberData.email,
   };
 
   useEffect(() => {
@@ -58,8 +59,7 @@ const BookMealUtils = () => {
   useEffect(() => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
-      const response = await handleMemberBookingStatus(memberData.email);
-      // console.log("STATUS", response);
+      const response = await handleMemberBookingStatus(memberData?.email);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
         if (response?.data?.message === snackbarMessages.BOOK_YOUR_FIRST_MEAL) {
@@ -72,7 +72,9 @@ const BookMealUtils = () => {
             })
           );
         } else {
-          const allBookingDates = response?.data?.data;
+          const allBookingDates = response?.data?.data.map((data) => {
+            return data?.date;
+          });
           setAllBookedDates(allBookingDates);
           dispatch(getPrebookDates(allBookingDates));
           if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
@@ -222,7 +224,7 @@ const BookMealUtils = () => {
 
     if (currentDay >= 1 && currentDay <= 4) {
       if (currentHour >= 0 && currentHour < 10) {
-        //cancellation allowed from 12AM to 10AM the next day
+        //cancellation allowed from 12AM to 10AM
         setIsMealCancellationOpen(true);
         return true;
       } else if (currentHour >= 18 && currentHour <= 23) {
