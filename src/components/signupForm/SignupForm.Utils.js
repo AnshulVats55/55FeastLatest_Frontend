@@ -26,12 +26,14 @@ const SignupFormUtils = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
+  const [profilePictureName, setProfilePictureName] = useState("");
   const [emailErrorMsg, setEmailErrorMsg] = useState({});
   const [passwordErrorMsg, setPasswordErrorMsg] = useState({});
   const [isProfilePicAttached, setIsProfilePicAttached] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState("paper");
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -66,8 +68,10 @@ const SignupFormUtils = () => {
 
   const handleProfilePictureChange = (event) => {
     const profilePic = event.target.files;
+    // console.log(profilePic);
     if (profilePic && profilePic.length > 0) {
       getBase64(profilePic[0]);
+      setProfilePictureName(profilePic[0]?.name);
       setIsProfilePicAttached(true);
       setOpen(true);
     }
@@ -102,7 +106,7 @@ const SignupFormUtils = () => {
     const brandName = () => /@fiftyfivetech/.test(email);
     const regex = /^[A-Za-z0-9]+[._]?[A-Za-z0-9]+@fiftyfivetech\.io$/;
     if (regex.test(email)) {
-      message.text = "Email Id is correct";
+      message.text = "Email Id is valid";
       message.status = true;
     } else if (!checkAtTheRate()) {
       message.text = "Email Id must contain @";
@@ -239,13 +243,15 @@ const SignupFormUtils = () => {
         setCustomSnackbar({
           snackbarOpen: true,
           snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.PASSWORD_REQUIRED,
+          snackbarMessage: snackbarMessages.PASSWORD_REQUIRED_FOR_SIGNUP,
         })
       );
     } else {
       if (emailValidator(email).status && passwordCheck(password).status) {
         dispatch(setIsLoading(true));
+        setIsDisabled(true);
         const response = await handleMemberSignup(memberData);
+        // console.log("SIGNUP", response);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
           dispatch(setIsLoading(false));
           dispatch(
@@ -255,18 +261,17 @@ const SignupFormUtils = () => {
               snackbarMessage: snackbarMessages.SIGNUP_SUCCESSFULL,
             })
           );
-          setTimeout(() => {
-            navigate("/");
-          }, 2500);
+          navigate("/");
         } else if (
           response?.response?.data?.status === snackbarMessages.FAILURE
         ) {
           dispatch(setIsLoading(false));
+          setIsDisabled(false);
           dispatch(
             setCustomSnackbar({
               snackbarOpen: true,
               snackbarType: snackbarMessages.ERROR,
-              snackbarMessage: snackbarMessages.SIGNUP_FAILURE,
+              snackbarMessage: response?.response?.data?.message,
             })
           );
         }
@@ -284,6 +289,7 @@ const SignupFormUtils = () => {
     gender,
     setGender,
     profilePicture,
+    profilePictureName,
     location,
     setLocation,
     email,
@@ -306,6 +312,7 @@ const SignupFormUtils = () => {
     passwordErrorMsg,
     setPasswordErrorMsg,
     passwordCheck,
+    isDisabled,
   };
 };
 

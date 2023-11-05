@@ -2,27 +2,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getProgressBarStyles } from "./ProgressBar.Styles";
 import { Box, Skeleton } from "@mui/material";
-import ProgressBarUtils from "./ProgressBar.Utils";
+import ProgressBarUtils, { textStyle } from "./ProgressBar.Utils";
 
 const ProgressBar = ({ totalMembers, todaysCount, isDataLoaded }) => {
   const { classes } = getProgressBarStyles();
+  const { progress } = ProgressBarUtils(todaysCount, totalMembers);
 
-  const { progress, handleProgressPercentage } = ProgressBarUtils();
-
-  const textStyle = {
-    fontFamily: "Poppins, sans-serif !important",
-  };
-
-  useEffect(() => {
-    if (todaysCount > 0) {
-      handleProgressPercentage(totalMembers, todaysCount);
-    }
-  }, [todaysCount, totalMembers]);
   return (
     <Box className={classes.getProgressBarContStyles}>
       {isDataLoaded ? (
@@ -45,7 +34,7 @@ const ProgressBar = ({ totalMembers, todaysCount, isDataLoaded }) => {
               Math.round(progress) >= Math.round(0.5 * totalMembers)
                 ? "#4caf50"
                 : "#ef5d36",
-            trailColor: "#FFEEEA",
+            trailColor: "#f5f5f5",
             textStyle,
           })}
           minValue={0}
@@ -71,7 +60,7 @@ const ProgressBar = ({ totalMembers, todaysCount, isDataLoaded }) => {
                 Math.round(progress) >= Math.round(0.5 * totalMembers)
                   ? "#4caf50"
                   : "#ef5d36",
-              trailColor: "#FFEEEA",
+              trailColor: "#f5f5f5",
               textStyle,
             })}
             minValue={0}

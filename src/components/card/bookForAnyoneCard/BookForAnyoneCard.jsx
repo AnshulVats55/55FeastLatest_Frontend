@@ -57,8 +57,6 @@ const BookForAnyoneCard = ({
     }
   }, []);
 
-  console.log("Children from dialog windows", children);
-
   return (
     <>
       {isDataLoaded ? (

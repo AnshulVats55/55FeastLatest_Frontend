@@ -11,7 +11,7 @@ export const getProgressBarStyles = makeStyles()((theme) => ({
     "@media  screen and (max-width: 599px)": {
       width: "30%",
     },
-    "@media  screen and (max-width: 399px)": {
+    "@media  screen and (max-width: 400px)": {
       width: "45%",
     },
   },

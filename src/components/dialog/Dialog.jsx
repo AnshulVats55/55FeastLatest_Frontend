@@ -3,12 +3,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import { Typography } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Typography,
+} from "@mui/material";
 import { getDialogStyles } from "./Dialog.Styles";
 
 const CustomDialog = ({ open, scroll, handleClose, image }) => {
@@ -25,10 +27,19 @@ const CustomDialog = ({ open, scroll, handleClose, image }) => {
       >
         <DialogContent dividers={scroll === "paper"}>
           <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-            <Typography variant="body1" textAlign={"center"}>
-              Your profile picture
+            <Typography
+              variant="body1"
+              textAlign={"center"}
+              className={classes.getTopTextStyles}
+            >
+              This is the preview of your profile picture
             </Typography>
-            <img src={image} alt="" width="100%" />
+            <img
+              src={image}
+              alt=""
+              width="100%"
+              className={classes.getImageStyles}
+            />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -36,7 +47,7 @@ const CustomDialog = ({ open, scroll, handleClose, image }) => {
             className={classes.getActionButtonStyles}
             onClick={handleClose}
           >
-            Close
+            Save
           </Button>
         </DialogActions>
       </Dialog>

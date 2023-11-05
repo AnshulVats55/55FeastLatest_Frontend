@@ -23,6 +23,7 @@ const InviteMemberCard = ({
   memberEmail,
   memberId,
   children,
+  isCancellationAllowed,
   animationDuration,
   isDataLoaded,
   handleAction,
@@ -31,20 +32,21 @@ const InviteMemberCard = ({
   isActionButtonRequired,
   isStatusCheckRequired,
   isButtonDisableRequired,
+  isAlreadyBooked,
 }) => {
   const { classes } = getInviteMemberCardStyles();
   const {
     dateToBeChecked,
-    allDatesBooked,
-    isAlreadyBooked,
-    setIsAlreadyBooked,
     handleMemberName,
     handleMemberEmail,
     actionBeingPerformed,
-    getBookingStatusOfMember,
     isLoaderRequired,
     setIsLoaderRequired,
-  } = InviteMemberCardUtils();
+    isMealBooked,
+    setIsMealBooked,
+    isTodaysMealBooked,
+    setIsTodaysMealBooked,
+  } = InviteMemberCardUtils(isAlreadyBooked);
   const { customStyles } = getInviteButtonCustomStyles;
   const { initial, whileInView, transition } = getInviteMemberCardAnimation;
 
@@ -58,28 +60,12 @@ const InviteMemberCard = ({
     date: dateToBeChecked,
   };
 
-  useEffect(() => {
-    //checks status of member meal booking if it's already booked
-    if (isStatusCheckRequired) {
-      getBookingStatusOfMember(memberEmail);
-    }
-  }, [isAlreadyBooked]);
-
-  console.log("formatted date at invite member card", dateToBeChecked);
-
-  useEffect(() => {
-    //if meal is already booked, set the flag to "true"
-    console.log("all dates booked array", allDatesBooked);
-    if (allDatesBooked?.indexOf(dateToBeChecked) > -1) {
-      setIsAlreadyBooked(true);
-    }
-  }, [allDatesBooked]);
-
   const handleMealCancellation = async (memberDataToBeSent) => {
     setIsLoaderRequired(true);
     const response = await handleCancelMealBooking(memberDataToBeSent);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
-      setIsAlreadyBooked(false);
+      setIsMealBooked(false);
+      setIsTodaysMealBooked(false);
       setIsLoaderRequired(false);
       dispatch(
         setCustomSnackbar({
@@ -175,7 +161,11 @@ const InviteMemberCard = ({
               <InviteButton
                 children={
                   isStatusCheckRequired
-                    ? isAlreadyBooked
+                    ? isAlreadyBooked && isTodaysMealBooked
+                      ? isCancellationAllowed
+                        ? "Cancel"
+                        : "Booked"
+                      : isMealBooked
                       ? "Cancel"
                       : children
                     : children
@@ -183,16 +173,28 @@ const InviteMemberCard = ({
                 type=""
                 handleAction={() => {
                   return isStatusCheckRequired
-                    ? isAlreadyBooked
+                    ? isAlreadyBooked && isTodaysMealBooked
+                      ? actionBeingPerformed(() => {
+                          handleMealCancellation(memberDataToBeSent);
+                        })
+                      : isMealBooked
                       ? actionBeingPerformed(() => {
                           handleMealCancellation(memberDataToBeSent);
                         })
                       : actionBeingPerformed(handleAction)
                     : actionBeingPerformed(handleAction);
                 }}
-                styles={customStyles(isActionButtonRequired, isAlreadyBooked)}
+                styles={customStyles(
+                  isActionButtonRequired,
+                  isAlreadyBooked,
+                  isMealBooked,
+                  isTodaysMealBooked,
+                  isButtonDisableRequired
+                )}
                 isButtonDisableRequired={
-                  isAlreadyBooked ? isButtonDisableRequired : false
+                  isAlreadyBooked || isMealBooked
+                    ? isButtonDisableRequired
+                    : false
                 }
                 isLoaderRequired={isLoaderRequired}
               />

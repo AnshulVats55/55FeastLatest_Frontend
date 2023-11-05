@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
   Typography,
   Skeleton,
   Box,
@@ -30,6 +29,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
     descriptionElementRef,
     filteredUsers,
     handleBookForBuddy,
+    todaysCount,
   } = BookForBuddyUtils(open);
 
   return (
@@ -72,7 +72,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
               Book a lunch count for your buddy and invite them to have lunch
               with you
             </Typography>
-            <TextField
+            {/* <TextField
               type="search"
               placeholder="Search for your buddy..."
               variant="outlined"
@@ -80,28 +80,34 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
               className={classes.root}
               inputProps={{ className: classes.input }}
               onChange={handleMemberSearch}
-            />
+            /> */}
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {
                   const memberId = member._id;
+                  const isMembersTodaysMealBooked = !!todaysCount?.find(
+                    ({ email }) => member?.email === email
+                  );
                   return (
                     <InviteMemberCard
+                      key={index}
                       indexNumber={index + 1}
                       memberName={member.fullName}
                       memberEmail={member.email}
                       memberId={memberId}
                       animationDuration={animationDuration}
                       children={children}
+                      isCancellationAllowed={false}
                       isDataLoaded={isDataLoaded}
                       isDashboard={false}
                       isEmailChopRequired={true}
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
                       isButtonDisableRequired={true}
-                      handleAction={() => {
-                        const response = handleBookForBuddy({
-                          email: member.email,
+                      isAlreadyBooked={isMembersTodaysMealBooked}
+                      handleAction={async () => {
+                        const response = await handleBookForBuddy({
+                          email: member?.email,
                           date: date,
                         });
                         return response;
@@ -128,6 +134,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                     sx={{ minWidth: "100% !important" }}
                   >
                     <InviteMemberCard
+                      key={index}
                       indexNumber={index + 1}
                       memberName={member.memberName}
                       memberEmail={member.memberEmail}

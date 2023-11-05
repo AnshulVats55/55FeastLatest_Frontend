@@ -29,6 +29,7 @@ import CustomDialog from "../dialog/Dialog";
 import { motion } from "framer-motion";
 import Loader from "../loader/Loader";
 import SignupFormUtils from "./SignupForm.Utils";
+import BrandLogo from "../../../src/assets/55FeastLogoNew.png";
 
 const SignupForm = () => {
   const { classes } = getSignupFormStyles();
@@ -48,6 +49,7 @@ const SignupForm = () => {
     gender,
     setGender,
     profilePicture,
+    profilePictureName,
     location,
     setLocation,
     email,
@@ -70,6 +72,7 @@ const SignupForm = () => {
     passwordErrorMsg,
     setPasswordErrorMsg,
     passwordCheck,
+    isDisabled,
   } = SignupFormUtils();
 
   const {
@@ -81,6 +84,12 @@ const SignupForm = () => {
   return (
     <Box className={classes.getMainContStyles}>
       <Stack className={classes.getTextContStyles}>
+        <img
+          src={BrandLogo}
+          alt="55Feast"
+          width="20%"
+          className={classes.getBrandLogoStyles}
+        />
         <Typography className={classes.getTextOneStyles}>
           Welcome to 55Feast
         </Typography>
@@ -161,6 +170,7 @@ const SignupForm = () => {
             xs={12}
             sx={{
               display: "flex",
+              flexDirection: "column",
               justifyContent: "flex-start",
               alignItems: "center",
             }}
@@ -183,6 +193,14 @@ const SignupForm = () => {
                 Choose Picture
               </label>
             </motion.div>
+            <Typography
+              sx={{
+                fontSize: "0.8rem",
+                marginTop: "0.25rem",
+              }}
+            >
+              {profilePictureName && `Image selected: ${profilePictureName}`}
+            </Typography>
             <input
               id="files"
               type="file"
@@ -372,6 +390,7 @@ const SignupForm = () => {
                 onClick={(event) => {
                   handleSignup(event);
                 }}
+                isDisabled={isDisabled}
               />
             </motion.div>
           </Grid>

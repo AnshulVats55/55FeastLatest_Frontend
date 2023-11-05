@@ -78,12 +78,6 @@ export const getDeleteMemberDialogStyles = makeStyles()((theme) => ({
     },
   },
 
-  input: {
-    "& .MuiInputBase-input": {
-      color: "#232229 !important",
-    },
-  },
-
   getCloseButtonStyles: {
     width: "15%",
     height: "35px",
@@ -105,7 +99,7 @@ export const getDeleteMemberDialogStyles = makeStyles()((theme) => ({
     "&:focus": {
       outline: "none",
     },
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       marginLeft: "0px",
     },
     "@media screen and (max-width:409px)": {

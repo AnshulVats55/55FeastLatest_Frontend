@@ -2,30 +2,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { getReviewsStyles } from "./Reviews.Styles";
-import ReviewsUtils from "./Reviews.Utils";
-import ComingSoonImage from "../../assets/reviews image.jpg";
-import { motion } from "framer-motion";
+import "./Reviews.css";
 
 const Reviews = () => {
   const { classes } = getReviewsStyles();
-  const { imageVariants } = ReviewsUtils();
 
   return (
     <Box className={classes.getTopContStyles}>
-      <motion.div
-        variants={imageVariants}
-        initial="bounce"
-        animate="bounce"
-        className={classes.getImageContStyles}
-      >
-        <img
-          src={ComingSoonImage}
-          alt="reviews"
-          className={classes.getImageStyles}
-        />
-      </motion.div>
+      <Box className={classes.getTextOneContStyles}>
+        <section>
+          <Box className="content">
+            <Typography className="textStyles">Coming</Typography>
+            <Typography className="textStyles">Coming</Typography>
+          </Box>
+        </section>
+      </Box>
+      <Box className={classes.getTextTwoContStyles}>
+        <section>
+          <Box className="content">
+            <Typography className="textStyles">Soon</Typography>
+            <Typography className="textStyles">Soon</Typography>
+          </Box>
+        </section>
+      </Box>
     </Box>
   );
 };

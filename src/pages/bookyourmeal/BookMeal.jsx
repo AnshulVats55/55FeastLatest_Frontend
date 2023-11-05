@@ -28,6 +28,9 @@ const BookMeal = () => {
     handleMealBooking,
     handleMealCancellation,
     isStatusFetched,
+    prebookTooltip,
+    bookForBuddyTooltip,
+    mealBookingTooltip,
   } = BookMealUtils();
 
   return (
@@ -48,9 +51,11 @@ const BookMeal = () => {
           animationDuration={0.5}
           onClick={handlePrebookOpen("paper")}
           label="Most awaited"
-          isLoaderRequired={isLoaderRequired}
+          isLoaderRequired={false}
           isStatusFetchingRequired={true}
           isStatusFetched={isStatusFetched}
+          isCountdownRequired={false}
+          tooltipTitle={prebookTooltip}
         />
         {prebookOpen ? (
           <PrebookDialog
@@ -81,6 +86,8 @@ const BookMeal = () => {
           label="Try it out"
           isLoaderRequired={false}
           isStatusFetchingRequired={false}
+          isCountdownRequired={true}
+          tooltipTitle={bookForBuddyTooltip}
         />
         {bookForBuddyOpen ? (
           <BookForBuddyDialog
@@ -106,7 +113,7 @@ const BookMeal = () => {
           image={SoloImage}
           heading="Let’s Simplify Hunger"
           caption="Reserve your lunch spot now without a fuss!"
-          actionName={isBooked ? "Cancel booking" : "Book your meal"}
+          actionName={isBooked ? "Cancel booking" : "Rapid booking"}
           animationDuration={0.7}
           onClick={isBooked ? handleMealCancellation : handleMealBooking}
           isBooked={isBooked}
@@ -114,6 +121,8 @@ const BookMeal = () => {
           isLoaderRequired={isLoaderRequired}
           isStatusFetchingRequired={true}
           isStatusFetched={isStatusFetched}
+          isCountdownRequired={true}
+          tooltipTitle={mealBookingTooltip}
         />
       </Grid>
     </Grid>

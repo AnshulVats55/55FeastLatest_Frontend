@@ -42,28 +42,28 @@ const DeleteMemberDialogUtils = (open) => {
   const memberData = [
     //member's dummy data
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
   ];
 

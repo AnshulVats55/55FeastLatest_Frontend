@@ -123,3 +123,24 @@ export const bookMealForBuddy = async (buddyData) => {
     return error;
   }
 };
+
+export const getCountsByDate = async (dateToBeChecked, location) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/bookmeal/date/count?location=${location}`,
+      { date: dateToBeChecked },
+      {
+        headers: {
+          Authorization: `Bearer ${MEMBER_TOKEN}`,
+          "Content-Type": "application/json",
+          referrerPolicy: "no-referrer",
+          mode: "no-mode",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

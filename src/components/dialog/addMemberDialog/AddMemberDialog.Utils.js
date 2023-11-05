@@ -47,7 +47,6 @@ const AddMemberDialogUtils = () => {
       // dispatch(setIsLoading(true));
       setIsLoaderRequired(true);
       const response = await handleAddMember(newMemberData);
-      console.log("Response of add new member API is this", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         // dispatch(setIsLoading(false));
         setIsLoaderRequired(false);

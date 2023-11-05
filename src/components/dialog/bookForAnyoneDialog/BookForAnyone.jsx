@@ -30,11 +30,11 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
     setIsDataLoaded,
     searchTerm,
     myBuddies,
-    setMyBuddies,
     memberData,
     date,
     handleMemberSearch,
     checkMealBookingAvailability,
+    todaysCount,
   } = BookForAnyoneUtils();
 
   let animationDuration = 0.4;
@@ -49,23 +49,11 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
     }
   }, [open]);
 
-  useEffect(() => {
-    const handleAllMembers = async () => {
-      const response = await getMyBuddies(myData.email, myData.location);
-      if (response?.data?.status === "success") {
-        setMyBuddies(response?.data?.data);
-        setIsDataLoaded(true);
-      }
-    };
-
-    handleAllMembers();
-  }, []);
-
   const filteredUsers = myBuddies?.filter((member) =>
     member.fullName.toLowerCase().includes(searchTerm)
   );
 
-  const handleBookForBuddy = async (buddyData) => {
+  const handleBookForAnyone = async (buddyData) => {
     //handles meal booking for buddies
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
@@ -114,7 +102,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
               Book a lunch count for any member and help them to avail lunch
               without a miss
             </Typography>
-            <TextField
+            {/* <TextField
               type="search"
               placeholder="Search for any member..."
               variant="outlined"
@@ -122,11 +110,14 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
               className={classes.root}
               inputProps={{ className: classes.input }}
               onChange={handleMemberSearch}
-            />
+            /> */}
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {
                   const memberId = member._id;
+                  let isMembersTodaysMealBooked = !!todaysCount.find(
+                    ({ email }) => member?.email === email
+                  );
                   return (
                     <InviteMemberCard
                       indexNumber={index + 1}
@@ -135,14 +126,16 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                       memberId={memberId}
                       animationDuration={animationDuration}
                       children={children}
+                      isCancellationAllowed={true}
                       isDataLoaded={isDataLoaded}
                       isDashboard={false}
                       isEmailChopRequired={true}
                       isActionButtonRequired={true}
                       isStatusCheckRequired={true}
                       isButtonDisableRequired={false}
+                      isAlreadyBooked={isMembersTodaysMealBooked}
                       handleAction={() => {
-                        const response = handleBookForBuddy({
+                        const response = handleBookForAnyone({
                           email: member.email,
                           date: date,
                         });

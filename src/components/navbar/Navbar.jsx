@@ -20,9 +20,8 @@ import {
   RestaurantMenu,
   RateReview,
   Close,
-  RestartAlt,
   Logout,
-  Male,
+  EmojiPeople,
 } from "@mui/icons-material";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -43,9 +42,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAdmin, photo, gender } = useSelector((state) => {
-    return state.memberDataReducer;
-  });
+  const { isAdmin, photo, gender, firstName, lastName } = useSelector(
+    (state) => {
+      return state.memberDataReducer;
+    }
+  );
+
+  const memberName = firstName + " " + lastName;
 
   const isLoading = useSelector((state) => {
     return state.loaderReducer.isLoading;
@@ -96,8 +99,8 @@ const Navbar = () => {
 
   const actionLinks = [
     {
-      text: "Reset password",
-      icon: <RestartAlt className={classes.getListItemIconStyles} />,
+      text: `${memberName}`,
+      icon: <EmojiPeople className={classes.getListItemIconStyles} />,
     },
     {
       text: "Logout",
@@ -140,10 +143,8 @@ const Navbar = () => {
           snackbarMessage: snackbarMessages.LOGOUT_SUCCESSFULL,
         })
       );
-      setTimeout(() => {
-        navigate("/");
-        window.location.reload();
-      }, 1500);
+      navigate("/");
+      window.location.reload();
       dispatch(setIsLoading(false));
     } else {
       dispatch(
@@ -293,16 +294,8 @@ const Navbar = () => {
                 sx={{
                   fontSize: "1.5rem !important",
                   display: { xs: "flex", md: "none" },
-                  // flexGrow: 2,
-                  "@media screen and (max-width: 899px)": {
-                    // flexGrow: 1,
-                  },
-                  "@media screen and (max-width: 599px)": {
-                    // fontSize: "1.25rem !important",
-                  },
-                  "@media screen and (max-width: 399px)": {
+                  "@media screen and (max-width: 400px)": {
                     fontSize: "1.10rem !important",
-                    // mr: 3.5,
                   },
                 }}
                 className={classes.getBrandLogoStylesTwo}
@@ -511,7 +504,7 @@ const Navbar = () => {
               </Drawer>
             </Box>
           </Toolbar>
-          {isLoading ? <Loader /> : <></>}
+          {isLoading && <Loader />}
         </Box>
       </Container>
     </AppBar>

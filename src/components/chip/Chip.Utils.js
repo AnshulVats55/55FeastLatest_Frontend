@@ -1,9 +1,8 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-restricted-globals */
 import { useState, useEffect } from "react";
-import { handleFormattedDate } from "../../common/CommonData";
+import { handleFormattedDate } from "../../common/CommonData.js";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
@@ -53,9 +52,7 @@ const ChipUtils = (dateValue) => {
   };
 
   const handleDateSelection = async (dateToBeChecked) => {
-    // console.log("date to be checked", dateToBeChecked);
     const isBookingOpen = checkPrebookingAvailabilty(dateToBeChecked);
-    // console.log("isbookingopen", isBookingOpen);
     if (isBookingOpen === true) {
       setIsSelected(!isSelected);
       dispatch(setPrebookDates(currentFormattedDate));
@@ -79,7 +76,7 @@ const ChipUtils = (dateValue) => {
       date: getReversedDate(dateToBeChecked),
     };
     if (currentReversedDate === dateToBeChecked) {
-      if (currentHours >= 0 && currentHours <= 8 && isAlreadyBooked === true) {
+      if (currentHours >= 0 && currentHours < 10 && isAlreadyBooked === true) {
         setLoaderRequired(true);
         const response = await handleCancelMealBooking(prebookData);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
@@ -110,7 +107,7 @@ const ChipUtils = (dateValue) => {
           setCustomSnackbar({
             snackbarOpen: true,
             snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: "Time limit exceeded !",
+            snackbarMessage: "Can't cancel after 10AM !",
           })
         );
         setLoaderRequired(false);

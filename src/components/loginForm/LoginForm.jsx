@@ -27,11 +27,14 @@ import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { setIsLoading } from "../../store/slices/LoaderSlice";
 import Loader from "../loader/Loader";
 import snackbarMessages from "../../Constants";
+import BrandLogo from "../../../src/assets/55FeastLogoNew.png";
+
 const LoginForm = () => {
   const { classes } = getLoginFormStyles();
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const isLoading = useSelector((state) => {
-    return state.loaderReducer.isLoading;
+    return state?.loaderReducer?.isLoading;
   });
 
   const dispatch = useDispatch();
@@ -74,11 +77,12 @@ const LoginForm = () => {
         setCustomSnackbar({
           snackbarOpen: true,
           snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: "Enter your password",
+          snackbarMessage: snackbarMessages.PASSWORD_REQUIRED_FOR_LOGIN,
         })
       );
     } else {
       dispatch(setIsLoading(true));
+      setIsDisabled(true);
       const response = await handleMemberLogin(memberData);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(setIsLoading(false));
@@ -93,16 +97,17 @@ const LoginForm = () => {
         dispatch(setMemberData(response?.data?.data?.user));
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
         dispatch(setIsLoading(false));
+        setIsDisabled(false);
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
             snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: snackbarMessages.LOGIN_FAILURE,
+            snackbarMessage: response?.response?.data?.message,
           })
         );
       }
@@ -112,6 +117,12 @@ const LoginForm = () => {
   return (
     <Box className={classes.getMainContStyles}>
       <Stack className={classes.getTextContStyles}>
+        <img
+          src={BrandLogo}
+          alt=""
+          width="20%"
+          className={classes.getBrandLogoStyles}
+        />
         <Typography className={classes.getTextOneStyles}>
           Welcome back !
         </Typography>
@@ -228,6 +239,7 @@ const LoginForm = () => {
                 }}
                 isLoaderRequired={false}
                 type="submit"
+                isDisabled={isDisabled}
               />
             </motion.div>
           </Grid>

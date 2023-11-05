@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -10,7 +11,6 @@ import {
   TextField,
   Typography,
   Skeleton,
-  Box,
 } from "@mui/material";
 import { getInvitationDialogStyles } from "./InvitationDialog.Styles";
 import InviteMemberCard from "../card/InviteMemberCard";
@@ -62,28 +62,28 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   const memberData = [
     //member's dummy data
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
   ];
 
@@ -101,7 +101,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   };
 
   return (
-    <div>
+    <Box>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -215,7 +215,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 

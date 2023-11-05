@@ -14,7 +14,6 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const { classes } = getHomePageStyles();
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -34,10 +33,6 @@ const Home = () => {
     setInviteOpen(true);
     setInviteScroll(scrollType);
   };
-
-  // const handleClose = () => {
-  //     setOpen(false);
-  // };
 
   const handleInvitationClose = () => {
     setInviteOpen(false);
@@ -61,7 +56,7 @@ const Home = () => {
 
   const imageVariants = {
     bounce: {
-      y: [0, -25, 25, 0],
+      y: [-25, 25, -25],
       transition: {
         duration: 15,
         repeat: Infinity,

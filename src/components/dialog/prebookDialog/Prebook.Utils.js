@@ -4,7 +4,10 @@
 /* eslint-disable no-restricted-globals */
 import { useEffect, useState, useRef } from "react";
 import { addDays, isWeekend } from "date-fns";
-import { handleFormattedDate } from "../../../common/CommonData";
+import {
+  handleFormattedDate,
+  getNextDate,
+} from "../../../common/CommonData.js";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";
@@ -19,7 +22,6 @@ const PrebookUtils = (open, handleClose) => {
   const prebookedDates = useSelector((state) => {
     return state.prebookDatesReducer;
   });
-  console.log("Prebook dates kept in store", prebookedDates);
 
   const { email } = useSelector((state) => {
     return state.memberDataReducer;
@@ -32,6 +34,9 @@ const PrebookUtils = (open, handleClose) => {
 
   const dispatch = useDispatch();
   const todaysDate = new Date();
+  if (new Date().getHours() >= 18 && new Date().getHours() <= 23) {
+    todaysDate.setDate(new Date().getDate() + 1);
+  }
   const [openDatesForPrebook, setOpenDatesForPrebook] = useState([]);
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
 
@@ -67,9 +72,7 @@ const PrebookUtils = (open, handleClose) => {
       if (!isWeekend(currentDate)) {
         //Checking if the current date is a weekend or not
         const formattedDate = handleFormattedDate(currentDate);
-        // console.log("Formatted date", formattedDate);
         const reversedDate = getReversedDate(formattedDate);
-        // console.log("Reversed date", reversedDate);
         workingDays.push({
           dayName: getDaysNameFromDate(currentDate),
           date: reversedDate,
@@ -108,12 +111,9 @@ const PrebookUtils = (open, handleClose) => {
 
   const descriptionElementRef = useRef(null);
   useEffect(() => {
-    console.log("INSIDE USE EFFECT");
     if (open) {
-      console.log("INSIDE OPEN");
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
-        console.log("INSIDE THIS->>>>>");
         descriptionElement.focus();
       }
     }

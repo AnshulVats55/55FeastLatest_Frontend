@@ -11,6 +11,7 @@ const CommonButton = ({
   customStyles,
   onClick,
   isLoaderRequired,
+  isDisabled,
 }) => {
   const { classes } = getButtonStyles(customStyles);
 
@@ -19,6 +20,7 @@ const CommonButton = ({
       className={classes.getCommonButtonStyles}
       type={type}
       onClick={onClick}
+      disabled={isDisabled ? isDisabled : false}
     >
       {children}&nbsp;
       {isLoaderRequired && (

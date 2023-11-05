@@ -1,7 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from "react";
-import { handleFormattedDate, getNextDate } from "../../../common/CommonData";
+import { useState, useEffect } from "react";
+import {
+  handleFormattedDate,
+  getNextDate,
+} from "../../../common/CommonData.js";
+import {
+  handleMemberCountByDate,
+  getMyBuddies,
+  getCountsByDate,
+} from "../../../bookingMethods/BookingMethods.js";
 import { useDispatch } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
@@ -17,6 +25,7 @@ const BookForAnyoneUtils = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [myBuddies, setMyBuddies] = useState([]);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [todaysCount, setTodaysCount] = useState([]);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -84,7 +93,7 @@ const BookForAnyoneUtils = () => {
         return true;
       } else {
         setIsBookingOpen(false);
-        handleBookingNotifications("Bookings not allowed on weekend !");
+        handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
@@ -92,13 +101,6 @@ const BookForAnyoneUtils = () => {
         //booking allowed from 12AM to 12AM the next day for admins
         setIsBookingOpen(true);
         return true;
-        // } else if (currentHour >= 18 && currentHour <= 23) {
-        //   setIsBookingOpen(true);
-        //   return true;
-        // } else {
-        //   setIsBookingOpen(false);
-        //   handleBookingNotifications("Bookings closed for today !");
-        // return false;
       }
     } else if (currentDay === 5) {
       if (currentHour >= 0 && currentHour <= 17) {
@@ -117,6 +119,41 @@ const BookForAnyoneUtils = () => {
     }
   };
 
+  useEffect(() => {
+    const handleAllMembers = async () => {
+      const response = await getMyBuddies(myData?.email, myData?.location);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setMyBuddies(response?.data?.data);
+        setIsDataLoaded(true);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        setIsDataLoaded(true);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Error fetching members !",
+          })
+        );
+      }
+    };
+
+    handleAllMembers();
+  }, []);
+
+  useEffect(() => {
+    const handleGetCountsByDate = async () => {
+      const response = await getCountsByDate(date, myData?.location);
+      console.log("Response of get counts by date API", response);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setTodaysCount(response?.data?.data);
+      }
+    };
+
+    handleGetCountsByDate();
+  }, []);
+
   return {
     myData,
     isDataLoaded,
@@ -124,11 +161,11 @@ const BookForAnyoneUtils = () => {
     searchTerm,
     setSearchTerm,
     myBuddies,
-    setMyBuddies,
     memberData,
     date,
     handleMemberSearch,
     checkMealBookingAvailability,
+    todaysCount,
   };
 };
 

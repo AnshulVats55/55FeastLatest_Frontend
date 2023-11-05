@@ -36,10 +36,6 @@ const BookForAnyoneCardUtils = () => {
   const actionBeingPerformed = async (handleAction) => {
     try {
       const response = await handleAction();
-      console.log(
-        "Response at invite member card is this -------------->",
-        response
-      );
       if (response?.data?.status === "success") {
         if (response?.data?.message === "Invited successfully") {
           dispatch(
@@ -66,7 +62,9 @@ const BookForAnyoneCardUtils = () => {
             })
           );
         }
-      } else if (response?.response?.data?.status === "failure") {
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
         if (response?.response?.data?.message === "Internal server error") {
           dispatch(
             setCustomSnackbar({
@@ -100,7 +98,6 @@ const BookForAnyoneCardUtils = () => {
 
   const getBookingStatusOfMember = async (memberEmail) => {
     const response = await handleMemberBookingStatus(memberEmail);
-    console.log("res of getStatus at book for buddy", response);
     if (response?.data?.status === snackbarMessages.SUCCESS) {
       setAllDatesBooked(response.data.data);
     }

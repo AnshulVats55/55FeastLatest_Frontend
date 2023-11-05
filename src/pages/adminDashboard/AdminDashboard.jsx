@@ -15,8 +15,11 @@ import {
   CircularProgress,
 } from "@mui/material";
 import InviteMemberCard from "../../components/card/InviteMemberCard";
-import { handleMemberCountByDate } from "../../bookingMethods/BookingMethods";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData";
+import {
+  handleMemberCountByDate,
+  getCountsByDate,
+} from "../../bookingMethods/BookingMethods";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ProgressBar from "../../components/progressBar/ProgressBar";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,6 +64,7 @@ const AdminDashboard = () => {
     bookForAnyoneScroll,
     handleBookForAnyoneOpen,
     handleBookForAnyoneClose,
+    currentMonthName,
   } = AdminDashboardUtils();
   let animationDuration = 0.4;
 
@@ -68,13 +72,10 @@ const AdminDashboard = () => {
   const nextDate = getNextDate(new Date());
   const nextDateFormatted = handleFormattedDate(nextDate);
 
-  const dateToGetTodaysCount = {
-    //date to get todays count (count remains visible till 12PM on that day)
-    date:
-      new Date().getHours() >= 18 && new Date().getHours() <= 23
-        ? nextDateFormatted
-        : formattedDate,
-  };
+  const dateToBeChecked =
+    new Date().getHours() >= 18 && new Date().getHours() <= 23
+      ? nextDateFormatted
+      : formattedDate;
 
   const handleReversedDate = (date) => {
     //reverses a date
@@ -117,16 +118,15 @@ const AdminDashboard = () => {
   useEffect(() => {
     //get todaysCount according to date
     const getTodaysTotalCount = async () => {
-      const response = await handleMemberCountByDate(
-        dateToGetTodaysCount,
-        location
-      );
-      console.log(
-        "Response of today's count api----------------------->",
-        response
-      );
-      setTodaysCount(response?.data?.data);
-      setIsDataLoaded(true);
+      const response = await getCountsByDate(dateToBeChecked, location);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setTodaysCount(response?.data?.data);
+        setIsDataLoaded(true);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        setIsDataLoaded(true);
+      }
     };
 
     getTodaysTotalCount();
@@ -136,7 +136,6 @@ const AdminDashboard = () => {
     //get total members according to location
     const handleGetTotalMembers = async () => {
       const response = await getTotalMembers(location);
-      console.log("Total members in office", response);
       setTotalMembers(response?.data?.data?.length);
     };
 
@@ -163,28 +162,28 @@ const AdminDashboard = () => {
   const memberData = [
     //member's dummy data
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
     {
-      memberName: "Dummy User",
-      memberEmail: "dummy.user@fiftyfivetech.io",
+      memberName: "",
+      memberEmail: "",
     },
   ];
 
@@ -252,12 +251,8 @@ const AdminDashboard = () => {
           },
         }
       );
-      console.log(
-        "MONTHLY DATA API RESPONSE------------->>>>>>>>>>>>>>>",
-        response
-      );
-      if (response?.data?.status === "success") {
-        const fileName = "July Data";
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        const fileName = `${currentMonthName} Data`;
         try {
           const worksheet = XLSX.utils.json_to_sheet(response.data.data);
           const workbook = XLSX.utils.book_new();
@@ -309,36 +304,41 @@ const AdminDashboard = () => {
           xs={12}
           className={classes.getGridItemOnePointOneStyles}
         >
-          <Box className={classes.getBoxOneStyles}>
-            <Stack className={classes.getStackOneStyles}>
-              <Typography className={classes.getTextOneStyles}>
-                {new Date().getHours() >= 18 && new Date().getHours() <= 23
-                  ? `Count for ${handleReversedDate(nextDateFormatted)}`
-                  : `Count for ${handleReversedDate(formattedDate)}`}
-              </Typography>
-              {isDataLoaded ? (
-                <Typography className={classes.getTextTwoStyles}>
-                  {`${Math.round(todaysTotalCount)}`}
+          <motion.div
+            style={{ width: "90%" }}
+            initial={{ translateY: "30px", opacity: 0 }}
+            animate={{ translateY: "0px", opacity: 1 }}
+            transition={{
+              duration: 0.75,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          >
+            <Box className={classes.getBoxOneStyles}>
+              <Stack className={classes.getStackOneStyles}>
+                <Typography className={classes.getTextOneStyles}>
+                  {new Date().getHours() >= 18 && new Date().getHours() <= 23
+                    ? `Count for ${handleReversedDate(nextDateFormatted)}`
+                    : `Count for ${handleReversedDate(formattedDate)}`}
                 </Typography>
-              ) : (
-                <Typography className={classes.getTextTwoStyles}>
-                  <CircularProgress
-                    size={30}
-                    thickness={5}
-                    color="inherit"
-                    className={classes.getCircularProgressStyles}
-                  />
-                </Typography>
-              )}
-            </Stack>
-            <motion.div
-              initial={{ rotate: 0 }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2 }}
-            >
+                {isDataLoaded ? (
+                  <Typography className={classes.getTextTwoStyles}>
+                    {`${Math.round(todaysTotalCount)}`}
+                  </Typography>
+                ) : (
+                  <Typography className={classes.getTextTwoStyles}>
+                    <CircularProgress
+                      size={35}
+                      thickness={5}
+                      color="inherit"
+                      className={classes.circularProgressStyles}
+                    />
+                  </Typography>
+                )}
+              </Stack>
               <ShowChartIcon className={classes.getIconOneStyles} />
-            </motion.div>
-          </Box>
+            </Box>
+          </motion.div>
         </Grid>
 
         <Grid
@@ -349,13 +349,24 @@ const AdminDashboard = () => {
           xs={12}
           className={classes.getGridItemOnePointTwoStyles}
         >
-          <Box className={classes.getBoxTwoStyles}>
-            <ProgressBar
-              todaysCount={todaysCount?.length}
-              totalMembers={totalMembers}
-              isDataLoaded={isDataLoaded}
-            />
-          </Box>
+          <motion.div
+            style={{ width: "90%" }}
+            initial={{ translateY: "30px", opacity: 0 }}
+            animate={{ translateY: "0px", opacity: 1 }}
+            transition={{
+              duration: 0.9,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          >
+            <Box className={classes.getBoxTwoStyles}>
+              <ProgressBar
+                todaysCount={todaysCount?.length}
+                totalMembers={totalMembers}
+                isDataLoaded={isDataLoaded}
+              />
+            </Box>
+          </motion.div>
         </Grid>
 
         <Grid
@@ -367,163 +378,174 @@ const AdminDashboard = () => {
           sx={{ background: "" }}
           className={classes.getGridItemOnePointThreeStyles}
         >
-          <Box className={classes.getBoxThreeStyles}>
-            <Stack>
-              <Typography className={classes.getTextThreeStyles}>
-                Freeing up the time by transitioning from manual list creation
-                to automation
-              </Typography>
-              <Box className={classes.getDownloadButtonsContStyles}>
-                <Grid container sx={{ width: "100%" }}>
-                  <Grid
-                    item
-                    lg={6}
-                    xs={12}
-                    sx={{
-                      background: "",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <motion.div
-                      initial={{ scale: 1 }}
-                      whileTap={{ scale: 0.97 }}
-                      transition={{ duration: 0.1 }}
-                      style={{ width: "90%", background: "" }}
+          <motion.div
+            style={{ width: "90%" }}
+            initial={{ translateY: "30px", opacity: 0 }}
+            animate={{ translateY: "0px", opacity: 1 }}
+            transition={{
+              duration: 1.05,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          >
+            <Box className={classes.getBoxThreeStyles}>
+              <Stack>
+                <Typography className={classes.getTextThreeStyles}>
+                  Freeing up the time by transitioning from manual list creation
+                  to automation
+                </Typography>
+                <Box className={classes.getDownloadButtonsContStyles}>
+                  <Grid container sx={{ width: "100%" }}>
+                    <Grid
+                      item
+                      lg={6}
+                      xs={12}
+                      sx={{
+                        background: "",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
                     >
-                      <CommonButton
-                        children={"Daily data"}
-                        type=""
-                        onClick={() => {
-                          handleExportInExcel(todaysCount);
-                        }}
-                        customStyles={{
-                          width: "90% !important",
-                          height: "40px",
-                          borderRadius: "4px",
-                          border: "1px solid #ef5d36",
-                          color: "#ef5d36",
-                          fontSize: "0.9rem",
-                          margin: "0.25rem 0rem",
-                          "&:hover": {
-                            background: "#ef5d36",
-                            border: "none",
-                            color: "#FFF",
-                          },
-                          "&:focus": {
-                            outline: "none",
-                          },
-                          "@media screen and (max-width: 399px)": {
-                            fontSize: "0.8rem",
-                          },
-                        }}
-                      />
-                    </motion.div>
-                  </Grid>
-                  <Grid
-                    item
-                    lg={6}
-                    xs={12}
-                    sx={{
-                      background: "",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <motion.div
-                      initial={{ scale: 1 }}
-                      whileTap={{ scale: 0.97 }}
-                      transition={{ duration: 0.1 }}
-                      style={{ width: "90%", background: "" }}
-                    >
-                      <CommonButton
-                        children={"Monthly data"}
-                        type=""
-                        onClick={handlePreviousMonthData}
-                        isLoaderRequired={isFileLoading}
-                        customStyles={{
-                          width: "90% !important",
-                          height: "40px",
-                          borderRadius: "4px",
-                          border: "1px solid #ef5d36",
-                          color: "#ef5d36",
-                          fontSize: "0.9rem",
-                          margin: "0.25rem 0rem",
-                          "&:hover": {
-                            background: "#ef5d36",
-                            border: "none",
-                            color: "#FFF",
-                          },
-                          "&:focus": {
-                            outline: "none",
-                          },
-                          "@media screen and (max-width: 399px)": {
-                            fontSize: "0.8rem",
-                          },
-                        }}
-                      />
-                    </motion.div>
-                  </Grid>
-                  <Grid
-                    item
-                    lg={12}
-                    xs={12}
-                    sx={{
-                      background: "",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <motion.div
-                      initial={{ scale: 1 }}
-                      whileTap={{ scale: 0.97 }}
-                      transition={{ duration: 0.1 }}
-                      className={classes.bookForAnyoneBtnContStyles}
-                    >
-                      <CommonButton
-                        children={"Book for anyone"}
-                        type=""
-                        onClick={handleBookForAnyoneOpen("paper")}
-                        customStyles={{
-                          width: "90% !important",
-                          height: "40px",
-                          borderRadius: "4px",
-                          border: "1px solid #ef5d36",
-                          color: "#ef5d36",
-                          fontSize: "0.9rem",
-                          margin: "0.25rem 0rem",
-                          "&:hover": {
-                            background: "#ef5d36",
-                            border: "none",
-                            color: "#FFF",
-                          },
-                          "&:focus": {
-                            outline: "none",
-                          },
-                          "@media screen and (max-width: 1199px)": {
+                      <motion.div
+                        initial={{ scale: 1 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ duration: 0.1 }}
+                        style={{ width: "90%", background: "" }}
+                      >
+                        <CommonButton
+                          children={"Daily data"}
+                          type=""
+                          onClick={() => {
+                            handleExportInExcel(todaysCount);
+                          }}
+                          customStyles={{
                             width: "90% !important",
-                          },
-                          "@media screen and (max-width: 399px)": {
-                            fontSize: "0.8rem",
-                          },
-                        }}
-                      />
-                      {bookForAnyoneOpen ? (
-                        <BookForAnyone
-                          open={bookForAnyoneOpen}
-                          scroll={bookForAnyoneScroll}
-                          handleClose={handleBookForAnyoneClose}
-                          children="Book"
+                            height: "40px",
+                            borderRadius: "4px",
+                            border: "1px solid #ef5d36",
+                            color: "#ef5d36",
+                            fontSize: "0.9rem",
+                            margin: "0.25rem 0rem",
+                            "&:hover": {
+                              background: "#ef5d36",
+                              border: "none",
+                              color: "#FFF",
+                            },
+                            "&:focus": {
+                              outline: "none",
+                            },
+                            "@media screen and (max-width: 400px)": {
+                              fontSize: "0.8rem",
+                            },
+                          }}
                         />
-                      ) : (
-                        <></>
-                      )}
-                    </motion.div>
+                      </motion.div>
+                    </Grid>
+                    <Grid
+                      item
+                      lg={6}
+                      xs={12}
+                      sx={{
+                        background: "",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <motion.div
+                        initial={{ scale: 1 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ duration: 0.1 }}
+                        style={{ width: "90%", background: "" }}
+                      >
+                        <CommonButton
+                          children={"Monthly data"}
+                          type=""
+                          onClick={handlePreviousMonthData}
+                          isLoaderRequired={isFileLoading}
+                          customStyles={{
+                            width: "90% !important",
+                            height: "40px",
+                            borderRadius: "4px",
+                            border: "1px solid #ef5d36",
+                            color: "#ef5d36",
+                            fontSize: "0.9rem",
+                            margin: "0.25rem 0rem",
+                            "&:hover": {
+                              background: "#ef5d36",
+                              border: "none",
+                              color: "#FFF",
+                            },
+                            "&:focus": {
+                              outline: "none",
+                            },
+                            "@media screen and (max-width: 400px)": {
+                              fontSize: "0.8rem",
+                            },
+                          }}
+                        />
+                      </motion.div>
+                    </Grid>
+                    <Grid
+                      item
+                      lg={12}
+                      xs={12}
+                      sx={{
+                        background: "",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <motion.div
+                        initial={{ scale: 1 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ duration: 0.1 }}
+                        className={classes.bookForAnyoneBtnContStyles}
+                      >
+                        <CommonButton
+                          children={"Book for anyone"}
+                          type=""
+                          onClick={handleBookForAnyoneOpen("paper")}
+                          customStyles={{
+                            width: "90% !important",
+                            height: "40px",
+                            borderRadius: "4px",
+                            border: "1px solid #ef5d36",
+                            color: "#ef5d36",
+                            fontSize: "0.9rem",
+                            margin: "0.25rem 0rem",
+                            "&:hover": {
+                              background: "#ef5d36",
+                              border: "none",
+                              color: "#FFF",
+                            },
+                            "&:focus": {
+                              outline: "none",
+                            },
+                            "@media screen and (max-width: 1199px)": {
+                              width: "90% !important",
+                            },
+                            "@media screen and (max-width: 400px)": {
+                              fontSize: "0.8rem",
+                            },
+                          }}
+                        />
+                        {bookForAnyoneOpen ? (
+                          <BookForAnyone
+                            open={bookForAnyoneOpen}
+                            scroll={bookForAnyoneScroll}
+                            handleClose={handleBookForAnyoneClose}
+                            children="Book"
+                          />
+                        ) : (
+                          <></>
+                        )}
+                      </motion.div>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </Stack>
-          </Box>
+                </Box>
+              </Stack>
+            </Box>
+          </motion.div>
         </Grid>
 
         <Grid
@@ -535,69 +557,81 @@ const AdminDashboard = () => {
           sx={{ background: "" }}
           className={classes.getGridItemOnePointFourStyles}
         >
-          <Box className={classes.getBoxFourStyles}>
-            <Stack>
-              <Typography className={classes.getTextFourStyles}>
-                Now you can add & delete members in a speedy way without a fuss!
-              </Typography>
-              <Box className={classes.getDownloadButtonsContStyles}>
-                <motion.div
-                  style={{
-                    width: "90%",
-                    background: "",
-                    padding: "0",
-                    margin: "0.25rem 0rem",
-                    borderRadius: "4px",
-                    border: "none",
-                  }}
-                >
-                  <Button
-                    className={classes.getAddMemberButtonStyles}
-                    onClick={handleAddMemberOpen("paper")}
+          <motion.div
+            style={{ width: "90%" }}
+            initial={{ translateY: "30px", opacity: 0 }}
+            animate={{ translateY: "0px", opacity: 1 }}
+            transition={{
+              duration: 1.2,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          >
+            <Box className={classes.getBoxFourStyles}>
+              <Stack>
+                <Typography className={classes.getTextFourStyles}>
+                  Now you can add & delete members in a speedy way without a
+                  fuss!
+                </Typography>
+                <Box className={classes.getDownloadButtonsContStyles}>
+                  <motion.div
+                    style={{
+                      width: "90%",
+                      background: "",
+                      padding: "0",
+                      margin: "0.25rem 0rem",
+                      borderRadius: "4px",
+                      border: "none",
+                    }}
                   >
-                    Add member
-                  </Button>
-                </motion.div>
-                {addMemberOpen ? (
-                  <AddMemberDialog
-                    open={addMemberOpen}
-                    scroll={addMemberScroll}
-                    handleClose={handleAddMemberClose}
-                  />
-                ) : (
-                  <></>
-                )}
-                <motion.div
-                  style={{
-                    width: "90%",
-                    background: "",
-                    padding: "0",
-                    margin: "0.25rem 0rem",
-                    borderRadius: "4px",
-                    border: "none",
-                  }}
-                >
-                  <Button
-                    className={classes.getAddMemberButtonStyles}
-                    onClick={handleDeleteMemberOpen("paper")}
+                    <Button
+                      className={classes.getAddMemberButtonStyles}
+                      onClick={handleAddMemberOpen("paper")}
+                    >
+                      Add member
+                    </Button>
+                  </motion.div>
+                  {addMemberOpen ? (
+                    <AddMemberDialog
+                      open={addMemberOpen}
+                      scroll={addMemberScroll}
+                      handleClose={handleAddMemberClose}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                  <motion.div
+                    style={{
+                      width: "90%",
+                      background: "",
+                      padding: "0",
+                      margin: "0.25rem 0rem",
+                      borderRadius: "4px",
+                      border: "none",
+                    }}
                   >
-                    Delete member
-                  </Button>
-                </motion.div>
-                {deleteMemberOpen ? (
-                  <DeleteMemberDialog
-                    open={deleteMemberOpen}
-                    scroll={deleteMemberScroll}
-                    handleClose={handleDeleteMemberClose}
-                    children="Delete"
-                    placeholder="Search member to delete..."
-                  />
-                ) : (
-                  <></>
-                )}
-              </Box>
-            </Stack>
-          </Box>
+                    <Button
+                      className={classes.getAddMemberButtonStyles}
+                      onClick={handleDeleteMemberOpen("paper")}
+                    >
+                      Delete member
+                    </Button>
+                  </motion.div>
+                  {deleteMemberOpen ? (
+                    <DeleteMemberDialog
+                      open={deleteMemberOpen}
+                      scroll={deleteMemberScroll}
+                      handleClose={handleDeleteMemberClose}
+                      children="Delete"
+                      placeholder="Search member to delete..."
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </Box>
+              </Stack>
+            </Box>
+          </motion.div>
         </Grid>
       </Grid>
 

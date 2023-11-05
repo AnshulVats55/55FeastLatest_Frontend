@@ -12,7 +12,8 @@ const LAST_NAME_REQUIRED = "Enter your lastname !";
 const GENDER_REQUIRED = "Select your gender !";
 const LOCATION_REQUIRED = "Select your locaation !";
 const EMAIL_REQUIRED = "Enter your email !";
-const PASSWORD_REQUIRED = "Create your password !";
+const PASSWORD_REQUIRED_FOR_SIGNUP = "Create your password !";
+const PASSWORD_REQUIRED_FOR_LOGIN = "Enter your password !";
 const PHONE_NUMBER_REQUIRED = "Enter your number !";
 const SIGNUP_SUCCESSFULL = "Account created successfully !";
 const SIGNUP_FAILURE = "Error creating account !";
@@ -61,6 +62,8 @@ const DATA_FETCHED_SUCCESSFULL = "Data fetched successfully !";
 const DATA_FETCHED_FAILURE = "Error fetching data !";
 const TRY_AGAIN = "Please try again !";
 const MEMBER_MEAL_STATUS = "Error fetching status !";
+const USER_NOT_VALID = "user not valid";
+const BOOK_YOUR_FIRST_MEAL = "Book your first meal";
 
 export default {
   SUCCESS,
@@ -72,7 +75,8 @@ export default {
   GENDER_REQUIRED,
   LOCATION_REQUIRED,
   EMAIL_REQUIRED,
-  PASSWORD_REQUIRED,
+  PASSWORD_REQUIRED_FOR_SIGNUP,
+  PASSWORD_REQUIRED_FOR_LOGIN,
   PHONE_NUMBER_REQUIRED,
   SIGNUP_SUCCESSFULL,
   SIGNUP_FAILURE,
@@ -121,4 +125,6 @@ export default {
   MEMBER_EMAIL_ALREADY_EXISTS,
   TRY_AGAIN,
   MEMBER_MEAL_STATUS,
+  USER_NOT_VALID,
+  BOOK_YOUR_FIRST_MEAL,
 };

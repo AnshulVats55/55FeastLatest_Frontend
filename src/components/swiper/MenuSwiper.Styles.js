@@ -41,7 +41,7 @@ export const getMenuItemStyles = makeStyles()((theme) => ({
     width: "500px",
     height: "285px",
     padding: "2rem 0rem",
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       width: "400px",
       height: "225px",
     },

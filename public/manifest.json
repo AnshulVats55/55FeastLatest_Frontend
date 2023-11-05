@@ -3,34 +3,34 @@
   "name": "55Feast",
   "icons": [
     {
-      "src": "55FeastLogo.ico",
+      "src": "55FeastLogoNew.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "55FeastLogo.png",
+      "src": "55FeastLogoNew.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
-      "src": "55FeastLogo.png",
+      "src": "55FeastLogoNew.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
     },
     {
-      "src": "55FeastLogo.png",
+      "src": "55FeastLogoNew.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
     }
   ],
-  "start_url": "https://fiftyfive-feast.netlify.app/",
+  "start_url": "https://feastapp-60d7c.web.app/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "description": "Welcome to \"55Feast\" !",
   "display_override": ["standalone", "window-controls-overlay"],
-  "prefer_related_applications": "false"
+  "prefer_related_applications": false
 }

@@ -17,6 +17,7 @@ import CarrotImage from "../../assets/carrot.png";
 import OrangeImage from "../../assets/orange image.png";
 
 const AllRoutes = () => {
+
   return (
     <Router>
       <CustomSnackbar />

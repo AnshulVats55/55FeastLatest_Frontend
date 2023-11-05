@@ -9,7 +9,7 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     left: "0px",
     background: "none",
     height: "10vh",
-    "@media screen and (max-width: 399px)": {
+    "@media screen and (max-width: 400px)": {
       height: "8vh",
     },
   },
@@ -34,7 +34,7 @@ export const getNavbarStyles = makeStyles()((theme) => ({
       borderBottomLeftRadius: "1rem",
       borderBottomRightRadius: "1rem",
     },
-    "@media screen and (max-width: 399px)": {
+    "@media screen and (max-width: 400px)": {
       height: "8vh",
     },
   },
@@ -57,14 +57,9 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     letterSpacing: ".3rem",
     color: "#FFF",
     textDecoration: "none",
-    // fontSize: "1.5rem",
     "&:hover": {
       color: "#FFF",
     },
-    // "@media screen and (max-width: 399px)": {
-    //   maxWidth: "150px",
-    // },
-    // background:"pink",
   },
 
   getBrandLogoStylesOne: {
@@ -77,10 +72,6 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     "&:hover": {
       color: "#FFF",
     },
-    // "@media screen and (max-width: 399px)": {
-    //   maxWidth: "150px",
-    // },
-    // background:"pink",
   },
 
   getNavLinksContStylesOne: {
@@ -145,7 +136,7 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    "@media screen and (max-width: 899px)": {
+    "@media screen and (max-width: 900px)": {
       display: "none",
     },
   },
