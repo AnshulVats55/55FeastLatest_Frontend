@@ -32,10 +32,8 @@ const BookMealUtils = () => {
   const [prebookScroll, setPrebookScroll] = useState("paper");
   const [isStatusFetched, setIsStatusFetched] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [allBookedDates, setAllBookedDates] = useState([]);
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
-  const [isMealCancellationOpen, setIsMealCancellationOpen] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -59,7 +57,6 @@ const BookMealUtils = () => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(memberData.email);
-      // console.log("STATUS", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
         if (response?.data?.message === snackbarMessages.BOOK_YOUR_FIRST_MEAL) {
@@ -122,7 +119,6 @@ const BookMealUtils = () => {
   };
 
   const checkMealBookingAvailability = () => {
-    //handles checking timings for meal bookings
     const currentDateTime = new Date();
     const currentDay = currentDateTime.getDay();
     const currentHour = currentDateTime.getHours();
@@ -130,38 +126,30 @@ const BookMealUtils = () => {
     if (currentDay === 0) {
       if (currentHour >= 18 && currentHour <= 23) {
         //booking allowed from 5PM(Sunday) to 9AM(Monday)
-        setIsBookingOpen(true);
         return true;
       } else {
-        setIsBookingOpen(false);
         handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
       if (currentHour >= 0 && currentHour <= 8) {
         //booking allowed from 7PM to 9AM the next day
-        setIsBookingOpen(true);
         return true;
       } else if (currentHour >= 18 && currentHour <= 23) {
-        setIsBookingOpen(true);
         return true;
       } else {
-        setIsBookingOpen(false);
         handleBookingNotifications("Bookings open at 6PM !");
         return false;
       }
     } else if (currentDay === 5) {
       if (currentHour >= 0 && currentHour <= 8) {
         //booking allowed from 12AM(Friday) to 9AM(Friday)
-        setIsBookingOpen(true);
         return true;
       } else {
-        setIsBookingOpen(false);
         handleBookingNotifications("Bookings closed for today !");
         return false;
       }
     } else {
-      setIsBookingOpen(false);
       handleBookingNotifications("Bookings not allowed on weekend !");
       return false;
     }
@@ -220,26 +208,29 @@ const BookMealUtils = () => {
     const currentDay = currentDateTime.getDay();
     const currentHour = currentDateTime.getHours();
 
-    if (currentDay >= 1 && currentDay <= 4) {
+    if(currentDay === 0){
+      if (currentHour >= 18 && currentHour <= 23) {
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else if (currentDay >= 1 && currentDay <= 4) {
       if (currentHour >= 0 && currentHour < 10) {
         //cancellation allowed from 12AM to 10AM the next day
-        setIsMealCancellationOpen(true);
         return true;
       } else if (currentHour >= 18 && currentHour <= 23) {
-        setIsMealCancellationOpen(true);
         return true;
       } else {
-        setIsMealCancellationOpen(false);
         handleBookingNotifications("Can't cancel after 10AM !");
         return false;
       }
     } else if (currentDay === 5) {
       if (currentHour >= 0 && currentHour < 10) {
         //cancellation allowed from 12AM(Friday) to 10AM(Friday)
-        setIsMealCancellationOpen(true);
         return true;
       } else {
-        setIsMealCancellationOpen(false);
         handleBookingNotifications("Can't cancel after 10AM !");
         return false;
       }
