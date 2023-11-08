@@ -4,10 +4,7 @@
 /* eslint-disable no-restricted-globals */
 import { useEffect, useState, useRef } from "react";
 import { addDays, isWeekend } from "date-fns";
-import {
-  handleFormattedDate,
-  getNextDate,
-} from "../../../common/CommonData.js";
+import { handleFormattedDate } from "../../../common/CommonData.js";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";
@@ -17,6 +14,7 @@ import { removeAllDates } from "../../../store/slices/PrebookDatesSlice";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
 import { getPrebookDates } from "../../../store/slices/FetchPrebookDatesSlice";
+import { HandleLogoutOnSessionExpire } from "../../../common/Logout";
 
 const PrebookUtils = (open, handleClose) => {
   const prebookedDates = useSelector((state) => {
@@ -26,6 +24,8 @@ const PrebookUtils = (open, handleClose) => {
   const { email } = useSelector((state) => {
     return state.memberDataReducer;
   });
+
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const memberData = {
     email: email,
@@ -145,13 +145,29 @@ const PrebookUtils = (open, handleClose) => {
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: snackbarMessages.PREBOOKING_FAILURE,
-          })
-        );
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        } else {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.PREBOOKING_FAILURE,
+            })
+          );
+        }
         setIsLoaderRequired(false);
       }
     }

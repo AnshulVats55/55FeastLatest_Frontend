@@ -10,12 +10,12 @@ import {
 import {
   getMyBuddies,
   bookMealForBuddy,
-  handleMemberCountByDate,
   getCountsByDate,
 } from "../../../bookingMethods/BookingMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
+import { HandleLogoutOnSessionExpire } from "../../../common/Logout";
 
 const BookForBuddyUtils = ({ open }) => {
   const myData = useSelector((state) => {
@@ -23,6 +23,7 @@ const BookForBuddyUtils = ({ open }) => {
   });
 
   const dispatch = useDispatch();
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -53,14 +54,28 @@ const BookForBuddyUtils = ({ open }) => {
 
   useEffect(() => {
     const handleMyBuddies = async () => {
-      const response = await getMyBuddies(myData.email, myData.location);
+      const response = await getMyBuddies(myData?.email, myData?.location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
-        console.log("Error");
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        }
       }
     };
 
@@ -75,13 +90,29 @@ const BookForBuddyUtils = ({ open }) => {
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: "Error fetching buddies !",
-          })
-        );
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        } else {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.ERROR_FETCHING_BUDDIES,
+            })
+          );
+        }
       }
     };
 
@@ -117,12 +148,10 @@ const BookForBuddyUtils = ({ open }) => {
   ];
 
   const handleMemberSearch = (event) => {
-    //handles member search
-    setSearchTerm(event.target.value.toLowerCase());
+    setSearchTerm(event?.target?.value.toLowerCase());
   };
 
   const handleBookingNotifications = (notificationMessage) => {
-    //dispatches notifications based on response
     dispatch(
       setCustomSnackbar({
         snackbarOpen: true,

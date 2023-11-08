@@ -15,10 +15,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import InviteMemberCard from "../../components/card/InviteMemberCard";
-import {
-  handleMemberCountByDate,
-  getCountsByDate,
-} from "../../bookingMethods/BookingMethods";
+import { getCountsByDate } from "../../bookingMethods/BookingMethods";
 import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ProgressBar from "../../components/progressBar/ProgressBar";
@@ -40,6 +37,7 @@ import BookForAnyone from "../../components/dialog/bookForAnyoneDialog/BookForAn
 import BASE_URL from "../../api/baseUrl/BaseUrl";
 import MEMBER_TOKEN from "../../api/memberToken/MemberToken";
 import axios from "axios";
+import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 
 const AdminDashboard = () => {
   const { location } = useSelector((state) => {
@@ -48,6 +46,7 @@ const AdminDashboard = () => {
 
   const { classes } = getAdminDashboardStyles();
   const dispatch = useDispatch();
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -78,30 +77,25 @@ const AdminDashboard = () => {
       : formattedDate;
 
   const handleReversedDate = (date) => {
-    //reverses a date
     const reversedDate = getReversedDate(date);
     return reversedDate;
   };
 
   const handleAddMemberOpen = (scrollType) => () => {
-    //opens add member dialog
     setAddMemberOpen(true);
     setAddMemberScroll(scrollType);
   };
 
   const handleAddMemberClose = () => {
-    //closeds add member dialog
     setAddMemberOpen(false);
   };
 
   const handleDeleteMemberOpen = (scrollType) => () => {
-    //opens delete member dialog
     setDeleteMemberOpen(true);
     setDeleteMemberScroll(scrollType);
   };
 
   const handleDeleteMemberClose = () => {
-    //closes delete member dialog
     setDeleteMemberOpen(false);
   };
 
@@ -125,6 +119,21 @@ const AdminDashboard = () => {
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        }
         setIsDataLoaded(true);
       }
     };
@@ -136,7 +145,27 @@ const AdminDashboard = () => {
     //get total members according to location
     const handleGetTotalMembers = async () => {
       const response = await getTotalMembers(location);
-      setTotalMembers(response?.data?.data?.length);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setTotalMembers(response?.data?.data?.length);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        }
+      }
     };
 
     handleGetTotalMembers();
@@ -275,6 +304,24 @@ const AdminDashboard = () => {
             })
           );
           setIsFileLoading(false);
+        }
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
         }
       }
       return response;

@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useEffect } from "react";
 import { Typography, Skeleton, Grid } from "@mui/material";
 import InviteButton from "../inviteButton/InviteButton";
 import {
@@ -12,10 +11,6 @@ import {
 } from "./InviteMemberCard.Styles";
 import { motion } from "framer-motion";
 import InviteMemberCardUtils from "./InviteMemberCard.Utils";
-import { handleCancelMealBooking } from "../../bookingMethods/BookingMethods";
-import { useDispatch } from "react-redux";
-import snackbarMessages from "../../Constants";
-import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 
 const InviteMemberCard = ({
   indexNumber,
@@ -36,56 +31,20 @@ const InviteMemberCard = ({
 }) => {
   const { classes } = getInviteMemberCardStyles();
   const {
-    dateToBeChecked,
     handleMemberName,
     handleMemberEmail,
     actionBeingPerformed,
     isLoaderRequired,
-    setIsLoaderRequired,
     isMealBooked,
-    setIsMealBooked,
     isTodaysMealBooked,
-    setIsTodaysMealBooked,
-  } = InviteMemberCardUtils(isAlreadyBooked);
+    handleMealCancellation,
+    memberDataToBeSent,
+  } = InviteMemberCardUtils(isAlreadyBooked, memberEmail);
   const { customStyles } = getInviteButtonCustomStyles;
   const { initial, whileInView, transition } = getInviteMemberCardAnimation;
 
-  const dispatch = useDispatch();
-
   let newMemberEmail = handleMemberEmail(isEmailChopRequired, memberEmail);
   handleMemberName();
-
-  const memberDataToBeSent = {
-    email: memberEmail,
-    date: dateToBeChecked,
-  };
-
-  const handleMealCancellation = async (memberDataToBeSent) => {
-    setIsLoaderRequired(true);
-    const response = await handleCancelMealBooking(memberDataToBeSent);
-    if (response?.data?.status === snackbarMessages.SUCCESS) {
-      setIsMealBooked(false);
-      setIsTodaysMealBooked(false);
-      setIsLoaderRequired(false);
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.SUCCESS,
-          snackbarMessage:
-            snackbarMessages.MEMBER_MEAL_CANCELLATION_SUCCESSFULL,
-        })
-      );
-    } else if (response?.response?.data?.status === snackbarMessages.FAILURE) {
-      setIsLoaderRequired(false);
-      dispatch(
-        setCustomSnackbar({
-          snackbarOpen: true,
-          snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.MEMBER_MEAL_CANCELLATION_FAILURE,
-        })
-      );
-    }
-  };
 
   return (
     <>

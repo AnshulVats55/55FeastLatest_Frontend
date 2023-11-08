@@ -14,6 +14,7 @@ import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
 import { removeAllDates } from "../../store/slices/PrebookDatesSlice";
 import snackbarMessages from "../../Constants";
+import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 
 const BookMealUtils = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const BookMealUtils = () => {
   const bookForBuddyTooltip =
     "You can't cancel your buddy's meal even if you booked it !";
   const mealBookingTooltip = "You can cancel your meal only till 10AM !";
+
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [bookForBuddyOpen, setBookForBuddyOpen] = useState(false);
   const [prebookOpen, setPrebookOpen] = useState(false);
@@ -82,6 +85,20 @@ const BookMealUtils = () => {
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
         if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        } else if (
           response?.response?.data?.message === snackbarMessages.USER_NOT_VALID
         ) {
           setIsStatusFetched(true);
@@ -191,13 +208,29 @@ const BookMealUtils = () => {
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: snackbarMessages.MEMBER_MEAL_BOOKING_FAILURE,
-          })
-        );
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        } else {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.MEMBER_MEAL_BOOKING_FAILURE,
+            })
+          );
+        }
         setIsLoaderRequired(false);
       }
     }
@@ -208,15 +241,13 @@ const BookMealUtils = () => {
     const currentDay = currentDateTime.getDay();
     const currentHour = currentDateTime.getHours();
 
-    if(currentDay === 0){
+    if (currentDay === 0) {
       if (currentHour >= 18 && currentHour <= 23) {
         return true;
-      }
-      else{
+      } else {
         return false;
       }
-    }
-    else if (currentDay >= 1 && currentDay <= 4) {
+    } else if (currentDay >= 1 && currentDay <= 4) {
       if (currentHour >= 0 && currentHour < 10) {
         //cancellation allowed from 12AM to 10AM the next day
         return true;
@@ -256,13 +287,30 @@ const BookMealUtils = () => {
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: snackbarMessages.MEMBER_MEAL_CANCELLATION_FAILURE,
-          })
-        );
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        } else {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage:
+                snackbarMessages.MEMBER_MEAL_CANCELLATION_FAILURE,
+            })
+          );
+        }
         setIsLoaderRequired(false);
       }
     }

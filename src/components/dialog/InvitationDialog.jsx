@@ -19,6 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleInviteMembers } from "../../invitationMethods/InvitationMethods";
 import { setTotalMembers } from "../../store/slices/TotalMembersSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { HandleLogoutOnSessionExpire } from "../../common/Logout";
+import snackbarMessages from "../../Constants";
+import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 
 const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   const adminData = useSelector((state) => {
@@ -27,6 +30,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
 
   const { classes } = getInvitationDialogStyles();
   const dispatch = useDispatch();
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,10 +53,28 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
         adminData.email,
         adminData.location
       );
-      if (response?.data?.status === "success") {
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
         setNotInvited(response.data.data);
         setIsDataLoaded(true);
         dispatch(setTotalMembers(response.data.data.length));
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        }
       }
     };
 

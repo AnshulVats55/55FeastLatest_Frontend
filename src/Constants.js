@@ -64,6 +64,10 @@ const TRY_AGAIN = "Please try again !";
 const MEMBER_MEAL_STATUS = "Error fetching status !";
 const USER_NOT_VALID = "user not valid";
 const BOOK_YOUR_FIRST_MEAL = "Book your first meal";
+const JWT_TOKEN_EXPIRED = "JWT token expired";
+const SESSION_EXPIRED = "Session expired";
+const ERROR_FETCHING_BUDDIES = "Error fetching buddies !";
+const ERROR_FETCHING_MEMBERS = "Error fetching members !";
 
 export default {
   SUCCESS,
@@ -127,4 +131,8 @@ export default {
   MEMBER_MEAL_STATUS,
   USER_NOT_VALID,
   BOOK_YOUR_FIRST_MEAL,
+  JWT_TOKEN_EXPIRED,
+  SESSION_EXPIRED,
+  ERROR_FETCHING_BUDDIES,
+  ERROR_FETCHING_MEMBERS,
 };

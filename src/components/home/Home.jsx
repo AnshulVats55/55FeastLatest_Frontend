@@ -10,15 +10,21 @@ import MenuSwiper from "../swiper/MenuSwiper";
 import LunchImage from "../../assets/lunch image.png";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
+import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
+import snackbarMessages from "../../Constants";
+import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 
 const Home = () => {
   const { classes } = getHomePageStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  const { isAdmin } = useSelector((state) => {
+  const { isAdmin, email } = useSelector((state) => {
     return state.memberDataReducer;
   });
 
@@ -39,6 +45,7 @@ const Home = () => {
   };
 
   const descriptionElementRef = React.useRef(null);
+
   useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -53,6 +60,28 @@ const Home = () => {
       setIsDataLoaded(true);
     }, 1500);
   }, [isDataLoaded]);
+
+  useEffect(() => {
+    const getMemberBookingStatus = async () => {
+      const response = await handleMemberBookingStatus(email);
+      console.log("TOKEN RES", response);
+      if (
+        response?.response?.data?.message === snackbarMessages.JWT_TOKEN_EXPIRED
+      ) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.INFO,
+            snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+          })
+        );
+        setTimeout(() => {
+          handleLogoutOnTokenExpire();
+        }, 1500);
+      }
+    };
+    getMemberBookingStatus();
+  }, []);
 
   const imageVariants = {
     bounce: {

@@ -3,16 +3,22 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getTotalMembers,
   handleDeleteMember,
 } from "../../../invitationMethods/InvitationMethods";
+import { HandleLogoutOnSessionExpire } from "../../../common/Logout";
+import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
+import snackbarMessages from "../../../Constants";
 
 const DeleteMemberDialogUtils = (open) => {
   const { location } = useSelector((state) => {
     return state.memberDataReducer;
   });
+  const dispatch = useDispatch();
+
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,7 +38,27 @@ const DeleteMemberDialogUtils = (open) => {
   useEffect(() => {
     const handleGetTotalMembers = async () => {
       const response = await getTotalMembers(location);
-      setTotalMembers(response?.data?.data);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setTotalMembers(response?.data?.data);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        }
+      }
       setIsDataLoaded(true);
     };
 
@@ -68,7 +94,6 @@ const DeleteMemberDialogUtils = (open) => {
   ];
 
   const handleMemberSearch = (event) => {
-    //handles member search
     setSearchTerm(event.target.value.toLowerCase());
   };
 

@@ -6,7 +6,6 @@ import {
   getNextDate,
 } from "../../../common/CommonData.js";
 import {
-  handleMemberCountByDate,
   getMyBuddies,
   getCountsByDate,
 } from "../../../bookingMethods/BookingMethods.js";
@@ -14,12 +13,15 @@ import { useDispatch } from "react-redux";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../../Constants";
 import { useSelector } from "react-redux";
+import { HandleLogoutOnSessionExpire } from "../../../common/Logout";
 
 const BookForAnyoneUtils = () => {
   const myData = useSelector((state) => {
     return state.memberDataReducer;
   });
+
   const dispatch = useDispatch();
+  const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -65,12 +67,10 @@ const BookForAnyoneUtils = () => {
   ];
 
   const handleMemberSearch = (event) => {
-    //handles member search
     setSearchTerm(event.target.value.toLowerCase());
   };
 
   const handleBookingNotifications = (notificationMessage) => {
-    //dispatches notifications based on response
     dispatch(
       setCustomSnackbar({
         snackbarOpen: true,
@@ -121,21 +121,37 @@ const BookForAnyoneUtils = () => {
 
   useEffect(() => {
     const handleAllMembers = async () => {
-      const response = await getMyBuddies(myData?.email, myData?.location);
+      const response = await getMyBuddies(myData.email, myData.location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setMyBuddies(response?.data?.data);
         setIsDataLoaded(true);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        } else {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: snackbarMessages.ERROR_FETCHING_MEMBERS,
+            })
+          );
+        }
         setIsDataLoaded(true);
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.ERROR,
-            snackbarMessage: "Error fetching members !",
-          })
-        );
       }
     };
 
@@ -145,9 +161,26 @@ const BookForAnyoneUtils = () => {
   useEffect(() => {
     const handleGetCountsByDate = async () => {
       const response = await getCountsByDate(date, myData?.location);
-      console.log("Response of get counts by date API", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setTodaysCount(response?.data?.data);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        }
       }
     };
 
