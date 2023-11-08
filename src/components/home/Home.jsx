@@ -8,6 +8,7 @@ import { Grid, Typography, Button, Skeleton } from "@mui/material";
 import InvitationDialog from "../dialog/InvitationDialog";
 import MenuSwiper from "../swiper/MenuSwiper";
 import LunchImage from "../../assets/lunch image.png";
+import HomePageImage from '../../assets/home-image.png';
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -64,7 +65,6 @@ const Home = () => {
   useEffect(() => {
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(email);
-      console.log("TOKEN RES", response);
       if (
         response?.response?.data?.message === snackbarMessages.JWT_TOKEN_EXPIRED
       ) {
@@ -85,9 +85,9 @@ const Home = () => {
 
   const imageVariants = {
     bounce: {
-      y: [-25, 25, -25],
+      y: [-20, 20, -20],
       transition: {
-        duration: 15,
+        duration: 12,
         repeat: Infinity,
         ease: "easeInOut",
       },
@@ -216,7 +216,7 @@ const Home = () => {
               animate="bounce"
             >
               <img
-                src={LunchImage}
+                src={HomePageImage}
                 alt=""
                 className={classes.getHomeImageStyles}
               />

@@ -119,11 +119,11 @@ export const getHomePageStyles = makeStyles()((theme) => ({
 
   getHomeImageStyles: {
     "@media screen and (max-width: 900px)": {
-      width: "60%",
-      marginTop: "25px",
+      width: "70%",
+      // marginTop: "25px",
     },
     "@media screen and (max-width: 800px)": {
-      width: "70%",
+      width: "72.5%",
     },
     "@media screen and (max-width: 700px)": {
       width: "75%",
@@ -135,7 +135,7 @@ export const getHomePageStyles = makeStyles()((theme) => ({
       width: "82.5%",
     },
     "@media screen and (max-width: 400px)": {
-      width: "85%",
+      width: "100%",
     },
   },
 
