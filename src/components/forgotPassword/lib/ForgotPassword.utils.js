@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleForgotPassword } from "../../api/forgotPassword/ForgotPassword";
-import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
-import snackbarMessages from "../../Constants";
-import { setIsLoading } from "../../store/slices/LoaderSlice";
+import { handleForgotPassword } from "../../../api/forgotPassword/ForgotPassword";
+import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
+import snackbarMessages from "../../../Constants";
+import { setIsLoading } from "../../../store/slices/LoaderSlice";
 
 const ForgotPasswordUtils = (setIsDisabled) => {
   const isLoading = useSelector((state) => {

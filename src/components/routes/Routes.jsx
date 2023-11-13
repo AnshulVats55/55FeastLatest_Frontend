@@ -2,12 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import CommonLayout from "../../pages/commonLayout/CommonLayout";
 import Home from "../home/Home";
@@ -18,6 +13,7 @@ import LoginForm from "../loginForm/LoginForm";
 import AdminDashboard from "../../pages/adminDashboard/AdminDashboard";
 import Reviews from "../reviews/Reviews";
 import ForgotPasswordForm from "../forgotPasswordForm/ForgotPasswordForm";
+import ResetPassword from "../resetPassword/ResetPassword";
 import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
 import OrangeImage from "../../assets/orange image.png";
@@ -29,7 +25,7 @@ const AllRoutes = () => {
       <CustomSnackbar />
       {localStorage.getItem("memberToken") ? (
         <>
-          <Navbar />
+          {window?.location?.pathname !== "/reset-password" && <Navbar />}
           <Routes>
             <Route
               exact
@@ -51,6 +47,13 @@ const AllRoutes = () => {
               path="/reviews"
               element={<CommonLayout component={<Reviews />} />}
             />
+            <Route
+              exact
+              path="/reset-password"
+              element={
+                <Authmodal image={CarrotImage} component={<ResetPassword />} />
+              }
+            />
           </Routes>
         </>
       ) : (
@@ -60,7 +63,17 @@ const AllRoutes = () => {
               exact
               path="/"
               element={
-                <Authmodal image={CarrotImage} component={<LoginForm />} />
+                <Authmodal
+                  image={CarrotImage}
+                  component={
+                    <LoginForm
+                      isLoginForm={true}
+                      heading="Welcome back !"
+                      caption="Please enter your details"
+                      buttonChildren="Login"
+                    />
+                  }
+                />
               }
             />
             <Route

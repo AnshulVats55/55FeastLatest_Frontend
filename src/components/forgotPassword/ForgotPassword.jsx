@@ -1,4 +1,4 @@
-import ForgotPasswordUtils from "./ForgotPassword.utils";
+import ForgotPasswordUtils from "./lib/ForgotPassword.utils";
 import { ForgotPasswordStyles } from "./ForgotPassword.Styles";
 import { Grid, Stack, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";

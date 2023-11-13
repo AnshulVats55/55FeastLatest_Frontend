@@ -25,7 +25,7 @@ import Loader from "../loader/Loader";
 import BrandLogo from "../../../src/assets/55FeastLogoNew.png";
 import ForgotPassword from "../forgotPassword/ForgotPassword";
 
-const LoginForm = () => {
+const LoginForm = ({ isLoginForm, heading, caption, buttonChildren }) => {
   const {
     isDisabled,
     isLoading,
@@ -40,6 +40,7 @@ const LoginForm = () => {
     handlePasswordVisibility,
     handleMouseDownPassword,
     handleFormSubmit,
+    handleConfirmPassword,
   } = LoginFormUtils();
   const { classes } = getLoginFormStyles();
   const { register } = useForm();
@@ -54,12 +55,18 @@ const LoginForm = () => {
           className={classes.getBrandLogoStyles}
         />
         <Typography className={classes.getTextOneStyles}>
-          {isLoginFormVisible ? "Welcome back !" : "Forgot password?"}
+          {isLoginForm
+            ? isLoginFormVisible
+              ? heading
+              : "Forgot password?"
+            : heading}
         </Typography>
         <Typography className={classes.getTextTwoStyles}>
-          {isLoginFormVisible
-            ? "Please enter your details"
-            : "No worries, we'll help you reset it"}
+          {isLoginForm
+            ? isLoginFormVisible
+              ? caption
+              : "No worries, we'll help you reset it"
+            : caption}
         </Typography>
       </Stack>
       {isLoginFormVisible ? (
@@ -149,7 +156,7 @@ const LoginForm = () => {
                 transition={{ duration: 0.1 }}
               >
                 <CommonButton
-                  children="Login"
+                  children={buttonChildren}
                   customStyles={{
                     width: "100% !important",
                     height: "40px",
@@ -166,7 +173,9 @@ const LoginForm = () => {
                     },
                   }}
                   onClick={(event) => {
-                    handleFormSubmit(event);
+                    isLoginForm
+                      ? handleFormSubmit(event)
+                      : handleConfirmPassword(event);
                   }}
                   isLoaderRequired={false}
                   type="submit"
@@ -179,25 +188,27 @@ const LoginForm = () => {
       ) : (
         <ForgotPassword isDisabled={isDisabled} setIsDisabled={setIsDisabled} />
       )}
-      <Box className={classes.getLinkTopContStyles}>
-        <Box className={classes.getLinkContStyles}>
-          <Typography className={classes.getActionTextOneStyles}>
-            Don't have an account?
-          </Typography>
-          <Link to="/signup" className={classes.getLinkStyles}>
-            &nbsp;Signup
+      {isLoginForm && (
+        <Box className={classes.getLinkTopContStyles}>
+          <Box className={classes.getLinkContStyles}>
+            <Typography className={classes.getActionTextOneStyles}>
+              Don't have an account?
+            </Typography>
+            <Link to="/signup" className={classes.getLinkStyles}>
+              &nbsp;Signup
+            </Link>
+          </Box>
+          <Link
+            to=""
+            className={classes.getLinkStyles}
+            onClick={() => {
+              setIsLoginFormVisible(!isLoginFormVisible);
+            }}
+          >
+            {isLoginFormVisible ? "Forgot Password" : "Back to login"}
           </Link>
         </Box>
-        <Link
-          to=""
-          className={classes.getLinkStyles}
-          onClick={() => {
-            setIsLoginFormVisible(!isLoginFormVisible);
-          }}
-        >
-          {isLoginFormVisible ? "Forgot Password" : "Back to login"}
-        </Link>
-      </Box>
+      )}
       {isLoading ? <Loader /> : <></>}
     </Box>
   );

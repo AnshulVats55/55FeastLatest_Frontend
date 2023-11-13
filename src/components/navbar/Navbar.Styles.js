@@ -1,6 +1,4 @@
-import { makeStyles } from "tss-react/mui";
-
-export const getNavbarStyles = makeStyles()((theme) => ({
+export const getNavbarStyles = {
   getAppbarStyles: {
     width: "100%",
     boxShadow: "none",
@@ -52,7 +50,6 @@ export const getNavbarStyles = makeStyles()((theme) => ({
   },
 
   getBrandLogoStylesTwo: {
-    fontFamily: theme.typography.fontFamily,
     fontWeight: 700,
     letterSpacing: ".3rem",
     color: "#FFF",
@@ -60,10 +57,14 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     "&:hover": {
       color: "#FFF",
     },
+    fontSize: "1.5rem !important",
+    display: { xs: "flex", md: "none" },
+    "@media screen and (max-width: 400px)": {
+      fontSize: "1.10rem !important",
+    },
   },
 
   getBrandLogoStylesOne: {
-    fontFamily: theme.typography.fontFamily,
     fontWeight: 700,
     letterSpacing: ".3rem",
     color: "#FFF",
@@ -72,6 +73,9 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     "&:hover": {
       color: "#FFF",
     },
+    mr: 2,
+    display: { xs: "none", md: "flex" },
+    fontSize: "1.5rem !important",
   },
 
   getNavLinksContStylesOne: {
@@ -90,9 +94,8 @@ export const getNavbarStyles = makeStyles()((theme) => ({
   getNavLinksStylesOne: {
     position: "relative",
     textDecoration: "none",
-    fontFamily: theme.typography.fontFamily,
     color: "#FFF",
-    fontSize: theme.typography.fontSize,
+    fontSize: 16, //16
     letterSpacing: "1px",
     padding: "0.25rem 0.75rem",
     transition: "0.2s ease-in-out",
@@ -115,6 +118,7 @@ export const getNavbarStyles = makeStyles()((theme) => ({
   },
 
   getNavLinksContStylesTwo: {
+    display: { xs: "none", md: "flex" },
     justifyContent: "space-between",
     alignItems: "center",
     width: "30%",
@@ -141,17 +145,22 @@ export const getNavbarStyles = makeStyles()((theme) => ({
     },
   },
 
-  getListItemStylesOne: {
-    // marginTop: "2rem",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
+  getListItemStylesOne: (index) => {
+    return {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      marginTop: index === 0 ? "2.5rem !important" : "1.5rem !important",
+    };
   },
 
-  getListItemStylesTwo: {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
+  getListItemStylesTwo: (index) => {
+    return {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      marginTop: index === 0 ? "2.5rem !important" : "0.75rem !important",
+    };
   },
 
   getCloseIconStylesOne: {
@@ -195,8 +204,7 @@ export const getNavbarStyles = makeStyles()((theme) => ({
   },
 
   getCurrentUserNameStyles: {
-    fontFamily: theme.typography.fontFamily,
     color: "#FFF",
     fontSize: "1rem",
   },
-}));
+};

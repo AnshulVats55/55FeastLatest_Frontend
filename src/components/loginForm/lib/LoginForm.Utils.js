@@ -95,6 +95,11 @@ const LoginFormUtils = () => {
     }
   };
 
+  const handleConfirmPassword = async (event) => {
+    event.preventDefault();
+    console.log(email, password);
+  };
+
   return {
     isDisabled,
     isLoading,
@@ -109,6 +114,7 @@ const LoginFormUtils = () => {
     handlePasswordVisibility,
     handleMouseDownPassword,
     handleFormSubmit,
+    handleConfirmPassword,
   };
 };
 

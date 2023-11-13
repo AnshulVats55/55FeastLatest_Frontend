@@ -38,7 +38,27 @@ import { setIsLoading } from "../../store/slices/LoaderSlice";
 import Loader from "../loader/Loader";
 
 const Navbar = () => {
-  const { classes } = getNavbarStyles();
+  const {
+    getAppbarStyles,
+    getToolbarContStyles,
+    getToolbarStyles,
+    getHamburgerIconContStyles,
+    getHamburgerIconStyles,
+    getBrandLogoStylesTwo,
+    getBrandLogoStylesOne,
+    getNavLinksContStylesOne,
+    getNavLinksStylesOne,
+    getNavLinksContStylesTwo,
+    getNavLinksStylesTwo,
+    getListItemStylesOne,
+    getListItemStylesTwo,
+    getCloseIconStylesOne,
+    getCloseIconStylesTwo,
+    getListItemIconStyles,
+    getListItemTextStylesOne,
+    getListItemTextStylesTwo,
+    getCurrentUserNameStyles,
+  } = getNavbarStyles;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -57,17 +77,17 @@ const Navbar = () => {
   const memberNavigationLinks = [
     {
       text: "Home",
-      icon: <Home className={classes.getListItemIconStyles} />,
+      icon: <Home sx={getListItemIconStyles} />,
       url: "/",
     },
     {
       text: "Book your meal",
-      icon: <RestaurantMenu className={classes.getListItemIconStyles} />,
+      icon: <RestaurantMenu sx={getListItemIconStyles} />,
       url: "/bookyourmeal",
     },
     {
       text: "Reviews",
-      icon: <RateReview className={classes.getListItemIconStyles} />,
+      icon: <RateReview sx={getListItemIconStyles} />,
       url: "/reviews",
     },
   ];
@@ -75,24 +95,22 @@ const Navbar = () => {
   const adminNavigationLinks = [
     {
       text: "Home",
-      icon: <Home className={classes.getListItemIconStyles} />,
+      icon: <Home sx={getListItemIconStyles} />,
       url: "/",
     },
     {
       text: "Book your meal",
-      icon: <RestaurantMenu className={classes.getListItemIconStyles} />,
+      icon: <RestaurantMenu sx={getListItemIconStyles} />,
       url: "/bookyourmeal",
     },
     {
       text: "Dashboard",
-      icon: (
-        <DashboardCustomizeIcon className={classes.getListItemIconStyles} />
-      ),
+      icon: <DashboardCustomizeIcon sx={getListItemIconStyles} />,
       url: "/dashboard",
     },
     {
       text: "Reviews",
-      icon: <RateReview className={classes.getListItemIconStyles} />,
+      icon: <RateReview sx={getListItemIconStyles} />,
       url: "/reviews",
     },
   ];
@@ -100,11 +118,11 @@ const Navbar = () => {
   const actionLinks = [
     {
       text: `${memberName}`,
-      icon: <EmojiPeople className={classes.getListItemIconStyles} />,
+      icon: <EmojiPeople sx={getListItemIconStyles} />,
     },
     {
       text: "Logout",
-      icon: <Logout className={classes.getListItemIconStyles} />,
+      icon: <Logout sx={getListItemIconStyles} />,
     },
   ];
 
@@ -159,10 +177,10 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar className={classes.getAppbarStyles}>
+    <AppBar sx={getAppbarStyles}>
       <Container maxWidth="xl">
-        <Box className={classes.getToolbarContStyles}>
-          <Toolbar className={classes.getToolbarStyles}>
+        <Box sx={getToolbarContStyles}>
+          <Toolbar sx={getToolbarStyles}>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -171,9 +189,9 @@ const Navbar = () => {
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
-                className={classes.getHamburgerIconContStyles}
+                sx={getHamburgerIconContStyles}
               >
-                <MenuIcon className={classes.getHamburgerIconStyles} />
+                <MenuIcon sx={getHamburgerIconStyles} />
               </IconButton>
               {isAdmin ? (
                 <Drawer
@@ -193,13 +211,13 @@ const Navbar = () => {
                   }}
                 >
                   <Box
-                    className={classes.getNavLinksContStylesOne}
+                    sx={getNavLinksContStylesOne}
                     role="presentation"
                     onClick={toggleDrawer(false)}
                     onKeyDown={toggleDrawer(false)}
                   >
                     <Close
-                      className={classes.getCloseIconStylesOne}
+                      sx={getCloseIconStylesOne}
                       onClick={handleCloseNavMenu}
                     />
                     <List>
@@ -208,17 +226,10 @@ const Navbar = () => {
                           key={index}
                           component="a"
                           href={link.url}
-                          className={classes.getListItemStylesOne}
-                          sx={{
-                            ...(index === 0
-                              ? { marginTop: "2.5rem !important" }
-                              : { marginTop: "1.5rem !important" }),
-                          }}
+                          sx={getListItemStylesOne(index)}
                         >
                           {link.icon}
-                          <Typography
-                            className={classes.getListItemTextStylesOne}
-                          >
+                          <Typography sx={getListItemTextStylesOne}>
                             {link.text}
                           </Typography>
                         </ListItem>
@@ -244,13 +255,13 @@ const Navbar = () => {
                   }}
                 >
                   <Box
-                    className={classes.getNavLinksContStylesOne}
+                    sx={getNavLinksContStylesOne}
                     role="presentation"
                     onClick={toggleDrawer(false)}
                     onKeyDown={toggleDrawer(false)}
                   >
                     <Close
-                      className={classes.getCloseIconStylesOne}
+                      sx={getCloseIconStylesOne}
                       onClick={handleCloseNavMenu}
                     />
                     <List>
@@ -259,17 +270,10 @@ const Navbar = () => {
                           key={index}
                           component="a"
                           href={link.url}
-                          className={classes.getListItemStylesOne}
-                          sx={{
-                            ...(index === 0
-                              ? { marginTop: "2.5rem !important" }
-                              : { marginTop: "1.5rem !important" }),
-                          }}
+                          sx={getListItemStylesOne(index)}
                         >
                           {link.icon}
-                          <Typography
-                            className={classes.getListItemTextStylesOne}
-                          >
+                          <Typography sx={getListItemTextStylesOne}>
                             {link.text}
                           </Typography>
                         </ListItem>
@@ -281,7 +285,6 @@ const Navbar = () => {
             </Box>
             <Box
               sx={{
-                // background: "orange",
                 width: "100%",
                 justifyContent: "center",
                 display: { xs: "flex", md: "none" },
@@ -291,39 +294,22 @@ const Navbar = () => {
                 noWrap
                 component="a"
                 href="/"
-                sx={{
-                  fontSize: "1.5rem !important",
-                  display: { xs: "flex", md: "none" },
-                  "@media screen and (max-width: 400px)": {
-                    fontSize: "1.10rem !important",
-                  },
-                }}
-                className={classes.getBrandLogoStylesTwo}
+                sx={getBrandLogoStylesTwo}
               >
                 55Feast
               </Typography>
             </Box>
-            <Box className={classes.getNavLinksStylesTwo}>
+            <Box sx={getNavLinksStylesTwo}>
               <Typography
                 noWrap
                 component="a"
                 href="/"
-                sx={{
-                  mr: 2,
-                  display: { xs: "none", md: "flex" },
-                  fontSize: "1.5rem !important",
-                }}
-                className={classes.getBrandLogoStylesOne}
+                sx={getBrandLogoStylesOne}
               >
                 55Feast
               </Typography>
               {isAdmin ? (
-                <Box
-                  sx={{
-                    display: { xs: "none", md: "flex" },
-                  }}
-                  className={classes.getNavLinksContStylesTwo}
-                >
+                <Box sx={getNavLinksContStylesTwo}>
                   {adminNavigationLinks?.map((page, index) => {
                     if (index !== 1) {
                       return (
@@ -337,7 +323,7 @@ const Navbar = () => {
                             href={page.url}
                             key={page.text}
                             onClick={handleCloseNavMenu}
-                            className={classes.getNavLinksStylesOne}
+                            sx={getNavLinksStylesOne}
                           >
                             {page.text}
                           </Typography>
@@ -347,12 +333,7 @@ const Navbar = () => {
                   })}
                 </Box>
               ) : (
-                <Box
-                  sx={{
-                    display: { xs: "none", md: "flex" },
-                  }}
-                  className={classes.getNavLinksContStylesTwo}
-                >
+                <Box sx={getNavLinksContStylesTwo}>
                   {memberNavigationLinks?.map((page, index) => (
                     <motion.div
                       transition={{ duration: 0.15 }}
@@ -364,7 +345,7 @@ const Navbar = () => {
                         href={page.url}
                         key={page.text}
                         onClick={handleCloseNavMenu}
-                        className={classes.getNavLinksStylesOne}
+                        sx={getNavLinksStylesOne}
                       >
                         {page.text}
                       </Typography>
@@ -470,31 +451,24 @@ const Navbar = () => {
                 }}
               >
                 <Box
-                  className={classes.getNavLinksContStylesOne}
+                  sx={getNavLinksContStylesOne}
                   role="presentation"
                   onClick={toggleDrawer(false)}
                   onKeyDown={toggleDrawer(false)}
                 >
                   <Close
-                    className={classes.getCloseIconStylesTwo}
+                    sx={getCloseIconStylesTwo}
                     onClick={handleCloseUserMenu}
                   />
                   <List>
                     {actionLinks?.map((link, index) => (
                       <ListItem
                         key={index}
-                        className={classes.getListItemStylesTwo}
-                        sx={{
-                          ...(index === 0
-                            ? { marginTop: "2.5rem !important" }
-                            : { marginTop: "0.75rem !important" }),
-                        }}
+                        sx={getListItemStylesTwo(index)}
                         onClick={link.text === "Logout" ? handleLogout : null}
                       >
                         {link.icon}
-                        <Typography
-                          className={classes.getListItemTextStylesTwo}
-                        >
+                        <Typography sx={getListItemTextStylesTwo}>
                           {link.text}
                         </Typography>
                       </ListItem>
