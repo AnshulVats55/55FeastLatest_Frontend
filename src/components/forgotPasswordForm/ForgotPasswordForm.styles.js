@@ -1,6 +1,4 @@
-import { makeStyles } from "tss-react/mui";
-
-export const getLoginFormStyles = makeStyles()((theme) => ({
+export const ForgotPasswordFormStyles = {
   getMainContStyles: {
     height: "100%",
     display: "flex",
@@ -29,22 +27,24 @@ export const getLoginFormStyles = makeStyles()((theme) => ({
 
   getTextOneStyles: {
     fontSize: "2.5rem",
-    fontFamily: theme.typography.fontFamily,
+    fontFamily: "Poppins, sans-serif",
     "@media screen and (max-width: 981px)": {
       fontSize: "2rem",
     },
     "@media screen and (max-width: 785px)": {
       fontSize: "1.5rem",
     },
+    textAlign: "center",
   },
 
   getTextTwoStyles: {
     fontSize: "1rem",
     marginTop: "0.5rem",
-    fontFamily: theme.typography.fontFamily,
+    fontFamily: "Poppins, sans-serif",
     "@media screen and (max-width: 785px)": {
       fontSize: "0.90rem",
     },
+    textAlign: "center",
   },
 
   getFormStyles: {
@@ -83,80 +83,6 @@ export const getLoginFormStyles = makeStyles()((theme) => ({
     },
   },
 
-  selectGenderRoot: {
-    "& .MuiSelect-select": {
-      paddingLeft: "13px",
-      fontSize: "1rem",
-      "&:focus": {
-        border: "1px solid green !important",
-        boxShadow: "none",
-      },
-    },
-    "& .MuiInputBase-input": {
-      color: "#232229 !important",
-    },
-  },
-
-  getMenuItemStyles: {
-    fontSize: "1rem",
-  },
-
-  getProfilePicLabelStyles: {
-    padding: "0.5rem 1rem",
-    background: "#FFF",
-    color: "#232229",
-    transition: "0.25s ease-in",
-    border: "none",
-    borderRadius: "2rem",
-    outline: "none",
-    fontWeight: "500",
-    fontFamily: theme.typography.fontFamily,
-    fontSize: theme.typography.fontSize,
-    "&:hover": {
-      background: "transparent",
-      border: "2px solid #FFF",
-      color: "#FFF",
-    },
-  },
-
-  getLinkTopContStyles: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    rowGap: "0.25rem",
-  },
-
-  getLinkContStyles: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  getActionTextOneStyles: {
-    fontFamily: theme.typography.fontFamily,
-    fontSize: "1rem",
-    "@media screen and (max-width: 785px)": {
-      fontSize: "0.90rem",
-    },
-  },
-
-  getLinkStyles: {
-    textDecoration: "none",
-    fontFamily: theme.typography.fontFamily,
-    color: theme.palette.action.active,
-    fontWeight: "500",
-    "&:hover": {
-      color: theme.palette.action.active,
-    },
-    "&:focus": {
-      color: theme.palette.action.active,
-    },
-    fontSize: "1rem",
-    "@media screen and (max-width: 785px)": {
-      fontSize: "0.90rem",
-    },
-  },
-
   getButtonCustomStyles: {
     width: "100% !important",
     height: "40px",
@@ -172,4 +98,4 @@ export const getLoginFormStyles = makeStyles()((theme) => ({
       outline: "none",
     },
   },
-}));
+};

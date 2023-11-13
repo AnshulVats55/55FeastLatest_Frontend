@@ -307,6 +307,7 @@ const SignupForm = () => {
                   setEmail(e.target.value);
                   setEmailErrorMsg(emailValidator(e.target.value));
                 }}
+                
                 className={classes.root}
                 inputProps={{ className: classes.input }}
               ></TextField>

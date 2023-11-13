@@ -2,7 +2,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useParams,
+} from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import CommonLayout from "../../pages/commonLayout/CommonLayout";
 import Home from "../home/Home";
@@ -12,12 +17,13 @@ import SignupForm from "../signupForm/SignupForm";
 import LoginForm from "../loginForm/LoginForm";
 import AdminDashboard from "../../pages/adminDashboard/AdminDashboard";
 import Reviews from "../reviews/Reviews";
+import ForgotPasswordForm from "../forgotPasswordForm/ForgotPasswordForm";
 import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
 import OrangeImage from "../../assets/orange image.png";
+import OrangeImageOne from "../../assets/orange-image.png";
 
 const AllRoutes = () => {
-
   return (
     <Router>
       <CustomSnackbar />
@@ -62,6 +68,16 @@ const AllRoutes = () => {
               path="/signup"
               element={
                 <Authmodal image={OrangeImage} component={<SignupForm />} />
+              }
+            />
+            <Route
+              exact
+              path="/update-password/:id/:token"
+              element={
+                <Authmodal
+                  image={OrangeImageOne}
+                  component={<ForgotPasswordForm />}
+                />
               }
             />
           </Routes>

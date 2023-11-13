@@ -3,14 +3,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { Stack, LinearProgress } from "@mui/material";
-import {
-  getCircularProgressStyles,
-  getLoaderAnimations,
-} from "./Loader.Styles";
+import { getCircularProgressStyles } from "./Loader.Styles";
 
 const Loader = () => {
   const { classes } = getCircularProgressStyles();
-  const { initial, animate } = getLoaderAnimations;
 
   return (
     <Stack className={classes.getLoaderContStyles} sx={{ color: "#ef5d36" }}>
