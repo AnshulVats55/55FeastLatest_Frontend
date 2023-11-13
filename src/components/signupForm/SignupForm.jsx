@@ -75,11 +75,7 @@ const SignupForm = () => {
     isDisabled,
   } = SignupFormUtils();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register } = useForm();
 
   return (
     <Box className={classes.getMainContStyles}>
