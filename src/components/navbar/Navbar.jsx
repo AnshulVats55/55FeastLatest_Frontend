@@ -22,6 +22,7 @@ import {
   Close,
   Logout,
   EmojiPeople,
+  LockReset,
 } from "@mui/icons-material";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -36,6 +37,7 @@ import MaleAvatar from "../../assets/male avatar.jpg";
 import FemaleAvatar from "../../assets/female avatar.jpg";
 import { setIsLoading } from "../../store/slices/LoaderSlice";
 import Loader from "../loader/Loader";
+import NavbarPopover from "../navbarPopover/NavbarPopover";
 
 const Navbar = () => {
   const {
@@ -121,6 +123,10 @@ const Navbar = () => {
       icon: <EmojiPeople sx={getListItemIconStyles} />,
     },
     {
+      text: "Reset password",
+      icon: <LockReset sx={getListItemIconStyles} />,
+    },
+    {
       text: "Logout",
       icon: <Logout sx={getListItemIconStyles} />,
     },
@@ -128,6 +134,7 @@ const Navbar = () => {
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElPopover, setAnchorElPopover] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const toggleDrawer = (open) => () => {
@@ -149,6 +156,17 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handlePopoverOpen = (event) => {
+    setAnchorElPopover(event?.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorElPopover(null);
+  };
+
+  const popoverOpen = Boolean(anchorElPopover);
+  const popoverId = popoverOpen ? "simple-popover" : undefined;
 
   const handleLogout = () => {
     dispatch(setIsLoading(true));
@@ -174,6 +192,10 @@ const Navbar = () => {
       );
       dispatch(setIsLoading(false));
     }
+  };
+
+  const navigateToConfirmPassword = () => {
+    navigate("/confirm-password");
   };
 
   return (
@@ -361,7 +383,10 @@ const Navbar = () => {
                   alignItems: "center",
                 }}
               >
-                <IconButton sx={{ p: 0, marginRight: "1rem" }}>
+                <IconButton
+                  sx={{ p: 0, marginRight: "1rem" }}
+                  onClick={(event) => handlePopoverOpen(event)}
+                >
                   <Avatar
                     src={
                       photo
@@ -377,6 +402,14 @@ const Navbar = () => {
                     }}
                   />
                 </IconButton>
+                {popoverOpen && (
+                  <NavbarPopover
+                    popoverId={popoverId}
+                    popoverOpen={popoverOpen}
+                    anchorElPopover={anchorElPopover}
+                    handlePopoverClose={handlePopoverClose}
+                  />
+                )}
                 <motion.div
                   initial={{ scale: 1 }}
                   whileTap={{ scale: 0.97 }}
@@ -465,7 +498,15 @@ const Navbar = () => {
                       <ListItem
                         key={index}
                         sx={getListItemStylesTwo(index)}
-                        onClick={link.text === "Logout" ? handleLogout : null}
+                        onClick={
+                          index === 0
+                            ? null
+                            : index === 1
+                            ? navigateToConfirmPassword
+                            : index === 2
+                            ? handleLogout
+                            : null
+                        }
                       >
                         {link.icon}
                         <Typography sx={getListItemTextStylesTwo}>

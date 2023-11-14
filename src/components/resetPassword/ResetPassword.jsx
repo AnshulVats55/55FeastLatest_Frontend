@@ -4,9 +4,10 @@ const ResetPassword = () => {
   return (
     <LoginForm
       isLoginForm={false}
-      heading="Confirm password"
-      caption="Please confirm your password to reset it"
-      buttonChildren="Confirm"
+      formType="resetPassword"
+      heading="Reset password"
+      caption="Enter below details to reset your password"
+      buttonChildren="Reset"
     />
   );
 };

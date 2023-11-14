@@ -5,6 +5,11 @@ import snackbarMessages from "../../../Constants";
 import handleMemberLogin from "../../../api/login/Login";
 import { setMemberData } from "../../../store/slices/MemberDataSlice";
 import { setIsLoading } from "../../../store/slices/LoaderSlice";
+import {
+  confirmCurrentPassword,
+  resetPassword,
+} from "../../../api/resetPassword/ResetPassword";
+import { useNavigate } from "react-router-dom";
 
 const LoginFormUtils = () => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -13,6 +18,7 @@ const LoginFormUtils = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +37,16 @@ const LoginFormUtils = () => {
   const memberData = {
     email: email,
     password: password,
+  };
+
+  const confirmPasswordData = {
+    email: email,
+    oldPassword: password,
+  };
+
+  const resetPasswordData = {
+    email: email,
+    newPassword: password,
   };
 
   const handleFormSubmit = async (event) => {
@@ -96,8 +112,146 @@ const LoginFormUtils = () => {
   };
 
   const handleConfirmPassword = async (event) => {
-    event.preventDefault();
-    console.log(email, password);
+    event?.preventDefault();
+    if (email === "") {
+      dispatch(
+        setCustomSnackbar({
+          snackbarOpen: true,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: snackbarMessages.EMAIL_REQUIRED,
+        })
+      );
+    } else if (password === "") {
+      dispatch(
+        setCustomSnackbar({
+          snackbarOpen: true,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: snackbarMessages.PASSWORD_REQUIRED_FOR_LOGIN,
+        })
+      );
+    } else {
+      dispatch(setIsLoading(true));
+      setIsDisabled(true);
+      const response = await confirmCurrentPassword(confirmPasswordData);
+      console.log("RES OF CONFIRM PASSWORD", response);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        dispatch(setIsLoading(false));
+        setIsDisabled(true);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage: response?.data?.message,
+          })
+        );
+        setTimeout(() => {
+          navigate("/reset-password");
+        }, 1500);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(setIsLoading(false));
+        setIsDisabled(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: response?.response?.data?.message,
+          })
+        );
+      } else {
+        dispatch(setIsLoading(false));
+        setIsDisabled(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Please try again !",
+          })
+        );
+      }
+    }
+  };
+
+  const handleResetPassword = async (event) => {
+    event?.preventDefault();
+    if (email === "") {
+      dispatch(
+        setCustomSnackbar({
+          snackbarOpen: true,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: snackbarMessages.EMAIL_REQUIRED,
+        })
+      );
+    } else if (password === "") {
+      dispatch(
+        setCustomSnackbar({
+          snackbarOpen: true,
+          snackbarType: snackbarMessages.ERROR,
+          snackbarMessage: snackbarMessages.PASSWORD_REQUIRED_FOR_LOGIN,
+        })
+      );
+    } else {
+      dispatch(setIsLoading(true));
+      setIsDisabled(true);
+      const response = await resetPassword(resetPasswordData);
+      console.log("RES OF RESET PASSWORD", response);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        dispatch(setIsLoading(false));
+        setIsDisabled(true);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage: response?.data?.message,
+          })
+        );
+        setTimeout(() => {
+          localStorage.removeItem("memberToken");
+          if (localStorage.getItem("memberToken") === null) {
+            dispatch(
+              setCustomSnackbar({
+                snackbarOpen: true,
+                snackbarType: snackbarMessages.SUCCESS,
+                snackbarMessage: snackbarMessages.LOGOUT_SUCCESSFULL,
+              })
+            );
+            navigate("/");
+            window.location.reload();
+          } else {
+            dispatch(
+              setCustomSnackbar({
+                snackbarOpen: true,
+                snackbarType: snackbarMessages.ERROR,
+                snackbarMessage: snackbarMessages.LOGOUT_FAILURE,
+              })
+            );
+          }
+        }, 1500);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(setIsLoading(false));
+        setIsDisabled(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: response?.response?.data?.message,
+          })
+        );
+      } else {
+        dispatch(setIsLoading(false));
+        setIsDisabled(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Please try again !",
+          })
+        );
+      }
+    }
   };
 
   return {
@@ -115,6 +269,7 @@ const LoginFormUtils = () => {
     handleMouseDownPassword,
     handleFormSubmit,
     handleConfirmPassword,
+    handleResetPassword,
   };
 };
 

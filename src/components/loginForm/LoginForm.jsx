@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-// import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LoginFormUtils from "./lib/LoginForm.Utils";
@@ -25,7 +24,13 @@ import Loader from "../loader/Loader";
 import BrandLogo from "../../../src/assets/55FeastLogoNew.png";
 import ForgotPassword from "../forgotPassword/ForgotPassword";
 
-const LoginForm = ({ isLoginForm, heading, caption, buttonChildren }) => {
+const LoginForm = ({
+  isLoginForm,
+  formType,
+  heading,
+  caption,
+  buttonChildren,
+}) => {
   const {
     isDisabled,
     isLoading,
@@ -41,6 +46,7 @@ const LoginForm = ({ isLoginForm, heading, caption, buttonChildren }) => {
     handleMouseDownPassword,
     handleFormSubmit,
     handleConfirmPassword,
+    handleResetPassword,
   } = LoginFormUtils();
   const { classes } = getLoginFormStyles();
   const { register } = useForm();
@@ -92,7 +98,11 @@ const LoginForm = ({ isLoginForm, heading, caption, buttonChildren }) => {
             <Grid item lg={12} md={12} sm={12} xs={12}>
               <Stack>
                 <OutlinedInput
-                  placeholder="Enter your password"
+                  placeholder={
+                    formType === "resetPassword"
+                      ? "Create new password"
+                      : "Enter your password"
+                  }
                   variant="outlined"
                   type={isPasswordVisible ? "text" : "password"}
                   value={password}
@@ -175,7 +185,9 @@ const LoginForm = ({ isLoginForm, heading, caption, buttonChildren }) => {
                   onClick={(event) => {
                     isLoginForm
                       ? handleFormSubmit(event)
-                      : handleConfirmPassword(event);
+                      : formType === "confirmPassword"
+                      ? handleConfirmPassword(event)
+                      : handleResetPassword(event);
                   }}
                   isLoaderRequired={false}
                   type="submit"

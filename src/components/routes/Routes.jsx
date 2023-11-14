@@ -13,6 +13,7 @@ import LoginForm from "../loginForm/LoginForm";
 import AdminDashboard from "../../pages/adminDashboard/AdminDashboard";
 import Reviews from "../reviews/Reviews";
 import ForgotPasswordForm from "../forgotPasswordForm/ForgotPasswordForm";
+import ConfirmPassword from "../confirmPassword/ConfirmPassword";
 import ResetPassword from "../resetPassword/ResetPassword";
 import CustomSnackbar from "../snackbar/Snackbar";
 import CarrotImage from "../../assets/carrot.png";
@@ -25,7 +26,7 @@ const AllRoutes = () => {
       <CustomSnackbar />
       {localStorage.getItem("memberToken") ? (
         <>
-          {window?.location?.pathname !== "/reset-password" && <Navbar />}
+          <Navbar />
           <Routes>
             <Route
               exact
@@ -49,6 +50,16 @@ const AllRoutes = () => {
             />
             <Route
               exact
+              path="/confirm-password"
+              element={
+                <Authmodal
+                  image={CarrotImage}
+                  component={<ConfirmPassword />}
+                />
+              }
+            />
+            <Route
+              exact
               path="/reset-password"
               element={
                 <Authmodal image={CarrotImage} component={<ResetPassword />} />
@@ -68,6 +79,7 @@ const AllRoutes = () => {
                   component={
                     <LoginForm
                       isLoginForm={true}
+                      formType="login"
                       heading="Welcome back !"
                       caption="Please enter your details"
                       buttonChildren="Login"
