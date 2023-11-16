@@ -235,7 +235,6 @@ export const getHomePageStyles = makeStyles()((theme) => ({
     display: "flex",
     columnGap: "0.25rem",
     alignItems: "baseline",
-    // paddingBottom: "0.5rem",
   },
 
   getTypographyOneStyles: {

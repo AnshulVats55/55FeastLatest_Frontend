@@ -184,23 +184,27 @@ const Home = () => {
                     {`${getReversedDate(dateToBeChecked)}`}
                   </Typography>
                 </Box>
-                {isTodaysCountFetched ? (
-                  todaysCount && todaysCount?.length > 0 ? (
-                    <Typography sx={{ fontSize: "1.5rem", fontWeight: 500 }}>
-                      {todaysCount?.length}
-                    </Typography>
+                {isAdmin ? (
+                  isTodaysCountFetched ? (
+                    todaysCount && todaysCount?.length > 0 ? (
+                      <Typography sx={{ fontSize: "1.5rem", fontWeight: 500 }}>
+                        {todaysCount?.length}
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ fontSize: "1.5rem", fontWeight: 500 }}>
+                        0
+                      </Typography>
+                    )
                   ) : (
-                    <Typography sx={{ fontSize: "1.5rem", fontWeight: 500 }}>
-                      0
-                    </Typography>
+                    <Skeleton
+                      animation="wave"
+                      variant="rounded"
+                      width={32}
+                      height={32}
+                    ></Skeleton>
                   )
                 ) : (
-                  <Skeleton
-                    animation="wave"
-                    variant="rounded"
-                    width={32}
-                    height={32}
-                  ></Skeleton>
+                  <></>
                 )}
               </Box>
               <Box className={classes.getMemberSliderContStyles}>
@@ -215,7 +219,7 @@ const Home = () => {
                 ) : (
                   Array(4)
                     .fill()
-                    .map(() => {
+                    .map((data) => {
                       return (
                         <Skeleton
                           animation="wave"

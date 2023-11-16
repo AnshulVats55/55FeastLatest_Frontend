@@ -8,17 +8,19 @@ const MemberAvatar = ({ memberName, key }) => {
     getMemberAvatarStyles;
 
   return (
-    <Box sx={getBoxStyles}>
+    <Box sx={getBoxStyles} key={key}>
       <Avatar sx={getAvatarStyles(themeIndex)}>
-        {memberName?.split(" ")[0].substring(0, 1) +
+        {memberName?.toUpperCase().split(" ")[0].substring(0, 1) +
           "" +
-          memberName?.split(" ")[1].substring(0, 1)}
+          memberName?.toUpperCase().split(" ")[1].substring(0, 1)}
       </Avatar>
       <Typography sx={getTypographyStyles}>
-        {memberName?.split(" ")[0]}
+        {memberName?.split(" ")[0].charAt(0).toUpperCase() +
+          memberName?.split(" ")[0].slice(1)}
       </Typography>
       <Typography sx={getTypographyStyles}>
-        {memberName?.split(" ")[1]}
+        {memberName?.split(" ")[1].charAt(0).toUpperCase() +
+          memberName?.split(" ")[1].slice(1)}
       </Typography>
     </Box>
   );
