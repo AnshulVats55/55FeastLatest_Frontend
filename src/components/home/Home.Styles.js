@@ -224,4 +224,37 @@ export const getHomePageStyles = makeStyles()((theme) => ({
       padding: "0.17rem 0.50rem",
     },
   },
+
+  getGridItemFourStyles: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+
+  getTypographyContStyles: {
+    display: "flex",
+    columnGap: "0.25rem",
+    alignItems: "baseline",
+    // paddingBottom: "0.5rem",
+  },
+
+  getTypographyOneStyles: {
+    fontSize: "0.8rem",
+  },
+
+  getTypographyTwoStyles: {
+    fontSize: "1rem",
+    fontWeight: 500,
+  },
+
+  getMemberSliderContStyles: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-start",
+    columnGap: "1rem",
+    overflowX: "scroll",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
 }));

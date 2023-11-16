@@ -4,18 +4,24 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from "react";
 import { getHomePageStyles } from "./Home.Styles";
-import { Grid, Typography, Button, Skeleton } from "@mui/material";
+import { Grid, Typography, Button, Skeleton, Box, Avatar } from "@mui/material";
 import InvitationDialog from "../dialog/InvitationDialog";
 import MenuSwiper from "../swiper/MenuSwiper";
 import LunchImage from "../../assets/lunch image.png";
-import HomePageImage from '../../assets/home-image.png';
+import HomePageImage from "../../assets/home-image.png";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
+import {
+  handleMemberBookingStatus,
+  getCountsByDate,
+} from "../../bookingMethods/BookingMethods";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
+import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
 import { HandleLogoutOnSessionExpire } from "../../common/Logout";
+import MemberAvatar from "../memberAvatar/MemberAvatar";
 
 const Home = () => {
   const { classes } = getHomePageStyles();
@@ -23,14 +29,26 @@ const Home = () => {
   const dispatch = useDispatch();
   const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-
-  const { isAdmin, email } = useSelector((state) => {
+  const { isAdmin, email, location } = useSelector((state) => {
     return state.memberDataReducer;
   });
 
+  const currentDate = new Date();
+
+  const formattedDate = handleFormattedDate(new Date());
+  const nextDate = getNextDate(new Date());
+  const nextDateFormatted = handleFormattedDate(nextDate);
+
+  const dateToBeChecked =
+    new Date().getHours() >= 18 && new Date().getHours() <= 23
+      ? nextDateFormatted
+      : formattedDate;
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [inviteScroll, setInviteScroll] = useState("paper");
+  const [todaysCount, setTodaysCount] = useState([]);
+  const [isTodaysCountFetched, setIsTodaysCountFetched] = useState(false);
 
   const handleMealBooking = () => {
     navigate("/bookyourmeal");
@@ -83,6 +101,45 @@ const Home = () => {
     getMemberBookingStatus();
   }, []);
 
+  useEffect(() => {
+    const handleGetCountsByDate = async () => {
+      const response = await getCountsByDate(dateToBeChecked, location);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setIsTodaysCountFetched(true);
+        setTodaysCount(response?.data?.data);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        setIsTodaysCountFetched(true);
+        if (
+          response?.response?.data?.message ===
+          snackbarMessages.JWT_TOKEN_EXPIRED
+        ) {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.INFO,
+              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+            })
+          );
+          setTimeout(() => {
+            handleLogoutOnTokenExpire();
+          }, 1500);
+        } else {
+          dispatch(
+            setCustomSnackbar({
+              snackbarOpen: true,
+              snackbarType: snackbarMessages.ERROR,
+              snackbarMessage: "Error fetching members !",
+            })
+          );
+        }
+      }
+    };
+
+    handleGetCountsByDate();
+  }, []);
+
   const imageVariants = {
     bounce: {
       y: [-20, 20, -20],
@@ -98,6 +155,80 @@ const Home = () => {
     <>
       {isDataLoaded ? (
         <Grid container className={classes.getGridContStyles}>
+          {currentDate?.getDay() !== 0 && currentDate?.getDay() !== 6 && (
+            <Grid
+              item
+              lg={0}
+              md={0}
+              sm={0}
+              xs={12}
+              sx={{
+                display: { xs: "flex", sm: "none" },
+              }}
+              className={classes.getGridItemFourStyles}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                  paddingBottom: "0.5rem",
+                }}
+              >
+                <Box className={classes.getTypographyContStyles}>
+                  <Typography className={classes.getTypographyOneStyles}>
+                    {`Members joining on`}
+                  </Typography>
+                  <Typography className={classes.getTypographyTwoStyles}>
+                    {`${getReversedDate(dateToBeChecked)}`}
+                  </Typography>
+                </Box>
+                {isTodaysCountFetched ? (
+                  todaysCount && todaysCount?.length > 0 ? (
+                    <Typography sx={{ fontSize: "1.5rem", fontWeight: 500 }}>
+                      {todaysCount?.length}
+                    </Typography>
+                  ) : (
+                    <Typography sx={{ fontSize: "1.5rem", fontWeight: 500 }}>
+                      0
+                    </Typography>
+                  )
+                ) : (
+                  <Skeleton
+                    animation="wave"
+                    variant="rounded"
+                    width={32}
+                    height={32}
+                  ></Skeleton>
+                )}
+              </Box>
+              <Box className={classes.getMemberSliderContStyles}>
+                {isTodaysCountFetched ? (
+                  todaysCount && todaysCount?.length > 0 ? (
+                    todaysCount.map(({ fullName }, index) => {
+                      return <MemberAvatar memberName={fullName} key={index} />;
+                    })
+                  ) : (
+                    <></>
+                  )
+                ) : (
+                  Array(4)
+                    .fill()
+                    .map(() => {
+                      return (
+                        <Skeleton
+                          animation="wave"
+                          variant="circular"
+                          width={76}
+                          height={76}
+                        ></Skeleton>
+                      );
+                    })
+                )}
+              </Box>
+            </Grid>
+          )}
           <Grid
             item
             lg={6}
