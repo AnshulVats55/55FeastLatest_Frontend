@@ -38,6 +38,8 @@ const NewAdminDashboard = () => {
     imageOneStyles,
   } = NewAdminDashboardStyles;
 
+  console.log("todays count", todaysCount);
+
   return (
     <Grid container sx={{ background: "" }}>
       {bookingDataArray?.map((bookingData, index) => {
@@ -105,9 +107,8 @@ const NewAdminDashboard = () => {
                     <Grid item xs={12} key={index} sx={gridItemSevenStyles}>
                       <DailyCountCard
                         id={index + 1}
-                        memberName={dailyData.memberName}
-                        memberEmail={dailyData.memberEmail}
-                        status={dailyData.status}
+                        memberName={dailyData.fullName}
+                        memberEmail={dailyData.email}
                       />
                     </Grid>
                   );

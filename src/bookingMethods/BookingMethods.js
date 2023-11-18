@@ -144,3 +144,44 @@ export const getCountsByDate = async (dateToBeChecked, location) => {
     return error;
   }
 };
+
+export const getRegularizedMeals = async (dateToBeChecked) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/bookmeal/missed-counts?date=${dateToBeChecked}`,
+      {
+        headers: {
+          Authorization: `Bearer ${MEMBER_TOKEN}`,
+          "Content-Type": "application/json",
+          referrerPolicy: "no-referrer",
+          mode: "no-mode",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const bookForGuests = async (guestType, guestLocation, guestData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/bookmeal/guest?guestType=${guestType}&location=${guestLocation}`,
+      guestData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${MEMBER_TOKEN}`,
+          referrerPolicy: "no-referrer",
+          mode: "no-mode",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import {
   handleFormattedDate,
   getNextDate,
-} from "../../../common/CommonData.js";
+} from "../../../common/CommonData.jsx";
 import {
   handleMemberCountByDate,
   getMyBuddies,
@@ -145,7 +145,6 @@ const BookForAnyoneUtils = () => {
   useEffect(() => {
     const handleGetCountsByDate = async () => {
       const response = await getCountsByDate(date, myData?.location);
-      console.log("Response of get counts by date API", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setTodaysCount(response?.data?.data);
       }

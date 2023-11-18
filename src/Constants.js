@@ -64,6 +64,7 @@ const USER_NOT_VALID = "user not valid";
 const BOOK_YOUR_FIRST_MEAL = "Book your first meal";
 const BOOKED_DATES_FETCHED = "booked dates fetched successfully";
 const ERROR_FECTHING_ALL_MEMBERS = "Error fetching members !";
+const ERROR_FETCHING_REQUESTS = "Error fetching requests !";
 
 export default {
   SUCCESS,
@@ -127,4 +128,5 @@ export default {
   BOOK_YOUR_FIRST_MEAL,
   BOOKED_DATES_FETCHED,
   ERROR_FECTHING_ALL_MEMBERS,
+  ERROR_FETCHING_REQUESTS,
 };

@@ -55,3 +55,12 @@ export const getMonthName = () => {
       return "";
   }
 };
+
+const formattedDate = handleFormattedDate(new Date());
+const nextDate = getNextDate(new Date());
+const nextDateFormatted = handleFormattedDate(nextDate);
+
+export const dateToBeChecked =
+  new Date().getHours() >= 18 && new Date().getHours() <= 23
+    ? nextDateFormatted
+    : formattedDate;

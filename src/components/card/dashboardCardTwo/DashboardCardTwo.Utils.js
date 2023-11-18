@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import snackbarMessages from "../../../Constants";
 import { setCustomSnackbar } from "../../../store/slices/SnackbarSlice";
 import * as XLSX from "xlsx";
@@ -9,12 +9,12 @@ import {
   handleFormattedDate,
   getNextDate,
   getMonthName,
-} from "../../../common/CommonData.js";
+} from "../../../common/CommonData.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import { getCountsByDate } from "../../../bookingMethods/BookingMethods";
 
-const DashboardCardTwoUtils = () => {
+const DashboardCardTwoUtils = (index) => {
   const { location } = useSelector((state) => {
     return state.memberDataReducer;
   });
@@ -24,6 +24,8 @@ const DashboardCardTwoUtils = () => {
   const [bookForAnyoneScroll, setBookForAnyoneScroll] = useState("paper");
   const [addMemberOpen, setAddMemberOpen] = useState(false);
   const [addMemberScroll, setAddMemberScroll] = useState("paper");
+  const [nonEmployeeDialogOpen, setNonEmployeeDialogOpen] = useState(false);
+  const [nonEmployeeDialogScroll, setNonEmployeeDialogScroll] = useState("paper");
   const [deleteMemberOpen, setDeleteMemberOpen] = useState(false);
   const [deleteMemberScroll, setDeleteMemberScroll] = useState("paper");
   const [isDailyDataLoading, setIsDailyDataLoading] = useState(false);
@@ -58,7 +60,9 @@ const DashboardCardTwoUtils = () => {
       }
     };
 
-    getTodaysTotalCount();
+    if (index === 0) {
+      getTodaysTotalCount();
+    }
   }, []);
 
   const handleBookForAnyoneOpen = (scrollType) => () => {
@@ -77,6 +81,15 @@ const DashboardCardTwoUtils = () => {
 
   const handleAddMemberClose = () => {
     setAddMemberOpen(false);
+  };
+
+  const handleNonEmployeeDialogOpen = (scrollType) => () => {
+    setNonEmployeeDialogOpen(true);
+    setNonEmployeeDialogScroll(scrollType);
+  };
+
+  const handleNonEmployeeDialogClose = () => {
+    setNonEmployeeDialogOpen(false);
   };
 
   const handleDeleteMemberOpen = (scrollType) => () => {
@@ -178,15 +191,6 @@ const DashboardCardTwoUtils = () => {
     }
   };
 
-  const descriptionElementRef = useRef(null);
-  // useEffect(() => {
-  //   if (open) {
-  //     const { current: descriptionElement } = descriptionElementRef;
-  //     if (descriptionElement !== null) {
-  //       descriptionElement.focus();
-  //     }
-  //   }
-  // }, [open]);
   return {
     todaysCount,
     bookForAnyoneOpen,
@@ -197,6 +201,10 @@ const DashboardCardTwoUtils = () => {
     addMemberScroll,
     handleAddMemberOpen,
     handleAddMemberClose,
+    nonEmployeeDialogOpen,
+    nonEmployeeDialogScroll,
+    handleNonEmployeeDialogOpen,
+    handleNonEmployeeDialogClose,
     deleteMemberOpen,
     deleteMemberScroll,
     handleDeleteMemberOpen,

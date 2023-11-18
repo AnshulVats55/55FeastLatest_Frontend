@@ -10,17 +10,23 @@ import {
   faClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import { getCountsByDate } from "../../bookingMethods/BookingMethods";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
-import { useSelector } from "react-redux";
+import {
+  getCountsByDate,
+  getRegularizedMeals,
+} from "../../bookingMethods/BookingMethods";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData.jsx";
+import { useDispatch, useSelector } from "react-redux";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import snackbarMessages from "../../Constants";
 import { CircularProgress } from "@mui/material";
+import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 
 const NewAdminDashboardUtils = () => {
   const { location } = useSelector((state) => {
     return state.memberDataReducer;
   });
+
+  const dispatch = useDispatch();
 
   const { iconStylesOne, iconStylesTwo, circularProgressStyles } =
     NewAdminDashboardStyles;
@@ -30,6 +36,7 @@ const NewAdminDashboardUtils = () => {
   const [todaysCount, setTodaysCount] = useState([]);
   const [todaysTotalCount, setTodaysTotalCount] = useState(0);
   const [totalMembers, setTotalMembers] = useState(0);
+  const [regularizationRequests, setRegularizationRequests] = useState([]);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -57,7 +64,6 @@ const NewAdminDashboardUtils = () => {
         setIsDataLoaded(true);
       }
     };
-
     getTodaysTotalCount();
   }, []);
 
@@ -77,6 +83,27 @@ const NewAdminDashboardUtils = () => {
       clearInterval(interval);
     };
   }, [todaysCount, totalMembers]);
+
+  useEffect(() => {
+    const handleReqularizationRequests = async () => {
+      const response = await getRegularizedMeals(dateToBeChecked);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setRegularizationRequests(response?.data?.data?.users);
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: snackbarMessages.ERROR_FETCHING_REQUESTS,
+          })
+        );
+      }
+    };
+
+    handleReqularizationRequests();
+  }, []);
 
   const handleMemberSearch = (event) => {
     setSearchTerm(event?.target?.value?.toLowerCase());
@@ -124,13 +151,22 @@ const NewAdminDashboardUtils = () => {
     {
       icon: <FontAwesomeIcon icon={faAdd} style={iconStylesOne(2)} />,
       cardLabel: "Today's Regularization requests",
-      cardValue: "06",
+      cardValue: isDataLoaded ? (
+        regularizationRequests?.length
+      ) : (
+        <CircularProgress
+          size={25}
+          thickness={4}
+          color="inherit"
+          sx={circularProgressStyles(2)}
+        />
+      ),
     },
     {
       icon: <FontAwesomeIcon icon={faDollar} style={iconStylesOne(3)} />,
       cardLabel: "Est. billing (inc. GST)",
       cardValue: isDataLoaded ? (
-        `${Math.round(todaysCount?.length * 112)}`
+        `₹${Math.round(todaysCount?.length * 112)}`
       ) : (
         <CircularProgress
           size={25}
@@ -196,6 +232,7 @@ const NewAdminDashboardUtils = () => {
     dateToBeChecked,
     imageVariants,
     handleReversedDate,
+    regularizationRequests,
   };
 };
 

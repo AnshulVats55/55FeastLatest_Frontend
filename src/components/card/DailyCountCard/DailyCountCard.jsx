@@ -2,7 +2,7 @@ import { Box, Typography, Avatar } from "@mui/material";
 import { DailyCountCardStyles } from "./DailyCountCard.styles";
 import { motion } from "framer-motion";
 
-const DailyCountCard = ({ id, memberName, memberEmail, status }) => {
+const DailyCountCard = ({ id, memberName, memberEmail }) => {
   const {
     topContStyles,
     typographyOneStyles,
@@ -27,14 +27,14 @@ const DailyCountCard = ({ id, memberName, memberEmail, status }) => {
           <Typography sx={typographyOneStyles}>{id}</Typography>
         </Box>
         <Box sx={boxTwoStyles}>
-          <Avatar sx={avatarStyles}>{memberName?.substring(0, 1)}</Avatar>
+          <Avatar sx={avatarStyles}>{memberName?.toUpperCase().substring(0, 1)}</Avatar>
         </Box>
         <Box sx={boxThreeStyles}>
           <Typography sx={typographyTwoStyles}>{memberName}</Typography>
           <Typography sx={typographyThreeStyles}>{memberEmail}</Typography>
         </Box>
         <Box sx={boxFourStyles}>
-          <Typography sx={typographyFourStyles}>{status}</Typography>
+          <Typography sx={typographyFourStyles}>Booked</Typography>
         </Box>
       </Box>
     </motion.div>

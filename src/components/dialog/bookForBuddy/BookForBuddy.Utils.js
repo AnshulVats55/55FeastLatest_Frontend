@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import {
   handleFormattedDate,
   getNextDate,
-} from "../../../common/CommonData.js";
+} from "../../../common/CommonData.jsx";
 import {
   getMyBuddies,
   bookMealForBuddy,

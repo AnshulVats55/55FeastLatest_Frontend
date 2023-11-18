@@ -7,7 +7,7 @@ import { addDays, isWeekend } from "date-fns";
 import {
   handleFormattedDate,
   getNextDate,
-} from "../../../common/CommonData.js";
+} from "../../../common/CommonData.jsx";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";
@@ -132,7 +132,6 @@ const PrebookUtils = (open, handleClose) => {
     } else {
       setIsLoaderRequired(true);
       const response = await handleMealPrebooking(memberData);
-      console.log("RESP OF PRE-BOOKING API", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(removeAllDates());
         const allPreBookedDates = response?.data?.data?.bookedDates?.map(
@@ -140,7 +139,6 @@ const PrebookUtils = (open, handleClose) => {
             return bookedData?.date;
           }
         );
-        console.log("ALL PREBOOKED DATES", allPreBookedDates);
         dispatch(getPrebookDates(allPreBookedDates));
         dispatch(
           setCustomSnackbar({

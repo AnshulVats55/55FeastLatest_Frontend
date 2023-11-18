@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { useState } from "react";
-// import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData.jsx";
 
 const InviteMemberCardUtils = (isAlreadyBooked) => {
   const formattedDate = handleFormattedDate(new Date());
