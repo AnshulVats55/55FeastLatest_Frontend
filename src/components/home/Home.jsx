@@ -4,7 +4,14 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from "react";
 import { getHomePageStyles } from "./Home.Styles";
-import { Grid, Typography, Button, Skeleton, Box, Avatar } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Button,
+  Skeleton,
+  Box,
+  TextField,
+} from "@mui/material";
 import InvitationDialog from "../dialog/InvitationDialog";
 import MenuSwiper from "../swiper/MenuSwiper";
 import LunchImage from "../../assets/lunch image.png";
@@ -12,10 +19,7 @@ import HomePageImage from "../../assets/home-image.png";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  handleMemberBookingStatus,
-  getCountsByDate,
-} from "../../bookingMethods/BookingMethods";
+import { getCountsByDate } from "../../bookingMethods/BookingMethods";
 import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
@@ -29,11 +33,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
-  const { isAdmin, email, location } = useSelector((state) => {
+  const { isAdmin, location } = useSelector((state) => {
     return state.memberDataReducer;
   });
-
-  const currentDate = new Date();
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -49,6 +51,8 @@ const Home = () => {
   const [inviteScroll, setInviteScroll] = useState("paper");
   const [todaysCount, setTodaysCount] = useState([]);
   const [isTodaysCountFetched, setIsTodaysCountFetched] = useState(false);
+  const [isBookingWindowOpen, setIsBookingWindowOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleMealBooking = () => {
     navigate("/bookyourmeal");
@@ -80,65 +84,89 @@ const Home = () => {
     }, 1500);
   }, [isDataLoaded]);
 
-  useEffect(() => {
-    const getMemberBookingStatus = async () => {
-      const response = await handleMemberBookingStatus(email);
-      if (
-        response?.response?.data?.message === snackbarMessages.JWT_TOKEN_EXPIRED
-      ) {
-        dispatch(
-          setCustomSnackbar({
-            snackbarOpen: true,
-            snackbarType: snackbarMessages.INFO,
-            snackbarMessage: snackbarMessages.SESSION_EXPIRED,
-          })
-        );
-        setTimeout(() => {
-          handleLogoutOnTokenExpire();
-        }, 1500);
+  const handleCheckBookingWindow = () => {
+    const currentDateTime = new Date();
+    const currentDay = currentDateTime.getDay();
+    const currentHour = currentDateTime.getHours();
+
+    if (currentDay === 0) {
+      if (currentHour >= 18 && currentHour <= 23) {
+        return true;
+      } else {
+        return false;
       }
-    };
-    getMemberBookingStatus();
-  }, []);
+    } else if (currentDay >= 1 && currentDay <= 4) {
+      if (currentHour >= 0 && currentHour <= 15) {
+        return true;
+      } else if (currentHour >= 18 && currentHour <= 23) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (currentDay === 5) {
+      if (currentHour >= 0 && currentHour <= 15) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
   useEffect(() => {
     const handleGetCountsByDate = async () => {
-      const response = await getCountsByDate(dateToBeChecked, location);
-      if (response?.data?.status === snackbarMessages.SUCCESS) {
-        setIsTodaysCountFetched(true);
-        setTodaysCount(response?.data?.data);
-      } else if (
-        response?.response?.data?.status === snackbarMessages.FAILURE
-      ) {
-        setIsTodaysCountFetched(true);
-        if (
-          response?.response?.data?.message ===
-          snackbarMessages.JWT_TOKEN_EXPIRED
+      const isWindowOpen = handleCheckBookingWindow();
+      setIsBookingWindowOpen(isWindowOpen);
+      console.log(isWindowOpen, "=++++++");
+      if (isWindowOpen) {
+        const response = await getCountsByDate(dateToBeChecked, location);
+        if (response?.data?.status === snackbarMessages.SUCCESS) {
+          setIsTodaysCountFetched(true);
+          setTodaysCount(response?.data?.data);
+        } else if (
+          response?.response?.data?.status === snackbarMessages.FAILURE
         ) {
-          dispatch(
-            setCustomSnackbar({
-              snackbarOpen: true,
-              snackbarType: snackbarMessages.INFO,
-              snackbarMessage: snackbarMessages.SESSION_EXPIRED,
-            })
-          );
-          setTimeout(() => {
-            handleLogoutOnTokenExpire();
-          }, 1500);
-        } else {
-          dispatch(
-            setCustomSnackbar({
-              snackbarOpen: true,
-              snackbarType: snackbarMessages.ERROR,
-              snackbarMessage: "Error fetching members !",
-            })
-          );
+          setIsTodaysCountFetched(true);
+          if (
+            response?.response?.data?.message ===
+            snackbarMessages.JWT_TOKEN_EXPIRED
+          ) {
+            dispatch(
+              setCustomSnackbar({
+                snackbarOpen: true,
+                snackbarType: snackbarMessages.INFO,
+                snackbarMessage: snackbarMessages.SESSION_EXPIRED,
+              })
+            );
+            setTimeout(() => {
+              handleLogoutOnTokenExpire();
+            }, 1500);
+          } else {
+            dispatch(
+              setCustomSnackbar({
+                snackbarOpen: true,
+                snackbarType: snackbarMessages.ERROR,
+                snackbarMessage: "Error fetching members !",
+              })
+            );
+          }
         }
+      } else {
+        setIsTodaysCountFetched(true);
       }
     };
 
     handleGetCountsByDate();
   }, []);
+
+  const handleMemberSearch = (event) => {
+    setSearchTerm(event?.target?.value.toLowerCase());
+  };
+
+  const filteredUsers = todaysCount?.filter((member) =>
+    member?.fullName.toLowerCase().includes(searchTerm)
+  );
 
   const imageVariants = {
     bounce: {
@@ -155,7 +183,7 @@ const Home = () => {
     <>
       {isDataLoaded ? (
         <Grid container className={classes.getGridContStyles}>
-          {currentDate?.getDay() !== 0 && currentDate?.getDay() !== 6 && (
+          {isBookingWindowOpen && (
             <Grid
               item
               lg={0}
@@ -163,10 +191,19 @@ const Home = () => {
               sm={0}
               xs={12}
               sx={{
-                display: { xs: "flex", sm: "none" },
+                display: { xs: "flex", flexDirection: "column", sm: "none" },
               }}
               className={classes.getGridItemFourStyles}
             >
+              <TextField
+                type="search"
+                placeholder="Search members..."
+                variant="outlined"
+                multiline
+                className={classes.root}
+                InputProps={{ className: classes.input }}
+                onChange={handleMemberSearch}
+              />
               <Box
                 sx={{
                   width: "100%",
@@ -209,12 +246,31 @@ const Home = () => {
               </Box>
               <Box className={classes.getMemberSliderContStyles}>
                 {isTodaysCountFetched ? (
-                  todaysCount && todaysCount?.length > 0 ? (
-                    todaysCount.map(({ fullName }, index) => {
+                  filteredUsers && filteredUsers?.length > 0 ? (
+                    filteredUsers.map(({ fullName }, index) => {
                       return <MemberAvatar memberName={fullName} key={index} />;
                     })
                   ) : (
-                    <></>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "0.9rem",
+                          textAlign: "center",
+                          "@media screen and (max-width: 400px)": {
+                            fontSize: "0.8rem",
+                          },
+                        }}
+                      >
+                        Hmm... No match found with this name
+                      </Typography>
+                    </Box>
                   )
                 ) : (
                   Array(4)

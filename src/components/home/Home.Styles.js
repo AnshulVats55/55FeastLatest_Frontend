@@ -256,4 +256,35 @@ export const getHomePageStyles = makeStyles()((theme) => ({
       display: "none",
     },
   },
+
+  root: {
+    width: "100%",
+    marginTop: "0.25rem",
+    fontSize: "0.9rem",
+    "& .MuiInputBase-root": {
+      fontSize: "0.85rem",
+      background: "#F7F7F7",
+      "& fieldset": {
+        border: "none",
+      },
+      "&:hover fieldset": {
+        border: "none",
+      },
+      "&.MuiInputBase-root.Mui-focused fieldset": {
+        border: "1px solid #ef5d36",
+      },
+    },
+    "& .MuiFormLabel-root": {
+      fontSize: "0.9rem",
+      "&.MuiFormLabel-root.Mui-focused": {
+        color: "#ef5d36",
+      },
+    },
+  },
+
+  input: {
+    "& .MuiInputBase-input": {
+      color: "#232229 !important",
+    },
+  },
 }));
