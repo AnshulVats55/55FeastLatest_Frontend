@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import {
   AppBar,
   Toolbar,
@@ -14,6 +14,8 @@ import {
   List,
   ListItem,
   Box,
+  BottomNavigation,
+  BottomNavigationAction,
 } from "@mui/material";
 import {
   Home,
@@ -23,6 +25,11 @@ import {
   Logout,
   EmojiPeople,
   LockReset,
+  Folder,
+  Restore,
+  Favorite,
+  LocationOn,
+  Dashboard,
 } from "@mui/icons-material";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -38,6 +45,7 @@ import FemaleAvatar from "../../assets/female avatar.jpg";
 import { setIsLoading } from "../../store/slices/LoaderSlice";
 import Loader from "../loader/Loader";
 import NavbarPopover from "../navbarPopover/NavbarPopover";
+import MemberAvatar from "../memberAvatar/MemberAvatar";
 
 const Navbar = () => {
   const {
@@ -83,7 +91,7 @@ const Navbar = () => {
       url: "/",
     },
     {
-      text: "Book your meal",
+      text: "Book meal",
       icon: <RestaurantMenu sx={getListItemIconStyles} />,
       url: "/bookyourmeal",
     },
@@ -101,7 +109,7 @@ const Navbar = () => {
       url: "/",
     },
     {
-      text: "Book your meal",
+      text: "Book meal",
       icon: <RestaurantMenu sx={getListItemIconStyles} />,
       url: "/bookyourmeal",
     },
@@ -136,6 +144,11 @@ const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElPopover, setAnchorElPopover] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [value, setValue] = useState("recents");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const toggleDrawer = (open) => () => {
     setOpenDrawer(open);
@@ -199,193 +212,409 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar sx={getAppbarStyles}>
-      <Container maxWidth="xl">
-        <Box sx={getToolbarContStyles}>
-          <Toolbar sx={getToolbarStyles}>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-                sx={getHamburgerIconContStyles}
-              >
-                <MenuIcon sx={getHamburgerIconStyles} />
-              </IconButton>
-              {isAdmin ? (
-                <Drawer
-                  anchor="left"
-                  open={Boolean(anchorElNav)}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    "& .MuiPaper-root": {
-                      borderTopRightRadius: "10px",
-                      borderBottomRightRadius: "10px",
-                      background: "transparent",
-                    },
-                    "& .MuiBox-root": {
-                      borderTopRightRadius: "10px",
-                      borderBottomRightRadius: "10px",
-                    },
-                  }}
-                >
-                  <Box
-                    sx={getNavLinksContStylesOne}
-                    role="presentation"
-                    onClick={toggleDrawer(false)}
-                    onKeyDown={toggleDrawer(false)}
-                  >
-                    <Close
-                      sx={getCloseIconStylesOne}
-                      onClick={handleCloseNavMenu}
-                    />
-                    <List>
-                      {adminNavigationLinks?.map((link, index) => (
-                        <ListItem
-                          key={index}
-                          component="a"
-                          href={link.url}
-                          sx={getListItemStylesOne(index)}
-                        >
-                          {link.icon}
-                          <Typography sx={getListItemTextStylesOne}>
-                            {link.text}
-                          </Typography>
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Box>
-                </Drawer>
-              ) : (
-                <Drawer
-                  anchor="left"
-                  open={Boolean(anchorElNav)}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    "& .MuiPaper-root": {
-                      borderTopRightRadius: "10px",
-                      borderBottomRightRadius: "10px",
-                      background: "transparent",
-                    },
-                    "& .MuiBox-root": {
-                      borderTopRightRadius: "10px",
-                      borderBottomRightRadius: "10px",
-                    },
-                  }}
-                >
-                  <Box
-                    sx={getNavLinksContStylesOne}
-                    role="presentation"
-                    onClick={toggleDrawer(false)}
-                    onKeyDown={toggleDrawer(false)}
-                  >
-                    <Close
-                      sx={getCloseIconStylesOne}
-                      onClick={handleCloseNavMenu}
-                    />
-                    <List>
-                      {memberNavigationLinks?.map((link, index) => (
-                        <ListItem
-                          key={index}
-                          component="a"
-                          href={link.url}
-                          sx={getListItemStylesOne(index)}
-                        >
-                          {link.icon}
-                          <Typography sx={getListItemTextStylesOne}>
-                            {link.text}
-                          </Typography>
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Box>
-                </Drawer>
-              )}
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                justifyContent: "center",
-                display: { xs: "flex", md: "none" },
-              }}
-            >
-              <Typography
-                noWrap
-                component="a"
-                href="/"
-                sx={getBrandLogoStylesTwo}
-              >
-                55Feast
-              </Typography>
-            </Box>
-            <Box sx={getNavLinksStylesTwo}>
-              <Typography
-                noWrap
-                component="a"
-                href="/"
-                sx={getBrandLogoStylesOne}
-              >
-                55Feast
-              </Typography>
-              {isAdmin ? (
-                <Box sx={getNavLinksContStylesTwo}>
-                  {adminNavigationLinks?.map((page, index) => {
-                    if (index !== 1) {
-                      return (
-                        <motion.div
-                          transition={{ duration: 0.15 }}
-                          whileTap={{ scale: 0.95 }}
-                          key={index}
-                        >
-                          <Typography
-                            component="a"
-                            href={page.url}
-                            key={page.text}
-                            onClick={handleCloseNavMenu}
-                            sx={getNavLinksStylesOne}
-                          >
-                            {page.text}
-                          </Typography>
-                        </motion.div>
-                      );
+    <>
+      <BottomNavigation
+        sx={{
+          width: 500,
+          width: "100%",
+          position: "fixed",
+          bottom: "0",
+          left: "0",
+          right: "0",
+          zIndex: "1",
+          display: { lg: "none", md: "none", sm: "none", xs: "flex" },
+          boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px",
+        }}
+        value={value}
+        onChange={handleChange}
+      >
+        {isAdmin
+          ? adminNavigationLinks?.map(({ text, url }, index) => {
+              if (index !== 3) {
+                return (
+                  <BottomNavigationAction
+                    label={text}
+                    value={text}
+                    icon={
+                      index === 0 ? (
+                        <Home />
+                      ) : index === 1 ? (
+                        <RestaurantMenu />
+                      ) : index === 2 ? (
+                        <Dashboard />
+                      ) : (
+                        <></>
+                      )
                     }
-                  })}
-                </Box>
-              ) : (
-                <Box sx={getNavLinksContStylesTwo}>
-                  {memberNavigationLinks?.map((page, index) => (
-                    <motion.div
-                      transition={{ duration: 0.15 }}
-                      whileTap={{ scale: 0.95 }}
-                      key={index}
+                    key={index}
+                    onClick={() => {
+                      navigate(url);
+                    }}
+                    sx={{
+                      color: "#EF5D36 !important",
+                      "&:focus": { color: "#EF5D36 !important" },
+                      "& .MuiBottomNavigationAction-label": {
+                        fontSize: "0.9rem",
+                        "@media screen and (max-width: 400px)": {
+                          fontSize: "0.70rem",
+                        },
+                        "&.MuiBottomNavigationAction-label.Mui-selected": {
+                          fontWeight: 600,
+                          fontSize: "0.80rem",
+                        },
+                      },
+                    }}
+                  />
+                );
+              }
+            })
+          : memberNavigationLinks?.map(({ text, url }, index) => {
+              if (index !== 2) {
+                return (
+                  <BottomNavigationAction
+                    label={text}
+                    value={text}
+                    icon={
+                      index === 0 ? (
+                        <Home />
+                      ) : index === 1 ? (
+                        <RestaurantMenu />
+                      ) : (
+                        <></>
+                      )
+                    }
+                    key={index}
+                    onClick={() => {
+                      navigate(url);
+                    }}
+                    sx={{
+                      color: "#EF5D36 !important",
+                      "&:focus": { color: "#EF5D36 !important" },
+                      "& .MuiBottomNavigationAction-label": {
+                        fontSize: "0.9rem",
+                        "@media screen and (max-width: 400px)": {
+                          fontSize: "0.70rem",
+                        },
+                        "&.MuiBottomNavigationAction-label.Mui-selected": {
+                          fontWeight: 600,
+                          fontSize: "0.80rem",
+                        },
+                      },
+                    }}
+                  />
+                );
+              }
+            })}
+        <BottomNavigationAction
+          label="Profile"
+          value="profile"
+          icon={
+            <Avatar
+              src={
+                photo ? photo : gender === "Male" ? MaleAvatar : FemaleAvatar
+              }
+              alt=""
+              sx={{
+                width: 44,
+                height: 44,
+                "@media screen and (max-width: 400px)": {
+                  width: 38,
+                  height: 38,
+                },
+              }}
+            />
+          }
+          onClick={(event) => {
+            handlePopoverOpen(event);
+          }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            "& .MuiBottomNavigationAction-root": {
+              background: "pink",
+            },
+            color: "#EF5D36 !important",
+            "&:focus": { color: "#EF5D36 !important" },
+            "& .MuiBottomNavigationAction-label": {
+              fontSize: "0.9rem",
+              "@media screen and (max-width: 400px)": {
+                fontSize: "0.70rem",
+              },
+              "&.MuiBottomNavigationAction-label.Mui-selected": {
+                fontWeight: 600,
+                fontSize: "0.80rem",
+              },
+            },
+          }}
+        />
+        {popoverOpen && (
+          <NavbarPopover
+            popoverId={popoverId}
+            popoverOpen={popoverOpen}
+            anchorElPopover={anchorElPopover}
+            handlePopoverClose={handlePopoverClose}
+            isMobileView={true}
+          />
+        )}
+      </BottomNavigation>
+      <AppBar sx={getAppbarStyles}>
+        <Container maxWidth="xl">
+          <Box sx={getToolbarContStyles}>
+            <Toolbar sx={getToolbarStyles}>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { lg: "none", md: "none", sm: "flex", xs: "none" },
+                }}
+              >
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                  sx={getHamburgerIconContStyles}
+                >
+                  <MenuIcon sx={getHamburgerIconStyles} />
+                </IconButton>
+                {isAdmin ? (
+                  <Drawer
+                    anchor="left"
+                    open={Boolean(anchorElNav)}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      "& .MuiPaper-root": {
+                        borderTopRightRadius: "10px",
+                        borderBottomRightRadius: "10px",
+                        background: "transparent",
+                      },
+                      "& .MuiBox-root": {
+                        borderTopRightRadius: "10px",
+                        borderBottomRightRadius: "10px",
+                      },
+                    }}
+                  >
+                    <Box
+                      sx={getNavLinksContStylesOne}
+                      role="presentation"
+                      onClick={toggleDrawer(false)}
+                      onKeyDown={toggleDrawer(false)}
                     >
-                      <Typography
-                        component="a"
-                        href={page.url}
-                        key={page.text}
+                      <Close
+                        sx={getCloseIconStylesOne}
                         onClick={handleCloseNavMenu}
-                        sx={getNavLinksStylesOne}
+                      />
+                      <List>
+                        {adminNavigationLinks?.map((link, index) => (
+                          <ListItem
+                            key={index}
+                            component="a"
+                            href={link.url}
+                            sx={getListItemStylesOne(index)}
+                          >
+                            {link.icon}
+                            <Typography sx={getListItemTextStylesOne}>
+                              {link.text}
+                            </Typography>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  </Drawer>
+                ) : (
+                  <Drawer
+                    anchor="left"
+                    open={Boolean(anchorElNav)}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      "& .MuiPaper-root": {
+                        borderTopRightRadius: "10px",
+                        borderBottomRightRadius: "10px",
+                        background: "transparent",
+                      },
+                      "& .MuiBox-root": {
+                        borderTopRightRadius: "10px",
+                        borderBottomRightRadius: "10px",
+                      },
+                    }}
+                  >
+                    <Box
+                      sx={getNavLinksContStylesOne}
+                      role="presentation"
+                      onClick={toggleDrawer(false)}
+                      onKeyDown={toggleDrawer(false)}
+                    >
+                      <Close
+                        sx={getCloseIconStylesOne}
+                        onClick={handleCloseNavMenu}
+                      />
+                      <List>
+                        {memberNavigationLinks?.map((link, index) => (
+                          <ListItem
+                            key={index}
+                            component="a"
+                            href={link.url}
+                            sx={getListItemStylesOne(index)}
+                          >
+                            {link.icon}
+                            <Typography sx={getListItemTextStylesOne}>
+                              {link.text}
+                            </Typography>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  </Drawer>
+                )}
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  justifyContent: "center",
+                  display: { xs: "flex", md: "none" },
+                }}
+              >
+                <Typography
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={getBrandLogoStylesTwo}
+                >
+                  55Feast
+                </Typography>
+              </Box>
+              <Box sx={getNavLinksStylesTwo}>
+                <Typography
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={getBrandLogoStylesOne}
+                >
+                  55Feast
+                </Typography>
+                {isAdmin ? (
+                  <Box sx={getNavLinksContStylesTwo}>
+                    {adminNavigationLinks?.map((page, index) => {
+                      if (index !== 1) {
+                        return (
+                          <motion.div
+                            transition={{ duration: 0.15 }}
+                            whileTap={{ scale: 0.95 }}
+                            key={index}
+                          >
+                            <Typography
+                              component="a"
+                              href={page.url}
+                              key={page.text}
+                              onClick={handleCloseNavMenu}
+                              sx={getNavLinksStylesOne}
+                            >
+                              {page.text}
+                            </Typography>
+                          </motion.div>
+                        );
+                      }
+                    })}
+                  </Box>
+                ) : (
+                  <Box sx={getNavLinksContStylesTwo}>
+                    {memberNavigationLinks?.map((page, index) => (
+                      <motion.div
+                        transition={{ duration: 0.15 }}
+                        whileTap={{ scale: 0.95 }}
+                        key={index}
                       >
-                        {page.text}
-                      </Typography>
-                    </motion.div>
-                  ))}
+                        <Typography
+                          component="a"
+                          href={page.url}
+                          key={page.text}
+                          onClick={handleCloseNavMenu}
+                          sx={getNavLinksStylesOne}
+                        >
+                          {page.text}
+                        </Typography>
+                      </motion.div>
+                    ))}
+                  </Box>
+                )}
+                <Box
+                  sx={{
+                    flexGrow: 0,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <IconButton
+                    sx={{ p: 0, marginRight: "1rem" }}
+                    onClick={(event) => handlePopoverOpen(event)}
+                  >
+                    <Avatar
+                      src={
+                        photo
+                          ? photo
+                          : gender === "Male"
+                          ? MaleAvatar
+                          : FemaleAvatar
+                      }
+                      alt=""
+                      sx={{
+                        width: 36,
+                        height: 36,
+                      }}
+                    />
+                  </IconButton>
+                  {popoverOpen && (
+                    <NavbarPopover
+                      popoverId={popoverId}
+                      popoverOpen={popoverOpen}
+                      anchorElPopover={anchorElPopover}
+                      handlePopoverClose={handlePopoverClose}
+                      isMobileView={false}
+                    />
+                  )}
+                  <motion.div
+                    initial={{ scale: 1 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ duration: 0.1 }}
+                  >
+                    <CommonButton
+                      onClick={handleLogout}
+                      children="Logout"
+                      type=""
+                      customStyles={{
+                        width: "80px",
+                        height: "40px",
+                        background: "transparent",
+                        color: "#FFF",
+                        borderRadius: "4px",
+                        border: "1px solid #FFF",
+                        "&:hover": {
+                          background: "#FFF",
+                          border: "none",
+                          color: "#232229",
+                        },
+                        "&:focus": {
+                          outline: "none",
+                        },
+                      }}
+                    />
+                  </motion.div>
                 </Box>
-              )}
+              </Box>
+
               <Box
                 sx={{
                   flexGrow: 0,
-                  display: "flex",
+                  display: { lg: "none", md: "none", sm: "flex", xs: "none" },
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
                 <IconButton
-                  sx={{ p: 0, marginRight: "1rem" }}
-                  onClick={(event) => handlePopoverOpen(event)}
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0, marginRight: "0.5rem" }}
                 >
                   <Avatar
                     src={
@@ -397,132 +626,68 @@ const Navbar = () => {
                     }
                     alt=""
                     sx={{
-                      width: 36,
-                      height: 36,
+                      width: 32,
+                      height: 32,
                     }}
                   />
                 </IconButton>
-                {popoverOpen && (
-                  <NavbarPopover
-                    popoverId={popoverId}
-                    popoverOpen={popoverOpen}
-                    anchorElPopover={anchorElPopover}
-                    handlePopoverClose={handlePopoverClose}
-                  />
-                )}
-                <motion.div
-                  initial={{ scale: 1 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.1 }}
-                >
-                  <CommonButton
-                    onClick={handleLogout}
-                    children="Logout"
-                    type=""
-                    customStyles={{
-                      width: "80px",
-                      height: "40px",
-                      background: "transparent",
-                      color: "#FFF",
-                      borderRadius: "4px",
-                      border: "1px solid #FFF",
-                      "&:hover": {
-                        background: "#FFF",
-                        border: "none",
-                        color: "#232229",
-                      },
-                      "&:focus": {
-                        outline: "none",
-                      },
-                    }}
-                  />
-                </motion.div>
-              </Box>
-            </Box>
-
-            <Box
-              sx={{
-                flexGrow: 0,
-                display: { xs: "flex", md: "none" },
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <IconButton
-                onClick={handleOpenUserMenu}
-                sx={{ p: 0, marginRight: "0.5rem" }}
-              >
-                <Avatar
-                  src={
-                    photo
-                      ? photo
-                      : gender === "Male"
-                      ? MaleAvatar
-                      : FemaleAvatar
-                  }
-                  alt=""
+                <Drawer
+                  anchor="right"
+                  open={Boolean(anchorElUser)}
+                  onClick={handleCloseUserMenu}
                   sx={{
-                    width: 32,
-                    height: 32,
+                    "& .MuiPaper-root": {
+                      borderTopLeftRadius: "10px",
+                      borderBottomLeftRadius: "10px",
+                      background: "transparent",
+                    },
+                    "& .MuiBox-root": {
+                      borderTopLeftRadius: "10px",
+                      borderBottomLeftRadius: "10px",
+                    },
                   }}
-                />
-              </IconButton>
-              <Drawer
-                anchor="right"
-                open={Boolean(anchorElUser)}
-                onClick={handleCloseUserMenu}
-                sx={{
-                  "& .MuiPaper-root": {
-                    borderTopLeftRadius: "10px",
-                    borderBottomLeftRadius: "10px",
-                    background: "transparent",
-                  },
-                  "& .MuiBox-root": {
-                    borderTopLeftRadius: "10px",
-                    borderBottomLeftRadius: "10px",
-                  },
-                }}
-              >
-                <Box
-                  sx={getNavLinksContStylesOne}
-                  role="presentation"
-                  onClick={toggleDrawer(false)}
-                  onKeyDown={toggleDrawer(false)}
                 >
-                  <Close
-                    sx={getCloseIconStylesTwo}
-                    onClick={handleCloseUserMenu}
-                  />
-                  <List>
-                    {actionLinks?.map((link, index) => (
-                      <ListItem
-                        key={index}
-                        sx={getListItemStylesTwo(index)}
-                        onClick={
-                          index === 0
-                            ? null
-                            : index === 1
-                            ? navigateToConfirmPassword
-                            : index === 2
-                            ? handleLogout
-                            : null
-                        }
-                      >
-                        {link.icon}
-                        <Typography sx={getListItemTextStylesTwo}>
-                          {link.text}
-                        </Typography>
-                      </ListItem>
-                    ))}
-                  </List>
-                </Box>
-              </Drawer>
-            </Box>
-          </Toolbar>
-          {isLoading && <Loader />}
-        </Box>
-      </Container>
-    </AppBar>
+                  <Box
+                    sx={getNavLinksContStylesOne}
+                    role="presentation"
+                    onClick={toggleDrawer(false)}
+                    onKeyDown={toggleDrawer(false)}
+                  >
+                    <Close
+                      sx={getCloseIconStylesTwo}
+                      onClick={handleCloseUserMenu}
+                    />
+                    <List>
+                      {actionLinks?.map((link, index) => (
+                        <ListItem
+                          key={index}
+                          sx={getListItemStylesTwo(index)}
+                          onClick={
+                            index === 0
+                              ? null
+                              : index === 1
+                              ? navigateToConfirmPassword
+                              : index === 2
+                              ? handleLogout
+                              : null
+                          }
+                        >
+                          {link.icon}
+                          <Typography sx={getListItemTextStylesTwo}>
+                            {link.text}
+                          </Typography>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Box>
+                </Drawer>
+              </Box>
+            </Toolbar>
+            {isLoading && <Loader />}
+          </Box>
+        </Container>
+      </AppBar>
+    </>
   );
 };
 

@@ -7,10 +7,15 @@ const NavbarPopover = ({
   popoverOpen,
   anchorElPopover,
   handlePopoverClose,
+  isMobileView,
 }) => {
   const { navigate } = NavbarPopoverUtils();
-  const { getPopoverStyles, getLinkContStyles, getLinkStyles } =
-    getNavbarPopoverStyles;
+  const {
+    getPopoverStyles,
+    getPopoverStylesMobile,
+    getLinkContStyles,
+    getLinkStyles,
+  } = getNavbarPopoverStyles;
 
   return (
     <Box>
@@ -27,7 +32,7 @@ const NavbarPopover = ({
           vertical: "bottom",
           horizontal: "right",
         }}
-        sx={getPopoverStyles}
+        sx={isMobileView ? getPopoverStylesMobile : getPopoverStyles}
       >
         <Box sx={getLinkContStyles(0)}>
           <Typography
