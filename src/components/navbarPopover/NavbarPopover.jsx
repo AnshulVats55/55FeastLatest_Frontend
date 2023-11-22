@@ -8,6 +8,7 @@ const NavbarPopover = ({
   anchorElPopover,
   handlePopoverClose,
   isMobileView,
+  actionToBePerformed,
 }) => {
   const { navigate } = NavbarPopoverUtils();
   const {
@@ -24,14 +25,12 @@ const NavbarPopover = ({
         open={popoverOpen}
         anchorEl={anchorElPopover}
         onClose={handlePopoverClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
+        anchorOrigin={
+          isMobileView
+            ? { vertical: "top", horizontal: "right" }
+            : { vertical: "bottom", horizontal: "right" }
+        }
+        transformOrigin={{ vertical: "bottom", horizontal: "right" }}
         sx={isMobileView ? getPopoverStylesMobile : getPopoverStyles}
       >
         <Box sx={getLinkContStyles(0)}>
@@ -57,6 +56,17 @@ const NavbarPopover = ({
             Reset Password
           </Typography>
         </Box>
+        {isMobileView && (
+          <Box sx={getLinkContStyles(1)}>
+            <Typography
+              component="a"
+              onClick={actionToBePerformed}
+              sx={getLinkStyles}
+            >
+              Logout
+            </Typography>
+          </Box>
+        )}
       </Popover>
     </Box>
   );

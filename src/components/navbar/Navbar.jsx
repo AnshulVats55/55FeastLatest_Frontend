@@ -143,6 +143,7 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElPopover, setAnchorElPopover] = useState(null);
+  const [anchorElPopoverMobile, setAnchorElPopoverMobile] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [value, setValue] = useState("recents");
 
@@ -174,12 +175,23 @@ const Navbar = () => {
     setAnchorElPopover(event?.currentTarget);
   };
 
+  const handlePopoverOpenMobile = (event) => {
+    setAnchorElPopoverMobile(event?.currentTarget);
+  };
+
   const handlePopoverClose = () => {
     setAnchorElPopover(null);
   };
 
+  const handlePopoverCloseMobile = () => {
+    setAnchorElPopoverMobile(null);
+  };
+
   const popoverOpen = Boolean(anchorElPopover);
   const popoverId = popoverOpen ? "simple-popover" : undefined;
+
+  const popoverOpenMobile = Boolean(anchorElPopoverMobile);
+  const popoverIdMobile = popoverOpenMobile ? "simple-popover" : undefined;
 
   const handleLogout = () => {
     dispatch(setIsLoading(true));
@@ -306,8 +318,8 @@ const Navbar = () => {
               }
             })}
         <BottomNavigationAction
-          label="Profile"
-          value="profile"
+          label="Actions"
+          value="actions"
           icon={
             <Avatar
               src={
@@ -315,17 +327,17 @@ const Navbar = () => {
               }
               alt=""
               sx={{
-                width: 44,
-                height: 44,
+                width: 40,
+                height: 40,
                 "@media screen and (max-width: 400px)": {
-                  width: 38,
-                  height: 38,
+                  width: 36,
+                  height: 36,
                 },
               }}
             />
           }
           onClick={(event) => {
-            handlePopoverOpen(event);
+            handlePopoverOpenMobile(event);
           }}
           sx={{
             display: "flex",
@@ -347,13 +359,14 @@ const Navbar = () => {
             },
           }}
         />
-        {popoverOpen && (
+        {popoverOpenMobile && (
           <NavbarPopover
-            popoverId={popoverId}
-            popoverOpen={popoverOpen}
-            anchorElPopover={anchorElPopover}
-            handlePopoverClose={handlePopoverClose}
+            popoverId={popoverIdMobile}
+            popoverOpen={popoverOpenMobile}
+            anchorElPopover={anchorElPopoverMobile}
+            handlePopoverClose={handlePopoverCloseMobile}
             isMobileView={true}
+            actionToBePerformed={handleLogout}
           />
         )}
       </BottomNavigation>
