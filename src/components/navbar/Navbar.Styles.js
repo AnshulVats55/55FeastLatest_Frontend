@@ -10,6 +10,7 @@ export const getNavbarStyles = {
     "@media screen and (max-width: 400px)": {
       height: "8vh",
     },
+    // display: { xs: "none", sm: "flex" },
   },
 
   getToolbarContStyles: {
@@ -41,6 +42,7 @@ export const getNavbarStyles = {
     "&:focus": {
       outline: "none",
     },
+    display: { xs: "none", sm: "flex" },
   },
 
   getHamburgerIconStyles: {

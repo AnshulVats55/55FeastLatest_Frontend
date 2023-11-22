@@ -13,6 +13,20 @@ export const getNavbarPopoverStyles = {
     },
   },
 
+  getPopoverStylesMobile: {
+    "& .MuiPaper-root": {
+      "&.MuiPopover-paper": {
+        minWidth: "6rem",
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "0.5rem",
+        padding: "0.5rem 0rem",
+        top: "calc(100% - 175px) !important",
+        left: "calc(100% - 180px) !important",
+      },
+    },
+  },
+
   getLinkContStyles: (index) => {
     return {
       width: "100%",
