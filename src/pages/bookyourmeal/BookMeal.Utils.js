@@ -9,6 +9,7 @@ import {
   handleMemberCountBooking,
   handleCancelMealBooking,
   handleMemberBookingStatus,
+  notifyAdmin,
 } from "../../bookingMethods/BookingMethods";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
@@ -47,7 +48,7 @@ const BookMealUtils = () => {
       : formattedDate;
 
   const memberDataToBeUsed = {
-    email: memberData.email,
+    email: memberData?.email,
     date: dateToBeUsed,
   };
 
@@ -277,6 +278,11 @@ const BookMealUtils = () => {
     }
   };
 
+  const handleNotifyAdmin = async () => {
+    const response = await notifyAdmin(memberDataToBeUsed);
+    console.log("Res of NA", response);
+  };
+
   return {
     bookForBuddyOpen,
     prebookOpen,
@@ -294,6 +300,7 @@ const BookMealUtils = () => {
     prebookTooltip,
     bookForBuddyTooltip,
     mealBookingTooltip,
+    handleNotifyAdmin,
   };
 };
 

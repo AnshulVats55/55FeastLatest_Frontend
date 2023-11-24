@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable array-callback-return */
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import { getMealBookingStyles } from "./BookMeal.Styles";
 import PrebookImage from "../../assets/prebook image.jpg";
 import FriendImage from "../../assets/friends image.jpg";
@@ -31,10 +31,12 @@ const BookMeal = () => {
     prebookTooltip,
     bookForBuddyTooltip,
     mealBookingTooltip,
+    handleNotifyAdmin,
   } = BookMealUtils();
 
   return (
     <Grid container className={classes.getGridContStyles}>
+      <Button onClick={handleNotifyAdmin}>Notify</Button>
       <Grid
         item
         lg={4}
