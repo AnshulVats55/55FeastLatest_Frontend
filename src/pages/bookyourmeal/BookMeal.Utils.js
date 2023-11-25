@@ -37,6 +37,8 @@ const BookMealUtils = () => {
   const [allBookedDates, setAllBookedDates] = useState([]);
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
   const [isMealCancellationOpen, setIsMealCancellationOpen] = useState(false);
+  const [isNotificationAllowed, setIsNotificationAllowed] = useState(false);
+  const [isNotified, setIsNotified] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -60,7 +62,6 @@ const BookMealUtils = () => {
     //checks if a meal is already booked for a member
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(memberData.email);
-      // console.log("STATUS", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsStatusFetched(true);
         if (response?.data?.message === snackbarMessages.BOOK_YOUR_FIRST_MEAL) {
@@ -278,9 +279,59 @@ const BookMealUtils = () => {
     }
   };
 
+  const checkNotifyAdminAvailability = () => {
+    const currentDateTime = new Date();
+    const currentDay = currentDateTime.getDay();
+    const currentHour = currentDateTime.getHours();
+
+    if (currentDay >= 1 && currentDay <= 5) {
+      if (currentHour > 8 && currentHour < 10) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const isNotifyAdminAllowed = checkNotifyAdminAvailability();
+    setIsNotificationAllowed(isNotifyAdminAllowed);
+  }, []);
+
   const handleNotifyAdmin = async () => {
-    const response = await notifyAdmin(memberDataToBeUsed);
-    console.log("Res of NA", response);
+    if (isNotificationAllowed) {
+      const response = await notifyAdmin(memberDataToBeUsed);
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setIsNotified(true);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage: response.data.message,
+          })
+        );
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: response.response.data.message,
+          })
+        );
+      } else {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Please try again !",
+          })
+        );
+      }
+    }
   };
 
   return {
@@ -301,6 +352,8 @@ const BookMealUtils = () => {
     bookForBuddyTooltip,
     mealBookingTooltip,
     handleNotifyAdmin,
+    isNotified,
+    isNotificationAllowed,
   };
 };
 
