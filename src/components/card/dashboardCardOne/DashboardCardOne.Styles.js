@@ -20,7 +20,17 @@ export const DashboardCardOneStyles = {
       "&:hover": {
         boxShadow: "rgba(0, 0, 0, 0.15) 0px 3px 3px 0px",
       },
+      position: "relative",
     };
+  },
+
+  threeDotsStyles: {
+    color: "#EF5D36",
+    position: "absolute",
+    top: "0.5rem",
+    left: "calc(100% - 35px)",
+    fontSize: "1.5rem",
+    cursor: "pointer",
   },
 
   cardLabelStyles: (index) => {

@@ -1,9 +1,18 @@
+import DashboardCardOneUtils from "./DashboardCardOne.Utils";
 import { DashboardCardOneStyles } from "./DashboardCardOne.Styles";
 import { Box, Typography } from "@mui/material";
+import { MoreVert } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import MissedCountDialog from "../../dialog/missedCountDialog/MissedCountDialog";
 
 const DashboardCardOne = ({ index, icon, cardLabel, cardValue }) => {
-  const { topContStyles, cardLabelStyles, cardValueStyles } =
+  const {
+    missedCountDialogOpen,
+    missedCountDialogScroll,
+    handleMissedCountDialogOpen,
+    handleMissedCountDialogClose,
+  } = DashboardCardOneUtils();
+  const { topContStyles, threeDotsStyles, cardLabelStyles, cardValueStyles } =
     DashboardCardOneStyles;
 
   return (
@@ -13,9 +22,22 @@ const DashboardCardOne = ({ index, icon, cardLabel, cardValue }) => {
       whileHover={{ translateY: -4 }}
     >
       <Box sx={topContStyles(index)}>
+        {index === 2 && (
+          <MoreVert
+            sx={threeDotsStyles}
+            onClick={handleMissedCountDialogOpen("paper")}
+          />
+        )}
         {icon}
         <Typography sx={cardLabelStyles(index)}>{cardLabel}</Typography>
         <Typography sx={cardValueStyles(index)}>{cardValue}</Typography>
+        {missedCountDialogOpen && (
+          <MissedCountDialog
+            open={missedCountDialogOpen}
+            scroll={missedCountDialogScroll}
+            handleClose={handleMissedCountDialogClose}
+          />
+        )}
       </Box>
     </motion.div>
   );

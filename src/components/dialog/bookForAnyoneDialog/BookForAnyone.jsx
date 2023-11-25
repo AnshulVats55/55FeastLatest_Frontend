@@ -53,7 +53,6 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
   );
 
   const handleBookForAnyone = async (buddyData) => {
-    //handles meal booking for buddies
     const isBookingAllowed = checkMealBookingAvailability();
     if (isBookingAllowed) {
       const response = await bookMealForBuddy(buddyData);

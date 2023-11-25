@@ -25,7 +25,8 @@ const DashboardCardTwoUtils = (index) => {
   const [addMemberOpen, setAddMemberOpen] = useState(false);
   const [addMemberScroll, setAddMemberScroll] = useState("paper");
   const [nonEmployeeDialogOpen, setNonEmployeeDialogOpen] = useState(false);
-  const [nonEmployeeDialogScroll, setNonEmployeeDialogScroll] = useState("paper");
+  const [nonEmployeeDialogScroll, setNonEmployeeDialogScroll] =
+    useState("paper");
   const [deleteMemberOpen, setDeleteMemberOpen] = useState(false);
   const [deleteMemberScroll, setDeleteMemberScroll] = useState("paper");
   const [isDailyDataLoading, setIsDailyDataLoading] = useState(false);
