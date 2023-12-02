@@ -36,6 +36,7 @@ const BookMeal = () => {
     handleNotifyAdmin,
     isNotified,
     isNotificationAllowed,
+    isOverlayRequired,
   } = BookMealUtils();
 
   return (
@@ -96,6 +97,7 @@ const BookMeal = () => {
                   <CommonButton
                     onClick={handleNotifyAdmin}
                     customStyles={customStyles(isBooked)}
+                    isLoaderRequired={isOverlayRequired}
                   >
                     Notify Admin
                   </CommonButton>
@@ -216,6 +218,7 @@ const BookMeal = () => {
           tooltipTitle={mealBookingTooltip}
         />
       </Grid>
+      {/* {isOverlayRequired && <Loader />} */}
     </Grid>
   );
 };
