@@ -38,8 +38,6 @@ const NewAdminDashboard = () => {
     imageOneStyles,
   } = NewAdminDashboardStyles;
 
-  console.log("todays count", todaysCount);
-
   return (
     <Grid container sx={{ background: "" }}>
       {bookingDataArray?.map((bookingData, index) => {
