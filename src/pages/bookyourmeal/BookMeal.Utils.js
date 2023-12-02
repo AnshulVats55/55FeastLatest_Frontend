@@ -287,7 +287,7 @@ const BookMealUtils = () => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay >= 1 && currentDay <= 6) {
-      if (currentHour > 8 && currentHour < 12) {
+      if (currentHour > 8 && currentHour < 10) {
         console.log("first");
         return true;
       } else {
