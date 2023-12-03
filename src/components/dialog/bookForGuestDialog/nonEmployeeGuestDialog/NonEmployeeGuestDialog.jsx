@@ -2,14 +2,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import Slider, {
-  SliderThumb,
-  SliderValueLabelProps,
-} from "@mui/material/Slider";
-import { styled } from "@mui/material/styles";
+import Slider from "@mui/material/Slider";
 import {
   Box,
-  Tooltip,
   Typography,
   Button,
   Dialog,
@@ -17,21 +12,11 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
-  Grid,
-  Stack,
-  FormControl,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import NonEmployeeGuestDialogUtils from "./NonEmployeeGuestDialog.Utils";
-import {
-  NonEmployeeGuestDialogStyles,
-  getCommonButtonCustomStyles,
-} from "./NonEmployeeGuestDialog.Styles";
+import { NonEmployeeGuestDialogStyles } from "./NonEmployeeGuestDialog.Styles";
 import CommonButton from "../../../button/CommonButton";
-import Loader from "../../../loader/Loader";
-import { DashboardCardTwoStyles } from "../../../card/dashboardCardTwo/DashboardCardTwo.Styles";
+import { dateToBeChecked } from "../../../../common/CommonData";
 
 const NonEmployeeGuestDialog = ({
   nonEmployeeDialogOpen,
@@ -47,11 +32,11 @@ const NonEmployeeGuestDialog = ({
     getDialogActionStyles,
     getCloseButtonStyles,
     getSliderStyles,
+    getButtonStyles,
   } = NonEmployeeGuestDialogStyles;
-  const { buttonStyles } = DashboardCardTwoStyles;
 
   return (
-    <div>
+    <Box>
       <Dialog
         open={nonEmployeeDialogOpen}
         onClose={handleNonEmployeeDialogClose}
@@ -77,14 +62,28 @@ const NonEmployeeGuestDialog = ({
                 "@media screen and (max-width: 532px)": {
                   fontSize: "0.9rem",
                 },
+                paddingBottom: "1rem",
               }}
             >
               Booking a meal for outsider guests is as simple as booking for
               yourself. Try now !
             </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.9rem",
+                "@media screen and (max-width: 532px)": {
+                  fontSize: "0.8rem",
+                },
+                fontWeight: 500,
+                color: "#000",
+              }}
+            >
+              {`You are booking for ${dateToBeChecked}`}
+            </Typography>
             <Box
               sx={{
                 display: "flex",
+                columnGap: "1rem",
                 width: "100%",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -105,7 +104,7 @@ const NonEmployeeGuestDialog = ({
                 isLoaderRequired={false}
                 type=""
                 isDisabled={false}
-                customStyles={buttonStyles}
+                customStyles={getButtonStyles("book")}
                 onClick={handleBookForGuests}
               />
             </Box>
@@ -114,13 +113,13 @@ const NonEmployeeGuestDialog = ({
         <DialogActions sx={getDialogActionStyles}>
           <Button
             onClick={handleNonEmployeeDialogClose}
-            sx={getCloseButtonStyles}
+            sx={getButtonStyles("close")}
           >
             Close
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 
