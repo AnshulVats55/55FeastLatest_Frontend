@@ -5,7 +5,13 @@ import { MoreVert } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import MissedCountDialog from "../../dialog/missedCountDialog/MissedCountDialog";
 
-const DashboardCardOne = ({ index, icon, cardLabel, cardValue }) => {
+const DashboardCardOne = ({
+  index,
+  icon,
+  cardLabel,
+  cardValue,
+  regularizationData,
+}) => {
   const {
     missedCountDialogOpen,
     missedCountDialogScroll,
@@ -36,6 +42,7 @@ const DashboardCardOne = ({ index, icon, cardLabel, cardValue }) => {
             open={missedCountDialogOpen}
             scroll={missedCountDialogScroll}
             handleClose={handleMissedCountDialogClose}
+            regularizationData={regularizationData}
           />
         )}
       </Box>

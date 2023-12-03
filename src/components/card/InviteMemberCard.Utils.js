@@ -6,17 +6,9 @@ import { useDispatch } from "react-redux";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { useState } from "react";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData.jsx";
+import { dateToBeChecked } from "../../common/CommonData.jsx";
 
-const InviteMemberCardUtils = (isAlreadyBooked) => {
-  const formattedDate = handleFormattedDate(new Date());
-  const nextDate = getNextDate(new Date());
-  const nextDateFormatted = handleFormattedDate(nextDate);
-  const dateToBeChecked =
-    new Date().getHours() >= 18 && new Date().getHours() <= 23
-      ? nextDateFormatted
-      : formattedDate;
-
+const InviteMemberCardUtils = () => {
   const dispatch = useDispatch();
 
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);

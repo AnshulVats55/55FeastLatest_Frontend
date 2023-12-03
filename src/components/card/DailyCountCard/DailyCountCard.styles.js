@@ -70,7 +70,6 @@ export const DailyCountCardStyles = {
     justifyContent: "flex-start",
     alignItems: "center",
     padding: "0 0.5rem 0 0.25rem",
-    // background: "lightblue",
   },
 
   typographyTwoStyles: {
@@ -80,11 +79,12 @@ export const DailyCountCardStyles = {
     "@media screen and (max-width: 450px)": {
       fontSize: "0.8rem",
     },
+    color: "#000",
   },
 
   typographyThreeStyles: {
     fontSize: "0.7rem",
-    color: "C1C1C1",
+    color: "#000",
     fontWeight: 400,
     fontFamily: "Poppins, sans-serif",
     "@media screen and (max-width: 450px)": {
@@ -112,6 +112,30 @@ export const DailyCountCardStyles = {
     "@media screen and (max-width: 400px)": {
       fontSize: "0.65rem",
       padding: "0.09rem 0.30rem",
+    },
+  },
+
+  buttonStyles: {
+    // borderRadius: "4px",
+    // border: "1px solid #ef5d36",
+    // color: "#ef5d36",
+    // fontSize: "0.7rem",
+    // margin: "0.25rem 1rem",
+    // "&:hover": {
+    //   background: "#ef5d36",
+    //   color: "#FFF",
+    // },
+    // "&:focus": {
+    //   outline: "none",
+    // },
+    // "@media screen and (max-width: 400px)": {
+    //   fontSize: "0.65rem",
+    // },
+    "@media screen and (max-width: 615px)": {
+      fontSize: "0.8rem",
+    },
+    "@media screen and (max-width: 370px)": {
+      padding: "0.15rem 0rem",
     },
   },
 };

@@ -20,6 +20,7 @@ import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import snackbarMessages from "../../Constants";
 import { CircularProgress } from "@mui/material";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
+import { dateToBeChecked } from "../../common/CommonData.jsx";
 
 const NewAdminDashboardUtils = () => {
   const { location } = useSelector((state) => {
@@ -47,10 +48,10 @@ const NewAdminDashboardUtils = () => {
     return reversedDate;
   };
 
-  const dateToBeChecked =
-    new Date().getHours() >= 18 && new Date().getHours() <= 23
-      ? nextDateFormatted
-      : formattedDate;
+  // const dateToBeChecked =
+  //   new Date().getHours() >= 18 && new Date().getHours() <= 23
+  //     ? nextDateFormatted
+  //     : formattedDate;
 
   useEffect(() => {
     const getTodaysTotalCount = async () => {
@@ -97,6 +98,14 @@ const NewAdminDashboardUtils = () => {
             snackbarOpen: true,
             snackbarType: snackbarMessages.ERROR,
             snackbarMessage: snackbarMessages.ERROR_FETCHING_REQUESTS,
+          })
+        );
+      } else {
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Please try again !",
           })
         );
       }

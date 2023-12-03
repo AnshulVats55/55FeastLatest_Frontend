@@ -45,7 +45,7 @@ const InviteMemberCard = ({
     setIsMealBooked,
     isTodaysMealBooked,
     setIsTodaysMealBooked,
-  } = InviteMemberCardUtils(isAlreadyBooked);
+  } = InviteMemberCardUtils();
   const { customStyles } = getInviteButtonCustomStyles;
   const { initial, whileInView, transition } = getInviteMemberCardAnimation;
 

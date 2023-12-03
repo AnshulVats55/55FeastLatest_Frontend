@@ -11,15 +11,16 @@ import { motion } from "framer-motion";
 
 const NewAdminDashboard = () => {
   const {
+    todaysCount,
     bookingDataArray,
     adminActionsArray,
     isDataLoaded,
     handleMemberSearch,
     filteredUsers,
-    todaysCount,
     dateToBeChecked,
     imageVariants,
     handleReversedDate,
+    regularizationRequests,
   } = NewAdminDashboardUtils();
   const {
     gridItemOneStyles,
@@ -56,6 +57,7 @@ const NewAdminDashboard = () => {
               icon={bookingData.icon}
               cardLabel={bookingData.cardLabel}
               cardValue={bookingData.cardValue}
+              regularizationData={index === 2 && regularizationRequests}
             />
           </Grid>
         );
@@ -107,6 +109,7 @@ const NewAdminDashboard = () => {
                         id={index + 1}
                         memberName={dailyData.fullName}
                         memberEmail={dailyData.email}
+                        type="status"
                       />
                     </Grid>
                   );
