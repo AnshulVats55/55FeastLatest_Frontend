@@ -745,32 +745,22 @@ const AdminDashboard = () => {
                   </Typography>
                 )
               ) : (
-                memberData?.map((member, index) => {
-                  return (
-                    <Grid
-                      item
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      sx={{ background: "" }}
-                    >
+                Array(6)
+                  .fill()
+                  .map((data, index) => {
+                    return (
                       <Skeleton
+                        key={index}
                         animation="wave"
-                        sx={{ minWidth: "100% !important" }}
-                      >
-                        <InviteMemberCard
-                          indexNumber={index + 1}
-                          memberName={member.memberName}
-                          memberEmail={member.memberEmail}
-                          animationDuration={animationDuration}
-                          isDataLoaded={isDataLoaded}
-                          isDashboard={true}
-                        />
-                      </Skeleton>
-                    </Grid>
-                  );
-                })
+                        variant="rounded"
+                        sx={{
+                          width: "100%",
+                          height: "3rem",
+                          margin: "0.5rem 0 0.25rem",
+                        }}
+                      />
+                    );
+                  })
               )}
             </Grid>
           </Box>

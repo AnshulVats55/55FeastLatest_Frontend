@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import {
   handleFormattedDate,
   getNextDate,
+  handleSort,
 } from "../../../common/CommonData.js";
 import {
   getMyBuddies,
@@ -56,7 +57,7 @@ const BookForBuddyUtils = ({ open }) => {
     const handleMyBuddies = async () => {
       const response = await getMyBuddies(myData?.email, myData?.location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
-        setMyBuddies(response?.data?.data);
+        setMyBuddies(handleSort(response?.data?.data));
         setIsDataLoaded(true);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
@@ -118,34 +119,6 @@ const BookForBuddyUtils = ({ open }) => {
 
     handleGetCountsByDate();
   }, []);
-
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-  ];
 
   const handleMemberSearch = (event) => {
     setSearchTerm(event?.target?.value.toLowerCase());
@@ -211,6 +184,8 @@ const BookForBuddyUtils = ({ open }) => {
     member.fullName.toLowerCase().includes(searchTerm)
   );
 
+  console.log("my buddies", myBuddies);
+
   const handleBookForBuddy = async (buddyData) => {
     //handles meal booking for buddies
     const isBookingAllowed = checkMealBookingAvailability();
@@ -224,7 +199,6 @@ const BookForBuddyUtils = ({ open }) => {
     animationDuration,
     isDataLoaded,
     setSearchTerm,
-    memberData,
     date,
     handleMemberSearch,
     descriptionElementRef,

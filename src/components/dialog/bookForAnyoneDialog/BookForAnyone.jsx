@@ -30,7 +30,6 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
     setIsDataLoaded,
     searchTerm,
     myBuddies,
-    memberData,
     date,
     handleMemberSearch,
     checkMealBookingAvailability,
@@ -156,28 +155,22 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                 </Typography>
               )
             ) : (
-              memberData?.map((member, index) => {
-                return (
-                  <Skeleton
-                    animation="wave"
-                    sx={{ minWidth: "100% !important" }}
-                  >
-                    <InviteMemberCard
-                      indexNumber={index + 1}
-                      memberName={member.memberName}
-                      memberEmail={member.memberEmail}
-                      animationDuration={animationDuration}
-                      children={children}
-                      isDataLoaded={isDataLoaded}
-                      isDashboard={true}
-                      isEmailChopRequired={true}
-                      isActionButtonRequired={true}
-                      isStatusCheckRequired={true}
-                      isButtonDisableRequired={false}
+              Array(6)
+                .fill()
+                .map((data, index) => {
+                  return (
+                    <Skeleton
+                      key={index}
+                      animation="wave"
+                      variant="rounded"
+                      sx={{
+                        width: "100%",
+                        height: "3rem",
+                        margin: "0.5rem 0 0.25rem",
+                      }}
                     />
-                  </Skeleton>
-                );
-              })
+                  );
+                })
             )}
           </DialogContentText>
         </DialogContent>

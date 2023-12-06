@@ -23,7 +23,6 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
   const {
     animationDuration,
     isDataLoaded,
-    memberData,
     date,
     handleMemberSearch,
     descriptionElementRef,
@@ -127,26 +126,22 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                 </Typography>
               )
             ) : (
-              memberData?.map((member, index) => {
-                return (
-                  <Skeleton
-                    animation="wave"
-                    sx={{ minWidth: "100% !important" }}
-                  >
-                    <InviteMemberCard
+              Array(6)
+                .fill()
+                .map((data, index) => {
+                  return (
+                    <Skeleton
                       key={index}
-                      indexNumber={index + 1}
-                      memberName={member.memberName}
-                      memberEmail={member.memberEmail}
-                      animationDuration={animationDuration}
-                      children="Book"
-                      isDataLoaded={isDataLoaded}
-                      isButtonRequired={true}
-                      isEmailChopRequired={true}
+                      animation="wave"
+                      variant="rounded"
+                      sx={{
+                        width: "100%",
+                        height: "3rem",
+                        margin: "0.5rem 0 0.25rem",
+                      }}
                     />
-                  </Skeleton>
-                );
-              })
+                  );
+                })
             )}
           </DialogContentText>
         </DialogContent>

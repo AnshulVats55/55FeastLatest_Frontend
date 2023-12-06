@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Button,
@@ -22,6 +22,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
+import { handleSort } from "../../common/CommonData";
 
 const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   const adminData = useSelector((state) => {
@@ -54,7 +55,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
         adminData.location
       );
       if (response?.data?.status === snackbarMessages.SUCCESS) {
-        setNotInvited(response.data.data);
+        setNotInvited(handleSort(response?.data?.data));
         setIsDataLoaded(true);
         dispatch(setTotalMembers(response.data.data.length));
       } else if (
@@ -80,34 +81,6 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
 
     handleGetNonInvitedMembers();
   }, []);
-
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-  ];
 
   const handleMemberSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
@@ -207,24 +180,22 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
                 </Typography>
               )
             ) : (
-              memberData.map((member, index) => {
-                return (
-                  <Skeleton
-                    animation="wave"
-                    sx={{ minWidth: "100% !important" }}
-                  >
-                    <InviteMemberCard
-                      indexNumber={index + 1}
-                      memberName={member.memberName}
-                      memberEmail={member.memberEmail}
-                      animationDuration={animationDuration}
-                      children="Invite"
-                      isDataLoaded={isDataLoaded}
-                      isDashboard={false}
+              Array(6)
+                .fill()
+                .map((data, index) => {
+                  return (
+                    <Skeleton
+                      key={index}
+                      animation="wave"
+                      variant="rounded"
+                      sx={{
+                        width: "100%",
+                        height: "3rem",
+                        margin: "0.5rem 0 0.25rem",
+                      }}
                     />
-                  </Skeleton>
-                );
-              })
+                  );
+                })
             )}
           </DialogContentText>
         </DialogContent>

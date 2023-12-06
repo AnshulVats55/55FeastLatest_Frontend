@@ -55,3 +55,10 @@ export const getMonthName = () => {
         return "";
   }
 };
+
+export const handleSort = (myBuddies) => {
+  const sortedBuddies = [...myBuddies].sort((a, b) => {
+    return a.fullName.localeCompare(b.fullName);
+  });
+  return sortedBuddies;
+};

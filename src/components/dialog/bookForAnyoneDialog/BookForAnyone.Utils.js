@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import {
   handleFormattedDate,
   getNextDate,
+  handleSort,
 } from "../../../common/CommonData.js";
 import {
   getMyBuddies,
@@ -37,34 +38,6 @@ const BookForAnyoneUtils = () => {
     new Date().getHours() >= 0 && new Date().getHours() <= 17
       ? formattedDate
       : nextDateFormatted;
-
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-  ];
 
   const handleMemberSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
@@ -123,7 +96,7 @@ const BookForAnyoneUtils = () => {
     const handleAllMembers = async () => {
       const response = await getMyBuddies(myData.email, myData.location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
-        setMyBuddies(response?.data?.data);
+        setMyBuddies(handleSort(response?.data?.data));
         setIsDataLoaded(true);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
@@ -194,7 +167,6 @@ const BookForAnyoneUtils = () => {
     searchTerm,
     setSearchTerm,
     myBuddies,
-    memberData,
     date,
     handleMemberSearch,
     checkMealBookingAvailability,
