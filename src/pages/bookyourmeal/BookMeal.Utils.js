@@ -14,12 +14,16 @@ import {
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
 import { removeAllDates } from "../../store/slices/PrebookDatesSlice";
+import { setIsNotified } from "../../store/slices/NotifyAdminSlice.js";
 import snackbarMessages from "../../Constants";
 
 const BookMealUtils = () => {
   const dispatch = useDispatch();
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
+  });
+  const { isNotified } = useSelector((state) => {
+    return state.NotifyAdminReducer;
   });
   const prebookTooltip =
     "Meal cancellation restrictions don't apply to pre-booking for upcoming days !";
@@ -38,7 +42,7 @@ const BookMealUtils = () => {
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
   const [isMealCancellationOpen, setIsMealCancellationOpen] = useState(false);
   const [isNotificationAllowed, setIsNotificationAllowed] = useState(false);
-  const [isNotified, setIsNotified] = useState(false);
+  // const [isNotified, setIsNotified] = useState(false);
   const [isOverlayRequired, setIsOverlayRequired] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
@@ -80,7 +84,7 @@ const BookMealUtils = () => {
           dispatch(getPrebookDates(allBookingDates));
           if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
             setIsBooked(true);
-            setIsNotified(true);
+            dispatch(setIsNotified(true));
           } else {
             setIsBooked(false);
           }
@@ -287,15 +291,12 @@ const BookMealUtils = () => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay >= 1 && currentDay <= 6) {
-      if (currentHour > 8 && currentHour < 10) {
-        console.log("first");
+      if (currentHour > 8 && currentHour < 16) {
         return true;
       } else {
-        console.log("second");
         return false;
       }
     } else {
-      console.log("third");
       return false;
     }
   };
@@ -311,7 +312,7 @@ const BookMealUtils = () => {
       const response = await notifyAdmin(memberDataToBeUsed);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsOverlayRequired(false);
-        setIsNotified(true);
+        dispatch(setIsNotified(true));
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
