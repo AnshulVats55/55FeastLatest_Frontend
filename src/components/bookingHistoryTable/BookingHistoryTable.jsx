@@ -44,7 +44,7 @@ const BookingHistoryTable = ({ isDataLoaded, memberBookingData }) => {
                   </Typography>
                 </Grid>
                 <Grid item lg={2} md={2} sm={2} xs={2} sx={gridItemFiveStyles}>
-                  <Typography sx={statusTextStyles}>Availed</Typography>
+                  <Typography sx={statusTextStyles}>Booked</Typography>
                 </Grid>
               </Grid>
             );

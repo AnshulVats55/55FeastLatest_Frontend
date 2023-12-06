@@ -10,6 +10,8 @@ const DailyCountCard = ({
   memberEmail,
   type,
   actionToBePerformed,
+  isLoaderRequired,
+  isBooked,
 }) => {
   const {
     topContStyles,
@@ -50,9 +52,10 @@ const DailyCountCard = ({
           ) : (
             <InviteButton
               type="button"
-              isLoaderRequired={false}
+              isLoaderRequired={isLoaderRequired}
               handleAction={actionToBePerformed}
-              styles={buttonStyles}
+              styles={buttonStyles(isBooked)}
+              isButtonDisableRequired={isBooked}
             >
               Book
             </InviteButton>

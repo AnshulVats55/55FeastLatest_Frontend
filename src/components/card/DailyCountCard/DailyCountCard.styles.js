@@ -61,7 +61,6 @@ export const DailyCountCardStyles = {
       padding: "0",
       width: "80%",
     },
-    // background: "lightgreen",
   },
 
   boxFourStyles: {
@@ -115,27 +114,16 @@ export const DailyCountCardStyles = {
     },
   },
 
-  buttonStyles: {
-    // borderRadius: "4px",
-    // border: "1px solid #ef5d36",
-    // color: "#ef5d36",
-    // fontSize: "0.7rem",
-    // margin: "0.25rem 1rem",
-    // "&:hover": {
-    //   background: "#ef5d36",
-    //   color: "#FFF",
-    // },
-    // "&:focus": {
-    //   outline: "none",
-    // },
-    // "@media screen and (max-width: 400px)": {
-    //   fontSize: "0.65rem",
-    // },
-    "@media screen and (max-width: 615px)": {
-      fontSize: "0.8rem",
-    },
-    "@media screen and (max-width: 370px)": {
-      padding: "0.15rem 0rem",
-    },
+  buttonStyles: (isBooked) => {
+    return {
+      background: isBooked ? "lightgreen" : "transparent",
+      color: isBooked ? "#4caf50" : "#ef5d36",
+      "@media screen and (max-width: 615px)": {
+        fontSize: "0.8rem",
+      },
+      "@media screen and (max-width: 370px)": {
+        padding: "0.15rem 0rem",
+      },
+    };
   },
 };

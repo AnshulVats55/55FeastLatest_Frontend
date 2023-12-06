@@ -37,7 +37,7 @@ const MissedCountDialogUtils = () => {
         setCustomSnackbar({
           snackbarOpen: true,
           snackbarType: snackbarMessages.ERROR,
-          snackbarMessage: snackbarMessages.MEMBER_MEAL_BOOKING_FAILURE,
+          snackbarMessage: response?.response?.data?.message,
         })
       );
       setIsLoaderRequired(false);
@@ -49,6 +49,7 @@ const MissedCountDialogUtils = () => {
     dateToBeChecked,
     handleMealBooking,
     isBooked,
+    isLoaderRequired,
   };
 };
 

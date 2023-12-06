@@ -22,8 +22,13 @@ const MissedCountDialog = ({
   handleClose,
   regularizationData,
 }) => {
-  const { email, dateToBeChecked, handleMealBooking, isBooked } =
-    MissedCountDialogUtils();
+  const {
+    email,
+    dateToBeChecked,
+    handleMealBooking,
+    isBooked,
+    isLoaderRequired,
+  } = MissedCountDialogUtils();
   const {
     getDialogTitleStyles,
     getDialogContentStyles,
@@ -76,7 +81,7 @@ const MissedCountDialog = ({
                   width: "100%",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  background: "wheat",
+                  background: "",
                 }}
               >
                 {regularizationData?.map((data, index) => {
@@ -84,7 +89,7 @@ const MissedCountDialog = ({
                     <Grid
                       item
                       xs={12}
-                      sx={{ background: "pink", width: "100%" }}
+                      sx={{ background: "", width: "100%" }}
                     >
                       <DailyCountCard
                         id={index + 1}
@@ -94,6 +99,8 @@ const MissedCountDialog = ({
                         actionToBePerformed={() =>
                           handleMealBooking(data?.email, dateToBeChecked, email)
                         }
+                        isLoaderRequired={isLoaderRequired}
+                        isBooked={isBooked}
                       />
                     </Grid>
                   );
