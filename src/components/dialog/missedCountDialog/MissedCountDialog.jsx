@@ -12,8 +12,8 @@ import {
   DialogTitle,
   Grid,
 } from "@mui/material";
-import CommonButton from "../../button/CommonButton";
-import { dateToBeChecked } from "../../../common/CommonData";
+// import CommonButton from "../../button/CommonButton";
+// import { dateToBeChecked } from "../../../common/CommonData";
 import DailyCountCard from "../../card/DailyCountCard/DailyCountCard";
 
 const MissedCountDialog = ({
@@ -22,8 +22,8 @@ const MissedCountDialog = ({
   handleClose,
   regularizationData,
 }) => {
-  const {} = MissedCountDialogUtils();
-  // const {} = getMissedCountDialogStyles;
+  const { email, dateToBeChecked, handleMealBooking, isBooked } =
+    MissedCountDialogUtils();
   const {
     getDialogTitleStyles,
     getDialogContentStyles,
@@ -71,21 +71,29 @@ const MissedCountDialog = ({
               <Box
                 sx={{
                   display: "flex",
+                  flexDirection: "column",
                   columnGap: "1rem",
                   width: "100%",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  background: "",
+                  background: "wheat",
                 }}
               >
                 {regularizationData?.map((data, index) => {
                   return (
-                    <Grid item xs={12} sx={{ background: "" }}>
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{ background: "pink", width: "100%" }}
+                    >
                       <DailyCountCard
                         id={index + 1}
                         memberName={data?.name}
                         memberEmail={data?.email}
                         type="action"
+                        actionToBePerformed={() =>
+                          handleMealBooking(data?.email, dateToBeChecked, email)
+                        }
                       />
                     </Grid>
                   );

@@ -4,7 +4,13 @@ import { motion } from "framer-motion";
 import CommonButton from "../../button/CommonButton";
 import InviteButton from "../../inviteButton/InviteButton";
 
-const DailyCountCard = ({ id, memberName, memberEmail, type }) => {
+const DailyCountCard = ({
+  id,
+  memberName,
+  memberEmail,
+  type,
+  actionToBePerformed,
+}) => {
   const {
     topContStyles,
     typographyOneStyles,
@@ -45,7 +51,7 @@ const DailyCountCard = ({ id, memberName, memberEmail, type }) => {
             <InviteButton
               type="button"
               isLoaderRequired={false}
-              handleAction={() => alert("clicked")}
+              handleAction={actionToBePerformed}
               styles={buttonStyles}
             >
               Book
