@@ -1,7 +1,6 @@
 import { Box, Typography, Avatar } from "@mui/material";
 import { DailyCountCardStyles } from "./DailyCountCard.styles";
 import { motion } from "framer-motion";
-import CommonButton from "../../button/CommonButton";
 import InviteButton from "../../inviteButton/InviteButton";
 
 const DailyCountCard = ({

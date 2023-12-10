@@ -17,6 +17,7 @@ import NonEmployeeGuestDialogUtils from "./NonEmployeeGuestDialog.Utils";
 import { NonEmployeeGuestDialogStyles } from "./NonEmployeeGuestDialog.Styles";
 import CommonButton from "../../../button/CommonButton";
 import { dateToBeChecked } from "../../../../common/CommonData";
+import { getReversedDate } from "../../../../invitationMethods/InvitationMethods";
 
 const NonEmployeeGuestDialog = ({
   nonEmployeeDialogOpen,
@@ -45,7 +46,7 @@ const NonEmployeeGuestDialog = ({
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title" sx={getDialogTitleStyles}>
-          Book for Non-employee guests
+          Book for guests
         </DialogTitle>
         <DialogContent
           dividers={scroll === "paper"}
@@ -65,7 +66,7 @@ const NonEmployeeGuestDialog = ({
                 paddingBottom: "1rem",
               }}
             >
-              Booking a meal for outsider guests is as simple as booking for
+              Booking a meal for your guests is as simple as booking for
               yourself. Try now !
             </Typography>
             <Typography
@@ -78,7 +79,7 @@ const NonEmployeeGuestDialog = ({
                 color: "#000",
               }}
             >
-              {`You are booking for ${dateToBeChecked}`}
+              {`You are booking for ${getReversedDate(dateToBeChecked)}`}
             </Typography>
             <Box
               sx={{

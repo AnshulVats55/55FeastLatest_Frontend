@@ -118,6 +118,7 @@ export const DailyCountCardStyles = {
     return {
       background: isBooked ? "lightgreen" : "transparent",
       color: isBooked ? "#4caf50" : "#ef5d36",
+      border: isBooked ? "1px solid #4caf50" : "1px solid #ef5d36",
       "@media screen and (max-width: 615px)": {
         fontSize: "0.8rem",
       },
