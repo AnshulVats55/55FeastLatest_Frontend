@@ -42,7 +42,6 @@ const BookMealUtils = () => {
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
   const [isMealCancellationOpen, setIsMealCancellationOpen] = useState(false);
   const [isNotificationAllowed, setIsNotificationAllowed] = useState(false);
-  // const [isNotified, setIsNotified] = useState(false);
   const [isOverlayRequired, setIsOverlayRequired] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
@@ -84,7 +83,7 @@ const BookMealUtils = () => {
           dispatch(getPrebookDates(allBookingDates));
           if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
             setIsBooked(true);
-            dispatch(setIsNotified(true));
+            dispatch(setIsNotified(false));
           } else {
             setIsBooked(false);
           }
@@ -290,8 +289,8 @@ const BookMealUtils = () => {
     const currentDay = currentDateTime.getDay();
     const currentHour = currentDateTime.getHours();
 
-    if (currentDay >= 1 && currentDay <= 6) {
-      if (currentHour > 8 && currentHour < 16) {
+    if (currentDay >= 1 && currentDay <= 5) {
+      if (currentHour > 8 && currentHour < 10) {
         return true;
       } else {
         return false;
