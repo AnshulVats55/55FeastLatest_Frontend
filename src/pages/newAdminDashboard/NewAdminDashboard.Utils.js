@@ -87,9 +87,9 @@ const NewAdminDashboardUtils = () => {
 
   useEffect(() => {
     const handleReqularizationRequests = async () => {
-      const response = await getRegularizedMeals(dateToBeChecked);
+      const response = await getRegularizedMeals(dateToBeChecked, location);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
-        setRegularizationRequests(response?.data?.data?.users);
+        setRegularizationRequests(response?.data?.data);
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {

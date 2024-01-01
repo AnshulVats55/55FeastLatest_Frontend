@@ -145,10 +145,10 @@ export const getCountsByDate = async (dateToBeChecked, location) => {
   }
 };
 
-export const getRegularizedMeals = async (dateToBeChecked) => {
+export const getRegularizedMeals = async (dateToBeChecked, location) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/bookmeal/missed-counts?date=${dateToBeChecked}`,
+      `${BASE_URL}/bookmeal/missed-counts?date=${dateToBeChecked}&location=${location}`,
       {
         headers: {
           Authorization: `Bearer ${MEMBER_TOKEN}`,
