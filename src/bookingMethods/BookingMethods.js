@@ -144,3 +144,24 @@ export const getCountsByDate = async (dateToBeChecked, location) => {
     return error;
   }
 };
+
+export const notifyAdmin = async (memberData, location) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/bookmeal/count-missed?location=${location}`,
+      memberData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${MEMBER_TOKEN}`,
+          referrerPolicy: "no-referrer",
+          mode: "no-mode",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

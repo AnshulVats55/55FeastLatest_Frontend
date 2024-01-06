@@ -1,7 +1,6 @@
-const BASE_URL = "https://light-jay-leg-warmers.cyclic.cloud"; //https://yellow-abalone-veil.cyclic.app
+const BASE_URL = "https://ill-ruby-chick-wear.cyclic.cloud/api";
 //1. https://light-jay-leg-warmers.cyclic.cloud
 //2. https://ivory-panda-garb.cyclic.cloud
 //3. https://brainy-blue-shoe.cyclic.app
-//4. https://nice-pear-bee-sock.cyclic.app
 
 export default BASE_URL;

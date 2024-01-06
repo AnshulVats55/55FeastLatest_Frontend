@@ -9,10 +9,12 @@ import {
   handleMemberCountBooking,
   handleCancelMealBooking,
   handleMemberBookingStatus,
+  notifyAdmin,
 } from "../../bookingMethods/BookingMethods";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
 import { removeAllDates } from "../../store/slices/PrebookDatesSlice";
+import { setIsNotified } from "../../store/slices/NotifyAdminSlice.js";
 import snackbarMessages from "../../Constants";
 import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 
@@ -20,6 +22,9 @@ const BookMealUtils = () => {
   const dispatch = useDispatch();
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
+  });
+  const { isNotified } = useSelector((state) => {
+    return state.NotifyAdminReducer;
   });
   const prebookTooltip =
     "Meal cancellation restrictions don't apply to pre-booking for upcoming days !";
@@ -37,6 +42,9 @@ const BookMealUtils = () => {
   const [isBooked, setIsBooked] = useState(false);
   const [allBookedDates, setAllBookedDates] = useState([]);
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
+  const [isMealCancellationOpen, setIsMealCancellationOpen] = useState(false);
+  const [isNotificationAllowed, setIsNotificationAllowed] = useState(false);
+  const [isOverlayRequired, setIsOverlayRequired] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
   const nextDate = getNextDate(new Date());
@@ -48,7 +56,7 @@ const BookMealUtils = () => {
       : formattedDate;
 
   const memberDataToBeUsed = {
-    email: memberData.email,
+    email: memberData?.email,
     date: dateToBeUsed,
   };
 
@@ -77,6 +85,7 @@ const BookMealUtils = () => {
           dispatch(getPrebookDates(allBookingDates));
           if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
             setIsBooked(true);
+            dispatch(setIsNotified(false));
           } else {
             setIsBooked(false);
           }
@@ -316,6 +325,68 @@ const BookMealUtils = () => {
     }
   };
 
+  const checkNotifyAdminAvailability = () => {
+    const currentDateTime = new Date();
+    const currentDay = currentDateTime.getDay();
+    const currentHour = currentDateTime.getHours();
+
+    if (currentDay >= 1 && currentDay <= 5) {
+      if (currentHour > 8 && currentHour < 13) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const isNotifyAdminAllowed = checkNotifyAdminAvailability();
+    setIsNotificationAllowed(isNotifyAdminAllowed);
+  }, []);
+
+  const handleNotifyAdmin = async () => {
+    if (isNotificationAllowed) {
+      setIsOverlayRequired(true);
+      const response = await notifyAdmin(
+        memberDataToBeUsed,
+        memberData?.location
+      );
+      if (response?.data?.status === snackbarMessages.SUCCESS) {
+        setIsOverlayRequired(false);
+        dispatch(setIsNotified(true));
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.SUCCESS,
+            snackbarMessage: response.data.message,
+          })
+        );
+      } else if (
+        response?.response?.data?.status === snackbarMessages.FAILURE
+      ) {
+        setIsOverlayRequired(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: response.response.data.message,
+          })
+        );
+      } else {
+        setIsOverlayRequired(false);
+        dispatch(
+          setCustomSnackbar({
+            snackbarOpen: true,
+            snackbarType: snackbarMessages.ERROR,
+            snackbarMessage: "Please try again !",
+          })
+        );
+      }
+    }
+  };
+
   return {
     bookForBuddyOpen,
     prebookOpen,
@@ -333,6 +404,10 @@ const BookMealUtils = () => {
     prebookTooltip,
     bookForBuddyTooltip,
     mealBookingTooltip,
+    handleNotifyAdmin,
+    isNotified,
+    isNotificationAllowed,
+    isOverlayRequired,
   };
 };
 
