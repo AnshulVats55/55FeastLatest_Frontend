@@ -290,7 +290,7 @@ const BookMealUtils = () => {
     const currentHour = currentDateTime.getHours();
 
     if (currentDay >= 1 && currentDay <= 5) {
-      if (currentHour > 8 && currentHour < 10) {
+      if (currentHour > 8 && currentHour < 13) {
         return true;
       } else {
         return false;
@@ -308,7 +308,10 @@ const BookMealUtils = () => {
   const handleNotifyAdmin = async () => {
     if (isNotificationAllowed) {
       setIsOverlayRequired(true);
-      const response = await notifyAdmin(memberDataToBeUsed);
+      const response = await notifyAdmin(
+        memberDataToBeUsed,
+        memberData?.location
+      );
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsOverlayRequired(false);
         dispatch(setIsNotified(true));

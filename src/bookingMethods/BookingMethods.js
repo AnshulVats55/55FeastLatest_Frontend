@@ -146,10 +146,10 @@ export const getCountsByDate = async (dateToBeChecked, location) => {
   }
 };
 
-export const notifyAdmin = async (memberData) => {
+export const notifyAdmin = async (memberData, location) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/bookmeal/count-missed`,
+      `${BASE_URL}/bookmeal/count-missed?location=${location}`,
       memberData,
       {
         headers: {
