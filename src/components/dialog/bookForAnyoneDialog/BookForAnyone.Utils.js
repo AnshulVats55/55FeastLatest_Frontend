@@ -5,7 +5,7 @@ import {
   handleFormattedDate,
   getNextDate,
   handleSort,
-} from "../../../common/CommonData.js";
+} from "../../../common/CommonData";
 import {
   getMyBuddies,
   getCountsByDate,

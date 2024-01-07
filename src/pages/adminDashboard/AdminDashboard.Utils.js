@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { useState } from "react";
-import { getMonthName } from "../../common/CommonData.js";
+import { getMonthName } from "../../common/CommonData";
 
 const AdminDashboardUtils = () => {
   const [bookForAnyoneOpen, setBookForAnyoneOpen] = useState(false);

@@ -87,7 +87,7 @@ const InvitationDialog = ({ open, scroll, handleClose, children }) => {
   };
 
   const filteredUsers = notInvited?.filter((member) =>
-    member.fullName.toLowerCase().includes(searchTerm)
+    member?.fullName?.toLowerCase().includes(searchTerm)
   );
 
   const handleInviteNewMember = async (memberEmail) => {

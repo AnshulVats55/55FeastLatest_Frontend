@@ -1,9 +1,7 @@
 import { makeStyles } from "tss-react/mui";
 
 export const getBookForBuddyDialogStyles = makeStyles()((theme) => ({
-  getDialogBoxStyles: {
-    
-  },
+  getDialogBoxStyles: {},
 
   getDialogTitleStyles: {
     textAlign: "center",
@@ -43,9 +41,7 @@ export const getBookForBuddyDialogStyles = makeStyles()((theme) => ({
     },
   },
 
-  getDialogActionStyles: {
-    
-  },
+  getDialogActionStyles: {},
 
   getMemberNameStyles: {
     fontSize: theme.typography.fontSize,
@@ -119,10 +115,10 @@ export const getBookForBuddyDialogStyles = makeStyles()((theme) => ({
   },
 
   cancelIconStyles: {
-    color:"#ef5d36",
+    color: "#ef5d36",
     cursor: "pointer",
-    position:"absolute",
-    top:"1rem",
-    right:"1rem",
+    position: "absolute",
+    top: "1rem",
+    right: "1rem",
   },
 }));

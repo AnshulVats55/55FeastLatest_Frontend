@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData";
 import {
   handleMemberCountBooking,
   handleCancelMealBooking,
@@ -58,6 +58,7 @@ const BookMealUtils = () => {
   const memberDataToBeUsed = {
     email: memberData?.email,
     date: dateToBeUsed,
+    bookedBy: memberData.email,
   };
 
   useEffect(() => {
@@ -80,7 +81,9 @@ const BookMealUtils = () => {
             })
           );
         } else {
-          const allBookingDates = response?.data?.data;
+          const allBookingDates = response?.data?.data.map((data) => {
+            return data?.date;
+          });
           setAllBookedDates(allBookingDates);
           dispatch(getPrebookDates(allBookingDates));
           if (allBookingDates?.indexOf(dateToBeUsed) > -1) {

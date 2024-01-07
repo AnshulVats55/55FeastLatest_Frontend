@@ -51,8 +51,8 @@ export const getMonthName = () => {
       return "November";
     case 11:
       return "December";
-      default:
-        return "";
+    default:
+      return "";
   }
 };
 
@@ -62,3 +62,12 @@ export const handleSort = (myBuddies) => {
   });
   return sortedBuddies;
 };
+
+const formattedDate = handleFormattedDate(new Date());
+const nextDate = getNextDate(new Date());
+const nextDateFormatted = handleFormattedDate(nextDate);
+
+export const dateToBeChecked =
+  new Date().getHours() >= 18 && new Date().getHours() <= 23
+    ? nextDateFormatted
+    : formattedDate;

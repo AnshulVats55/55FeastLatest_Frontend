@@ -21,10 +21,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
   const { classes } = getBookForBuddyDialogStyles();
   const {
+    email,
     animationDuration,
     isDataLoaded,
     date,
-    handleMemberSearch,
     descriptionElementRef,
     filteredUsers,
     handleBookForBuddy,
@@ -71,15 +71,6 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
               Book a lunch count for your buddy and invite them to have lunch
               with you
             </Typography>
-            {/* <TextField
-              type="search"
-              placeholder="Search for your buddy..."
-              variant="outlined"
-              multiline
-              className={classes.root}
-              inputProps={{ className: classes.input }}
-              onChange={handleMemberSearch}
-            /> */}
             {isDataLoaded ? (
               filteredUsers?.length > 0 ? (
                 filteredUsers?.map((member, index) => {
@@ -108,6 +99,7 @@ const BookForBuddyDialog = ({ open, scroll, handleClose, children }) => {
                         const response = await handleBookForBuddy({
                           email: member?.email,
                           date: date,
+                          bookedBy: email,
                         });
                         return response;
                       }}

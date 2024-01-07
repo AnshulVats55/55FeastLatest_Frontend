@@ -9,6 +9,7 @@ import PrebookDateSlice from "./slices/PrebookDatesSlice";
 import PrebookStatusSlice from "./slices/PrebookStatusSlice";
 import FetchPrebookDatesSlice from "./slices/FetchPrebookDatesSlice";
 import NotifyAdminSlice from "./slices/NotifyAdminSlice";
+import DailyCountSlice from "./slices/DailyCountSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   prebookStatusReducer: PrebookStatusSlice.reducer,
   FetchPrebookDatesReducer: FetchPrebookDatesSlice.reducer,
   NotifyAdminReducer: NotifyAdminSlice.reducer,
+  dailyCountReducer: DailyCountSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

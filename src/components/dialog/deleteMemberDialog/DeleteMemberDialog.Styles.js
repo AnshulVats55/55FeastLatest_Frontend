@@ -1,10 +1,8 @@
-import { makeStyles } from "tss-react/mui";
-
-export const getDeleteMemberDialogStyles = makeStyles()((theme) => ({
+export const DeleteMemberDialogStyles = {
   getDialogTitleStyles: {
     textAlign: "center",
     fontSize: "1.25rem",
-    fontFamily: theme.typography.fontFamily,
+    fontFamily: "Poppins, sans-serif",
     "@media screen and (max-width: 532px)": {
       fontSize: "1.10rem",
     },
@@ -21,7 +19,7 @@ export const getDeleteMemberDialogStyles = makeStyles()((theme) => ({
     "&:focus": {
       outline: "none",
     },
-    fontSize: theme.typography.fontSize,
+    fontSize: 16,
   },
 
   getMemberCardStyles: {
@@ -43,14 +41,14 @@ export const getDeleteMemberDialogStyles = makeStyles()((theme) => ({
   },
 
   getMemberNameStyles: {
-    fontSize: theme.typography.fontSize,
-    fontFamily: theme.typography.fontFamily,
+    fontSize: 16,
+    fontFamily: "Poppins, sans-serif",
     color: "#232229",
   },
 
   getMemberEmailStyles: {
-    fontSize: theme.typography.fontSize,
-    fontFamily: theme.typography.fontFamily,
+    fontSize: 16,
+    fontFamily: "Poppins, sans-serif",
     color: "#232229",
   },
 
@@ -114,4 +112,10 @@ export const getDeleteMemberDialogStyles = makeStyles()((theme) => ({
     top: "1rem",
     right: "1rem",
   },
-}));
+
+  skeletonStyles: {
+    width: "100%",
+    height: "3rem",
+    margin: "0.5rem 0 0.25rem",
+  },
+};

@@ -51,7 +51,6 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm();
 
@@ -66,7 +65,6 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
   }, [open]);
 
   const newMemberData = {
-    //data of new member to be added
     fullName: fullName,
     email: email,
     location: location,

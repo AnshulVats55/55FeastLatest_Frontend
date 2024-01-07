@@ -20,7 +20,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getCountsByDate } from "../../bookingMethods/BookingMethods";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData";
 import { getReversedDate } from "../../invitationMethods/InvitationMethods";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
@@ -370,6 +370,14 @@ const Home = () => {
                     >
                       Invite Members
                     </Button>
+                    {/* <Button
+                      onClick={() => {
+                        onHandleTag("prebook");
+                      }}
+                      className={classes.getInviteButtonStyles}
+                    >
+                      Notify user
+                    </Button> */}
                     {inviteOpen ? (
                       <InvitationDialog
                         open={inviteOpen}

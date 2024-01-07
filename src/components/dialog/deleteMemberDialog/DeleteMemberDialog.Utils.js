@@ -17,7 +17,6 @@ const DeleteMemberDialogUtils = (open) => {
     return state.memberDataReducer;
   });
   const dispatch = useDispatch();
-
   const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -65,40 +64,12 @@ const DeleteMemberDialogUtils = (open) => {
     handleGetTotalMembers();
   }, []);
 
-  const memberData = [
-    //member's dummy data
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-    {
-      memberName: "",
-      memberEmail: "",
-    },
-  ];
-
   const handleMemberSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
   const filteredUsers = totalMembers?.filter((member) =>
-    member.fullName.toLowerCase().includes(searchTerm)
+    member?.fullName?.toLowerCase().includes(searchTerm)
   );
 
   const handleDeleteExistingMember = async (memberEmail) => {
@@ -110,7 +81,6 @@ const DeleteMemberDialogUtils = (open) => {
     isDataLoaded,
     animationDuration,
     descriptionElementRef,
-    memberData,
     filteredUsers,
     handleMemberSearch,
     handleDeleteExistingMember,

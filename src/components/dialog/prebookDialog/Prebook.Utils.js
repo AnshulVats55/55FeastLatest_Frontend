@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-globals */
 import { useEffect, useState, useRef } from "react";
 import { addDays, isWeekend } from "date-fns";
-import { handleFormattedDate } from "../../../common/CommonData.js";
+import { handleFormattedDate } from "../../../common/CommonData";
 import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
 import axios from "axios";
 import BASE_URL from "../../../api/baseUrl/BaseUrl";
@@ -29,7 +29,8 @@ const PrebookUtils = (open, handleClose) => {
 
   const memberData = {
     email: email,
-    bookedDates: prebookedDates,
+    dates: prebookedDates,
+    bookedBy: email,
   };
 
   const dispatch = useDispatch();
@@ -133,7 +134,12 @@ const PrebookUtils = (open, handleClose) => {
       const response = await handleMealPrebooking(memberData);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(removeAllDates());
-        dispatch(getPrebookDates(response?.data?.data?.bookedDates));
+        const allPreBookedDates = response?.data?.data?.bookedDates?.map(
+          (bookedData) => {
+            return bookedData?.date;
+          }
+        );
+        dispatch(getPrebookDates(allPreBookedDates));
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,

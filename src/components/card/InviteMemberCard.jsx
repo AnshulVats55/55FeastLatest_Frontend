@@ -39,6 +39,7 @@ const InviteMemberCard = ({
     isTodaysMealBooked,
     handleMealCancellation,
     memberDataToBeSent,
+    setIsTodaysMealBooked,
   } = InviteMemberCardUtils(isAlreadyBooked, memberEmail);
   const { customStyles } = getInviteButtonCustomStyles;
   const { initial, whileInView, transition } = getInviteMemberCardAnimation;

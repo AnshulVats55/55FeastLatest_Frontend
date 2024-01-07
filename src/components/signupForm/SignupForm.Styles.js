@@ -18,7 +18,7 @@ export const getSignupFormStyles = makeStyles()((theme) => ({
   },
 
   getBrandLogoStyles: {
-    width: "28%",
+    width: "25%",
     "@media screen and (max-width: 899px)": {
       width: "22.5%",
     },

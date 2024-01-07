@@ -1,9 +1,7 @@
 import { getTooltipStyles } from "./Tooltip.styles";
 import TooltipUtils from "./Tooltip.Utils";
-import { Box } from "@mui/material";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
-import HelpIcon from '@mui/icons-material/Help';
+import { Box, Popover, Typography } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
 
 const CustomTooltip = ({ tooltipTitle }) => {
   const { anchorEl, handleOpenTooltip, handleCloseTooltip, open, id } =

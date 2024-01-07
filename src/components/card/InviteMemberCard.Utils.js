@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { useState } from "react";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData.js";
+import { handleFormattedDate, getNextDate } from "../../common/CommonData";
 import { handleCancelMealBooking } from "../../bookingMethods/BookingMethods";
 import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 
