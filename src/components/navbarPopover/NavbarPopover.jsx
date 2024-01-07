@@ -37,6 +37,7 @@ const NavbarPopover = ({
           <Typography
             component="a"
             onClick={() => {
+              navigate("/profile");
               handlePopoverClose();
             }}
             sx={getLinkStyles}

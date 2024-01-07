@@ -116,7 +116,7 @@ const Navbar = () => {
     {
       text: "Dashboard",
       icon: <DashboardCustomizeIcon sx={getListItemIconStyles} />,
-      url: "/dashboard",
+      url: "/admin/dashboard",
     },
     {
       text: "Reviews",

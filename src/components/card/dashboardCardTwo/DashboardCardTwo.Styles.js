@@ -11,6 +11,9 @@ export const DashboardCardTwoStyles = {
       boxShadow:
         "rgba(145, 158, 171, 0.3) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px",
       border: "none",
+      "@media screen and (max-width: 450px)": {
+        justifyContent: "space-between",
+      },
     };
   },
 
@@ -18,6 +21,10 @@ export const DashboardCardTwoStyles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
+    width:"50%",
+    "@media screen and (max-width: 365px)": {
+      width:"65%",
+    },  
   },
 
   cardLabelStyles: (index) => {

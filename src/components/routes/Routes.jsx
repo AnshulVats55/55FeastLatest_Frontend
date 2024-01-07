@@ -42,18 +42,23 @@ const AllRoutes = () => {
             />
             <Route
               exact
-              path="/dashboard"
-              element={<CommonLayout component={<AdminDashboard />} />}
+              path="/admin/dashboard"
+              element={<CommonLayout component={<NewAdminDashboard />} />}
             />
-            <Route
+            {/* <Route
               exact
               path="/admin"
               element={<CommonLayout component={<NewAdminDashboard />} />}
-            />
+            /> */}
             <Route
               exact
               path="/reviews"
               element={<CommonLayout component={<Reviews />} />}
+            />
+            <Route
+              exact
+              path="/profile"
+              element={<CommonLayout component={<UserProfile />} />}
             />
             <Route
               exact
