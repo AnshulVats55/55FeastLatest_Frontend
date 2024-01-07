@@ -1,3 +1,5 @@
+import ProfileImage from '../../assets/profile-banner.jpg';
+
 export const getUserProfileStyles = {
   gridContStyles: {
     // background: "pink",
@@ -16,19 +18,29 @@ export const getUserProfileStyles = {
   },
 
   boxOneStyles: {
-    background: "#FFEAE4",
+    width:"100%",
+    background: `url(${ProfileImage})`, //#FFEAE4
+    backgroundSize:"cover",
+    backgroundRepeat: "no-repeat",
     display: "flex",
     justifyContent: "center",
-    padding: "4rem 0rem",
+    padding: "6rem 0",
     border: "none",
     borderRadius: "0.5rem",
+    "@media screen and (max-width: 400px)": {
+      padding:"4rem 0",
+    }
   },
 
   memberAvatarStyles: {
     width: "8rem",
     height: "8rem",
     position: "absolute",
+    top:"8rem",
     background: "#FFF",
+    "@media screen and (max-width: 400px)": {
+      top:"4rem",
+    },
   },
 
   memberNameStyles: {
