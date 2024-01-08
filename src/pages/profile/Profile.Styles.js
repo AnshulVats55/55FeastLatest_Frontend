@@ -1,4 +1,4 @@
-import ProfileImage from '../../assets/profile-banner.jpg';
+import ProfileImage from "../../assets/profile-banner.jpg";
 
 export const getUserProfileStyles = {
   gridContStyles: {
@@ -18,9 +18,9 @@ export const getUserProfileStyles = {
   },
 
   boxOneStyles: {
-    width:"100%",
+    width: "100%",
     background: `url(${ProfileImage})`, //#FFEAE4
-    backgroundSize:"cover",
+    backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     display: "flex",
     justifyContent: "center",
@@ -28,18 +28,18 @@ export const getUserProfileStyles = {
     border: "none",
     borderRadius: "0.5rem",
     "@media screen and (max-width: 400px)": {
-      padding:"4rem 0",
-    }
+      padding: "4rem 0",
+    },
   },
 
   memberAvatarStyles: {
     width: "8rem",
     height: "8rem",
     position: "absolute",
-    top:"8rem",
+    top: "8rem",
     background: "#FFF",
     "@media screen and (max-width: 400px)": {
-      top:"4rem",
+      top: "4rem",
     },
   },
 

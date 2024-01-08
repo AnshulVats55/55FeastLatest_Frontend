@@ -4,6 +4,15 @@ import { handleMemberBookingStatus } from "../../bookingMethods/BookingMethods";
 import snackbarMessages from "../../Constants";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUtensils,
+  faUserGroup,
+  faFaceSmile,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { NewAdminDashboardStyles } from "../newAdminDashboard/NewAdminDashboard.Styles";
+import { CircularProgress } from "@mui/material";
 
 const UserProfileUtils = () => {
   const { photo, gender, firstName, lastName, email } = useSelector((state) => {
@@ -20,7 +29,6 @@ const UserProfileUtils = () => {
   const handleNavigation = () => {
     navigate("/bookyourmeal");
   };
-
   useEffect(() => {
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(email);
@@ -71,6 +79,80 @@ const UserProfileUtils = () => {
     setOptionSelected(optionValue);
   };
 
+  const { iconStylesOne, circularProgressStyles } = NewAdminDashboardStyles;
+
+  const profileCardsDataArray = [
+    {
+      icon: <FontAwesomeIcon icon={faUtensils} style={iconStylesOne(0)} />,
+      cardLabel: "Total Meals Booked",
+      cardValue: isDataLoaded ? (
+        memberBookingData.length
+      ) : (
+        <CircularProgress
+          size={25}
+          thickness={4}
+          color="inherit"
+          sx={circularProgressStyles(0)}
+        />
+      ),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faUserGroup} style={iconStylesOne(1)} />,
+      cardLabel: "Booked by you",
+      cardValue: isDataLoaded ? (
+        `${
+          (memberBookingData?.filter(
+            (member) => email !== member?.bookedByEmail
+          )).length
+        }`
+      ) : (
+        <CircularProgress
+          size={25}
+          thickness={4}
+          color="inherit"
+          sx={circularProgressStyles(1)}
+        />
+      ),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faUser} style={iconStylesOne(2)} />,
+      cardLabel: "Booked by others",
+      cardValue: isDataLoaded ? (
+        `${
+          (memberBookingData?.filter(
+            (member) => email !== member?.bookedByEmail
+          )).length
+        }`
+      ) : (
+        <CircularProgress
+          size={25}
+          thickness={4}
+          color="inherit"
+          sx={circularProgressStyles(2)}
+        />
+      ),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faFaceSmile} style={iconStylesOne(3)} />,
+      cardLabel: "Ratio",
+      cardValue: isDataLoaded ? (
+        `${
+          ((memberBookingData?.filter(
+            (member) => email === member?.bookedByEmail
+          )).length /
+            memberBookingData.length) *
+          100
+        }%`
+      ) : (
+        <CircularProgress
+          size={25}
+          thickness={4}
+          color="inherit"
+          sx={circularProgressStyles(3)}
+        />
+      ),
+    },
+  ];
   return {
     photo,
     gender,
@@ -80,6 +162,7 @@ const UserProfileUtils = () => {
     handleSwitchOption,
     isDataLoaded,
     handleNavigation,
+    profileCardsDataArray,
   };
 };
 

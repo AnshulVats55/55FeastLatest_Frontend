@@ -28,7 +28,7 @@ const DashboardCardOne = ({
       whileHover={{ translateY: -4 }}
     >
       <Box sx={topContStyles(index)}>
-        {index === 2 && (
+        {index === 2 && regularizationData && (
           <MoreVert
             sx={threeDotsStyles}
             onClick={handleMissedCountDialogOpen("paper")}

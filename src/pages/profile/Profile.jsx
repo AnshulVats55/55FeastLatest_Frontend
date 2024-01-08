@@ -6,6 +6,8 @@ import MaleAvatar from "../../assets/male avatar.jpg";
 import FemaleAvatar from "../../assets/female avatar.jpg";
 import BookingHistoryTable from "../../components/bookingHistoryTable/BookingHistoryTable";
 import CommonButton from "../../components/button/CommonButton";
+import DashboardCardOne from "../../components/card/dashboardCardOne/DashboardCardOne";
+import { motion } from "framer-motion";
 
 const UserProfile = () => {
   const {
@@ -17,7 +19,9 @@ const UserProfile = () => {
     handleSwitchOption,
     isDataLoaded,
     handleNavigation,
+    profileCardsDataArray,
   } = UserProfileUtils();
+
   const {
     gridContStyles,
     gridItemOneStyles,
@@ -60,6 +64,27 @@ const UserProfile = () => {
           <Typography sx={memberNameStyles}>{memberName}</Typography>
         </Box>
       </Grid>
+      {profileCardsDataArray?.map((profileCardsData, index) => {
+        return (
+          <Grid
+            key={index}
+            item
+            lg={3}
+            md={6}
+            sm={6}
+            xs={12}
+            sx={{ padding: "1rem 0.75rem 0rem" }}
+          >
+            <DashboardCardOne
+              index={index}
+              icon={profileCardsData.icon}
+              cardLabel={profileCardsData.cardLabel}
+              cardValue={profileCardsData.cardValue}
+            />
+          </Grid>
+        );
+      })}
+
       <Grid item xs={12} sx={gridItemThreeStyles}>
         <Box sx={boxThreeStyles}>
           <Box sx={boxFourStyles}>
@@ -82,6 +107,9 @@ const UserProfile = () => {
               label={<Typography sx={chipTypographyStyles}>Reviews</Typography>}
               variant="outlined"
               clickable
+              onClick={() => {
+                handleSwitchOption("reviews");
+              }}
               sx={chipTwoStyles(optionSelected)}
             />
           </Box>

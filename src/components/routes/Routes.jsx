@@ -3,14 +3,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "../navbar/Navbar";
 import CommonLayout from "../../pages/commonLayout/CommonLayout";
 import Home from "../home/Home";
 import BookMeal from "../../pages/bookyourmeal/BookMeal";
 import Authmodal from "../../pages/authmodal/Authmodal";
 import SignupForm from "../signupForm/SignupForm";
 import LoginForm from "../loginForm/LoginForm";
-import AdminDashboard from "../../pages/adminDashboard/AdminDashboard";
 import Reviews from "../reviews/Reviews";
 import ForgotPasswordForm from "../forgotPasswordForm/ForgotPasswordForm";
 import ConfirmPassword from "../confirmPassword/ConfirmPassword";
@@ -21,14 +19,12 @@ import OrangeImage from "../../assets/orange image.png";
 import OrangeImageOne from "../../assets/orange-image.png";
 import NewAdminDashboard from "../../pages/newAdminDashboard/NewAdminDashboard";
 import UserProfile from "../../pages/profile/Profile";
-
 const AllRoutes = () => {
   return (
     <Router>
       <CustomSnackbar />
       {localStorage.getItem("memberToken") ? (
         <>
-          <Navbar />
           <Routes>
             <Route
               exact
@@ -45,11 +41,6 @@ const AllRoutes = () => {
               path="/admin/dashboard"
               element={<CommonLayout component={<NewAdminDashboard />} />}
             />
-            {/* <Route
-              exact
-              path="/admin"
-              element={<CommonLayout component={<NewAdminDashboard />} />}
-            /> */}
             <Route
               exact
               path="/reviews"
