@@ -102,9 +102,10 @@ export const NonEmployeeGuestDialogStyles = {
       "@media screen and (max-width: 900px)": {
         marginLeft: "0px",
       },
-      "@media screen and (max-width:409px)": {
-        fontSize: "0.9rem",
-        padding: type === "book" && "0.15rem 0.25rem",
+      "@media screen and (max-width: 409px)": {
+        // height: type === "book" && "26px",
+        fontSize: "0.75rem",
+        padding: type === "book" && "0.10rem 0.25rem",
       },
     };
   },
@@ -175,6 +176,14 @@ export const NonEmployeeGuestDialogStyles = {
         transform: "rotate(45deg)",
       },
     },
+  },
+
+  cancelIconStyles: {
+    color: "#ef5d36",
+    cursor: "pointer",
+    position: "absolute",
+    top: "1rem",
+    right: "1rem",
   },
 };
 

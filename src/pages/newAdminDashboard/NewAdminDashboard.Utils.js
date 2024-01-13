@@ -161,7 +161,11 @@ const NewAdminDashboardUtils = () => {
       icon: <FontAwesomeIcon icon={faAdd} style={iconStylesOne(2)} />,
       cardLabel: "Today's Regularization requests",
       cardValue: isDataLoaded ? (
-        regularizationRequests?.length
+        regularizationRequests ? (
+          regularizationRequests?.length
+        ) : (
+          0
+        )
       ) : (
         <CircularProgress
           size={25}

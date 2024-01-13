@@ -18,6 +18,7 @@ import { NonEmployeeGuestDialogStyles } from "./NonEmployeeGuestDialog.Styles";
 import CommonButton from "../../../button/CommonButton";
 import { dateToBeChecked } from "../../../../common/CommonData";
 import { getReversedDate } from "../../../../invitationMethods/InvitationMethods";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const NonEmployeeGuestDialog = ({
   nonEmployeeDialogOpen,
@@ -34,6 +35,7 @@ const NonEmployeeGuestDialog = ({
     getCloseButtonStyles,
     getSliderStyles,
     getButtonStyles,
+    cancelIconStyles,
   } = NonEmployeeGuestDialogStyles;
 
   return (
@@ -45,6 +47,12 @@ const NonEmployeeGuestDialog = ({
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
+        <Box>
+          <CancelIcon
+            sx={cancelIconStyles}
+            onClick={handleNonEmployeeDialogClose}
+          />
+        </Box>
         <DialogTitle id="scroll-dialog-title" sx={getDialogTitleStyles}>
           Book for guests
         </DialogTitle>
@@ -76,7 +84,7 @@ const NonEmployeeGuestDialog = ({
                   fontSize: "0.8rem",
                 },
                 fontWeight: 500,
-                color: "#000",
+                marginTop:"1rem",
               }}
             >
               {`You are booking for ${getReversedDate(dateToBeChecked)}`}

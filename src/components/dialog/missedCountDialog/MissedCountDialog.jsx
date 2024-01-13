@@ -12,6 +12,8 @@ import {
   Grid,
 } from "@mui/material";
 import DailyCountCard from "../../card/DailyCountCard/DailyCountCard";
+import { getReversedDate } from "../../../invitationMethods/InvitationMethods";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const MissedCountDialog = ({
   open,
@@ -32,9 +34,8 @@ const MissedCountDialog = ({
     getDialogContentTextStyles,
     getDialogActionStyles,
     getButtonStyles,
+    cancelIconStyles,
   } = NonEmployeeGuestDialogStyles;
-
-  console.log("RR", regularizationData);
 
   return (
     <Box>
@@ -45,6 +46,9 @@ const MissedCountDialog = ({
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
+        <Box>
+          <CancelIcon sx={cancelIconStyles} onClick={handleClose} />
+        </Box>
         <DialogTitle id="scroll-dialog-title" sx={getDialogTitleStyles}>
           Regularize meal
         </DialogTitle>
@@ -81,23 +85,42 @@ const MissedCountDialog = ({
                   background: "",
                 }}
               >
-                {regularizationData?.map((data, index) => {
-                  return (
-                    <Grid item xs={12} sx={{ background: "", width: "100%" }}>
-                      <DailyCountCard
-                        id={index + 1}
-                        memberName={data?.name}
-                        memberEmail={data?.email}
-                        type="action"
-                        actionToBePerformed={() =>
-                          handleMealBooking(data?.email, dateToBeChecked, email)
-                        }
-                        isLoaderRequired={isLoaderRequired}
-                        isBooked={isBooked}
-                      />
-                    </Grid>
-                  );
-                })}
+                {regularizationData.length > 0 ? (
+                  regularizationData?.map((data, index) => {
+                    return (
+                      <Grid item xs={12} sx={{ width: "100%" }} key={index}>
+                        <DailyCountCard
+                          id={index + 1}
+                          memberName={data?.name}
+                          memberEmail={data?.email}
+                          type="action"
+                          actionToBePerformed={() =>
+                            handleMealBooking(
+                              data?.email,
+                              dateToBeChecked,
+                              email
+                            )
+                          }
+                          isLoaderRequired={isLoaderRequired}
+                          isBooked={isBooked}
+                        />
+                      </Grid>
+                    );
+                  })
+                ) : (
+                  <Typography
+                    sx={{
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                      marginTop: "0.5rem",
+                      "@media screen and (max-width: 532px)": {
+                        fontSize: "0.9rem",
+                      },
+                    }}
+                  >{`No member regularized his/her meal for ${getReversedDate(
+                    dateToBeChecked
+                  )}`}</Typography>
+                )}
               </Box>
             </Grid>
           </DialogContentText>

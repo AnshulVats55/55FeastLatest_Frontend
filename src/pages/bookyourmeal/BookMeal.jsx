@@ -39,6 +39,8 @@ const BookMeal = () => {
     isOverlayRequired,
   } = BookMealUtils();
 
+  console.log("IS---<", isNotificationAllowed);
+
   return (
     <Grid container className={classes.getGridContStyles}>
       {isNotificationAllowed ? (

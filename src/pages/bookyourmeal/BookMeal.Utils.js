@@ -26,6 +26,7 @@ const BookMealUtils = () => {
   const { isNotified } = useSelector((state) => {
     return state.NotifyAdminReducer;
   });
+  console.log('ISN', isNotified);
   const prebookTooltip =
     "Meal cancellation restrictions don't apply to pre-booking for upcoming days !";
   const bookForBuddyTooltip =
@@ -333,15 +334,16 @@ const BookMealUtils = () => {
     const currentDay = currentDateTime.getDay();
     const currentHour = currentDateTime.getHours();
 
-    if (currentDay >= 1 && currentDay <= 5) {
-      if (currentHour > 8 && currentHour < 13) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+    // if (currentDay >= 1 && currentDay <= 6) {
+    //   if (currentHour > 8 && currentHour < 10) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // } else {
+    //   return false;
+    // }
+    return true;
   };
 
   useEffect(() => {

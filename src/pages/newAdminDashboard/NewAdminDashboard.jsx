@@ -78,7 +78,7 @@ const NewAdminDashboard = () => {
                 icon={adminAction.icon}
                 cardLabel={adminAction.cardLabel}
                 buttonChildren={adminAction.buttonChildren}
-                regularizationData={index === 2 && regularizationRequests}
+                regularizationData={index === 1 && regularizationRequests}
               />
             </Grid>
           );
