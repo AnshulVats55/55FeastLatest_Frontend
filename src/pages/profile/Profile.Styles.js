@@ -19,12 +19,12 @@ export const getUserProfileStyles = {
 
   boxOneStyles: {
     width: "100%",
-    background: `url(${ProfileImage})`, //#FFEAE4
+    background: "rgba(0, 0, 0, 0.1)", //#FFEAE4
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     display: "flex",
     justifyContent: "center",
-    padding: "6rem 0",
+    padding: "1.25rem 0",
     border: "none",
     borderRadius: "0.5rem",
     "@media screen and (max-width: 400px)": {

@@ -1,5 +1,4 @@
 import MissedCountDialogUtils from "./lib/MissedCountDialog.Utils";
-// import { getMissedCountDialogStyles } from "./MissedCountDialog.Styles";
 import { NonEmployeeGuestDialogStyles } from "../bookForGuestDialog/nonEmployeeGuestDialog/NonEmployeeGuestDialog.Styles";
 import {
   Box,
@@ -12,8 +11,6 @@ import {
   DialogTitle,
   Grid,
 } from "@mui/material";
-// import CommonButton from "../../button/CommonButton";
-// import { dateToBeChecked } from "../../../common/CommonData";
 import DailyCountCard from "../../card/DailyCountCard/DailyCountCard";
 
 const MissedCountDialog = ({
@@ -86,11 +83,7 @@ const MissedCountDialog = ({
               >
                 {regularizationData?.map((data, index) => {
                   return (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{ background: "", width: "100%" }}
-                    >
+                    <Grid item xs={12} sx={{ background: "", width: "100%" }}>
                       <DailyCountCard
                         id={index + 1}
                         memberName={data?.name}

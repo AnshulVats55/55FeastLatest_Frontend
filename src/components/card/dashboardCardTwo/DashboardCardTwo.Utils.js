@@ -29,6 +29,9 @@ const DashboardCardTwoUtils = (index) => {
     useState("paper");
   const [deleteMemberOpen, setDeleteMemberOpen] = useState(false);
   const [deleteMemberScroll, setDeleteMemberScroll] = useState("paper");
+  const [missedCountDialogOpen, setMissedCountDialogOpen] = useState(false);
+  const [missedCountDialogScroll, setMissedCountDialogScroll] =
+    useState("paper");
   const [isDailyDataLoading, setIsDailyDataLoading] = useState(false);
   const [isFileLoading, setIsFileLoading] = useState(false);
 
@@ -100,6 +103,15 @@ const DashboardCardTwoUtils = (index) => {
 
   const handleDeleteMemberClose = () => {
     setDeleteMemberOpen(false);
+  };
+
+  const handleMissedCountDialogOpen = (scrollType) => () => {
+    setMissedCountDialogOpen(true);
+    setMissedCountDialogScroll(scrollType);
+  };
+
+  const handleMissedCountDialogClose = () => {
+    setMissedCountDialogOpen(false);
   };
 
   const handleExportInExcel = (memberData) => {
@@ -210,6 +222,10 @@ const DashboardCardTwoUtils = (index) => {
     deleteMemberScroll,
     handleDeleteMemberOpen,
     handleDeleteMemberClose,
+    missedCountDialogOpen,
+    missedCountDialogScroll,
+    handleMissedCountDialogOpen,
+    handleMissedCountDialogClose,
     isFileLoading,
     isDailyDataLoading,
     handleExportInExcel,

@@ -97,12 +97,12 @@ const UserProfileUtils = () => {
       ),
     },
     {
-      icon: <FontAwesomeIcon icon={faUserGroup} style={iconStylesOne(1)} />,
+      icon: <FontAwesomeIcon icon={faUser} style={iconStylesOne(1)} />,
       cardLabel: "Booked by you",
       cardValue: isDataLoaded ? (
         `${
           (memberBookingData?.filter(
-            (member) => email !== member?.bookedByEmail
+            (member) => email === member?.bookedByEmail
           )).length
         }`
       ) : (
@@ -115,7 +115,7 @@ const UserProfileUtils = () => {
       ),
     },
     {
-      icon: <FontAwesomeIcon icon={faUser} style={iconStylesOne(2)} />,
+      icon: <FontAwesomeIcon icon={faUserGroup} style={iconStylesOne(2)} />,
       cardLabel: "Booked by others",
       cardValue: isDataLoaded ? (
         `${
@@ -134,7 +134,7 @@ const UserProfileUtils = () => {
     },
     {
       icon: <FontAwesomeIcon icon={faFaceSmile} style={iconStylesOne(3)} />,
-      cardLabel: "Ratio",
+      cardLabel: "Feast factor",
       cardValue: isDataLoaded ? (
         `${
           ((memberBookingData?.filter(

@@ -57,7 +57,6 @@ const NewAdminDashboard = () => {
               icon={bookingData.icon}
               cardLabel={bookingData.cardLabel}
               cardValue={bookingData.cardValue}
-              regularizationData={index === 2 && regularizationRequests}
             />
           </Grid>
         );
@@ -79,6 +78,7 @@ const NewAdminDashboard = () => {
                 icon={adminAction.icon}
                 cardLabel={adminAction.cardLabel}
                 buttonChildren={adminAction.buttonChildren}
+                regularizationData={index === 2 && regularizationRequests}
               />
             </Grid>
           );

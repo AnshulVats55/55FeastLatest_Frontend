@@ -7,8 +7,15 @@ import BookForAnyone from "../../dialog/bookForAnyoneDialog/BookForAnyone";
 import AddMemberDialog from "../../dialog/addMemberDialog/AddMemberDialog";
 import DeleteMemberDialog from "../../dialog/deleteMemberDialog/DeleteMemberDialog";
 import NonEmployeeGuestDialog from "../../dialog/bookForGuestDialog/nonEmployeeGuestDialog/NonEmployeeGuestDialog";
+import MissedCountDialog from "../../dialog/missedCountDialog/MissedCountDialog";
 
-const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
+const DashboardCardTwo = ({
+  index,
+  icon,
+  cardLabel,
+  buttonChildren,
+  regularizationData,
+}) => {
   const {
     todaysCount,
     bookForAnyoneOpen,
@@ -27,6 +34,10 @@ const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
     deleteMemberScroll,
     handleDeleteMemberOpen,
     handleDeleteMemberClose,
+    missedCountDialogOpen,
+    missedCountDialogScroll,
+    handleMissedCountDialogOpen,
+    handleMissedCountDialogClose,
     isFileLoading,
     isDailyDataLoading,
     handleExportInExcel,
@@ -37,8 +48,8 @@ const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
     boxTwoStyles,
     cardLabelStyles,
     buttonStyles,
-    guestButtonContStyles,
-    guestButtonStyles,
+    // guestButtonContStyles,
+    // guestButtonStyles,
   } = DashboardCardTwoStyles;
 
   return (
@@ -65,7 +76,7 @@ const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
               index === 0
                 ? () => handleExportInExcel(todaysCount)
                 : index === 1
-                ? handleBookForAnyoneOpen("paper")
+                ? handleMissedCountDialogOpen("paper")
                 : index === 2
                 ? handleAddMemberOpen("paper")
                 : index === 3
@@ -99,12 +110,12 @@ const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
           ) : (
             <></>
           )}
-          {bookForAnyoneOpen ? (
-            <BookForAnyone
-              open={bookForAnyoneOpen}
-              scroll={bookForAnyoneScroll}
-              handleClose={handleBookForAnyoneClose}
-              children="Book"
+          {missedCountDialogOpen ? (
+            <MissedCountDialog
+              open={missedCountDialogOpen}
+              scroll={missedCountDialogScroll}
+              handleClose={handleMissedCountDialogClose}
+              regularizationData={regularizationData}
             />
           ) : (
             <></>
