@@ -1,6 +1,12 @@
 export const BookingHistoryTableStyles = {
   topContStyles: {
     width: "100%",
+    maxHeight: "50vh",
+    overflowY: "scroll",
+    marginBottom: "1rem",
+    "@media screen and (max-width: 600px)": {
+      marginBottom: "4rem",
+    },
   },
 
   gridContStyles: {
@@ -8,7 +14,7 @@ export const BookingHistoryTableStyles = {
     border: "none",
     borderRadius: "0.25rem",
     background: "#FAFAFA",
-    margin: "0.25rem 0rem",
+    margin: "0.5rem 0rem 0",
     transition: "0.2s ease-in-out",
     "&:hover": {
       boxShadow:
@@ -23,10 +29,11 @@ export const BookingHistoryTableStyles = {
   },
 
   avatarStyles: {
-    background: "#FFEAE4",
-    color: "#EF5D36",
-    fontWeight: 500,
-    transition: "0.20s ease-in-out",
+    background: "#EF5D36",
+    color: "#FFF",
+    width: "2rem",
+    height: "2rem",
+    fontSize: "1.10rem",
     "&:hover": {
       color: "#FFF",
       background: "#EF5D36",

@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import MissedCountDialog from "../../dialog/missedCountDialog/MissedCountDialog";
+import CustomTooltip from "../../tooltip/Tooltip";
 
 const DashboardCardOne = ({
   index,
@@ -11,6 +12,7 @@ const DashboardCardOne = ({
   cardLabel,
   cardValue,
   regularizationData,
+  isTooltipRequired,
 }) => {
   const {
     missedCountDialogOpen,
@@ -18,8 +20,13 @@ const DashboardCardOne = ({
     handleMissedCountDialogOpen,
     handleMissedCountDialogClose,
   } = DashboardCardOneUtils();
-  const { topContStyles, threeDotsStyles, cardLabelStyles, cardValueStyles } =
-    DashboardCardOneStyles;
+  const {
+    topContStyles,
+    threeDotsStyles,
+    cardLabelStyles,
+    cardValueStyles,
+    tooltipContStyles,
+  } = DashboardCardOneStyles;
 
   return (
     <motion.div
@@ -33,6 +40,11 @@ const DashboardCardOne = ({
             sx={threeDotsStyles}
             onClick={handleMissedCountDialogOpen("paper")}
           />
+        )}
+        {isTooltipRequired && index === 3 && (
+          <Box sx={tooltipContStyles}>
+            <CustomTooltip tooltipTitle="Feast Factor is the ratio of meals booked by you and total meals booked" />
+          </Box>
         )}
         {icon}
         <Typography sx={cardLabelStyles(index)}>{cardLabel}</Typography>

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { all } from "axios";
 
 const notifyAdmin = {
-  isNotified: false,
+  notificationStatus: [],
 };
 
 const NotifyAdminSlice = createSlice({
@@ -9,10 +10,20 @@ const NotifyAdminSlice = createSlice({
   initialState: notifyAdmin,
   reducers: {
     setIsNotified(state, action) {
-      state.isNotified = action.payload;
+      const { payload } = action;
+      state.notificationStatus?.map((data) => {
+        if (data.notificationDate === payload.notificationDate) {
+          data.isAdminNotified = payload.isAdminNotified;
+        }
+      });
+    },
+
+    setNotificationData: (state, action) => {
+      const { payload } = action;
+      state.notificationStatus.push(payload);
     },
   },
 });
 
-export const { setIsNotified } = NotifyAdminSlice.actions;
+export const { setIsNotified, setNotificationData } = NotifyAdminSlice.actions;
 export default NotifyAdminSlice;

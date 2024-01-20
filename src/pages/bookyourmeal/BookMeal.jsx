@@ -34,17 +34,15 @@ const BookMeal = () => {
     bookForBuddyTooltip,
     mealBookingTooltip,
     handleNotifyAdmin,
-    isNotified,
+    isAdminAlreadyNotified,
     isNotificationAllowed,
     isOverlayRequired,
   } = BookMealUtils();
 
-  console.log("IS---<", isNotificationAllowed);
-
   return (
     <Grid container className={classes.getGridContStyles}>
       {isNotificationAllowed ? (
-        isNotified ? (
+        isAdminAlreadyNotified ? (
           <></>
         ) : isStatusFetched ? (
           !isBooked && (

@@ -56,7 +56,7 @@ const ForgotPasswordUtils = (setIsDisabled) => {
       dispatch(setIsLoading(true));
       setIsDisabled(true);
       const response = await handleForgotPassword(memberData);
-      console.log("RES OF FORGOT PASSWORD API", response);
+      // console.log("RES OF FORGOT PASSWORD API", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(setIsLoading(false));
         setIsDisabled(false);

@@ -136,13 +136,13 @@ const UserProfileUtils = () => {
       icon: <FontAwesomeIcon icon={faFaceSmile} style={iconStylesOne(3)} />,
       cardLabel: "Feast factor",
       cardValue: isDataLoaded ? (
-        `${
+        `${Math.ceil(
           ((memberBookingData?.filter(
             (member) => email === member?.bookedByEmail
           )).length /
             memberBookingData.length) *
-          100
-        }%`
+            100
+        )}%`
       ) : (
         <CircularProgress
           size={25}

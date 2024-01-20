@@ -60,7 +60,7 @@ const DashboardCardTwoUtils = (index) => {
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {
-        console.log("Error getting daily count");
+        // console.log("Error getting daily count");
       }
     };
 

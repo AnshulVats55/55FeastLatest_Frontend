@@ -133,7 +133,7 @@ const LoginFormUtils = () => {
       dispatch(setIsLoading(true));
       setIsDisabled(true);
       const response = await confirmCurrentPassword(confirmPasswordData);
-      console.log("RES OF CONFIRM PASSWORD", response);
+      // console.log("RES OF CONFIRM PASSWORD", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(setIsLoading(false));
         setIsDisabled(true);
@@ -195,7 +195,7 @@ const LoginFormUtils = () => {
       dispatch(setIsLoading(true));
       setIsDisabled(true);
       const response = await resetPassword(resetPasswordData);
-      console.log("RES OF RESET PASSWORD", response);
+      // console.log("RES OF RESET PASSWORD", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(setIsLoading(false));
         setIsDisabled(true);

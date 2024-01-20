@@ -4,7 +4,11 @@
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFormattedDate, getNextDate } from "../../common/CommonData";
+import {
+  handleFormattedDate,
+  getNextDate,
+  dateToBeChecked,
+} from "../../common/CommonData";
 import {
   handleMemberCountBooking,
   handleCancelMealBooking,
@@ -14,7 +18,10 @@ import {
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import { getPrebookDates } from "../../store/slices/FetchPrebookDatesSlice";
 import { removeAllDates } from "../../store/slices/PrebookDatesSlice";
-import { setIsNotified } from "../../store/slices/NotifyAdminSlice.js";
+import {
+  setIsNotified,
+  setNotificationData,
+} from "../../store/slices/NotifyAdminSlice.js";
 import snackbarMessages from "../../Constants";
 import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 
@@ -23,10 +30,9 @@ const BookMealUtils = () => {
   const memberData = useSelector((state) => {
     return state.memberDataReducer;
   });
-  const { isNotified } = useSelector((state) => {
+  const { notificationStatus } = useSelector((state) => {
     return state.NotifyAdminReducer;
   });
-  console.log('ISN', isNotified);
   const prebookTooltip =
     "Meal cancellation restrictions don't apply to pre-booking for upcoming days !";
   const bookForBuddyTooltip =
@@ -45,6 +51,7 @@ const BookMealUtils = () => {
   const [isLoaderRequired, setIsLoaderRequired] = useState(false);
   const [isMealCancellationOpen, setIsMealCancellationOpen] = useState(false);
   const [isNotificationAllowed, setIsNotificationAllowed] = useState(false);
+  const [isAdminAlreadyNotified, setIsAdminAlreadyNotified] = useState(false);
   const [isOverlayRequired, setIsOverlayRequired] = useState(false);
 
   const formattedDate = handleFormattedDate(new Date());
@@ -89,7 +96,6 @@ const BookMealUtils = () => {
           dispatch(getPrebookDates(allBookingDates));
           if (allBookingDates?.indexOf(dateToBeUsed) > -1) {
             setIsBooked(true);
-            dispatch(setIsNotified(false));
           } else {
             setIsBooked(false);
           }
@@ -136,6 +142,28 @@ const BookMealUtils = () => {
     };
     getMemberBookingStatus();
   }, [isBooked]);
+
+  useEffect(() => {
+    const isAdminNotifiedToday = notificationStatus?.filter(
+      (data) => data?.notificationDate === dateToBeChecked
+    );
+    if (isAdminNotifiedToday?.length === 0) {
+      //means admin is not notified for that date
+      dispatch(
+        setNotificationData({
+          isAdminNotified: false,
+          notificationDate: dateToBeChecked,
+        })
+      );
+    }
+  }, [dateToBeChecked]);
+
+  useEffect(() => {
+    const todaysNotificationData = notificationStatus?.filter(
+      (data) => data?.notificationDate === dateToBeChecked
+    );
+    setIsAdminAlreadyNotified(todaysNotificationData[0]?.isAdminNotified);
+  }, [dateToBeChecked]);
 
   const handleBookingNotifications = (notificationMessage) => {
     //dispatches notifications based on response
@@ -333,17 +361,15 @@ const BookMealUtils = () => {
     const currentDateTime = new Date();
     const currentDay = currentDateTime.getDay();
     const currentHour = currentDateTime.getHours();
-
-    // if (currentDay >= 1 && currentDay <= 6) {
-    //   if (currentHour > 8 && currentHour < 10) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // } else {
-    //   return false;
-    // }
-    return true;
+    if (currentDay >= 1 && currentDay <= 5) {
+      if (currentHour > 8 && currentHour < 10) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   };
 
   useEffect(() => {
@@ -360,7 +386,12 @@ const BookMealUtils = () => {
       );
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         setIsOverlayRequired(false);
-        dispatch(setIsNotified(true));
+        dispatch(
+          setIsNotified({
+            isAdminNotified: true,
+            notificationDate: dateToBeChecked,
+          })
+        );
         dispatch(
           setCustomSnackbar({
             snackbarOpen: true,
@@ -410,7 +441,7 @@ const BookMealUtils = () => {
     bookForBuddyTooltip,
     mealBookingTooltip,
     handleNotifyAdmin,
-    isNotified,
+    isAdminAlreadyNotified,
     isNotificationAllowed,
     isOverlayRequired,
   };

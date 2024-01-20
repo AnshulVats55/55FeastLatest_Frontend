@@ -118,7 +118,7 @@ const Home = () => {
     const handleGetCountsByDate = async () => {
       const isWindowOpen = handleCheckBookingWindow();
       setIsBookingWindowOpen(isWindowOpen);
-      console.log(isWindowOpen, "=++++++");
+      // console.log(isWindowOpen, "=++++++");
       if (isWindowOpen) {
         const response = await getCountsByDate(dateToBeChecked, location);
         if (response?.data?.status === snackbarMessages.SUCCESS) {

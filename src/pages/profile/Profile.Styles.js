@@ -10,7 +10,7 @@ export const getUserProfileStyles = {
   },
 
   gridItemTwoStyles: {
-    // background: "lightgreen",
+    marginTop: "4.5rem",
   },
 
   gridItemThreeStyles: {

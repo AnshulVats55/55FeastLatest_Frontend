@@ -7,7 +7,6 @@ import FemaleAvatar from "../../assets/female avatar.jpg";
 import BookingHistoryTable from "../../components/bookingHistoryTable/BookingHistoryTable";
 import CommonButton from "../../components/button/CommonButton";
 import DashboardCardOne from "../../components/card/dashboardCardOne/DashboardCardOne";
-// import { motion } from "framer-motion";
 
 const UserProfile = () => {
   const {
@@ -60,30 +59,29 @@ const UserProfile = () => {
           ></Avatar>
         </Box>
       </Grid>
-      <Grid item xs={12} sx={gridItemTwoStyles}>
-        <Box sx={boxTwoStyles}>
-          {/* <Typography sx={memberNameStyles}>{memberName}</Typography> */}
-          {profileCardsDataArray?.map((profileCardsData, index) => {
-            return (
-              <Grid
-                key={index}
-                item
-                lg={3}
-                md={6}
-                sm={6}
-                xs={12}
-                sx={{ padding: "1rem 0.75rem 0rem" }}
-              >
-                <DashboardCardOne
-                  index={index}
-                  icon={profileCardsData.icon}
-                  cardLabel={profileCardsData.cardLabel}
-                  cardValue={profileCardsData.cardValue}
-                />
-              </Grid>
-            );
-          })}
-        </Box>
+      <Grid container item xs={12} sx={gridItemTwoStyles}>
+        {/* <Typography sx={memberNameStyles}>{memberName}</Typography> */}
+        {profileCardsDataArray?.map((profileCardsData, index) => {
+          return (
+            <Grid
+              key={index}
+              item
+              lg={3}
+              md={6}
+              sm={6}
+              xs={12}
+              sx={{ padding: "1rem 0.75rem 0rem" }}
+            >
+              <DashboardCardOne
+                index={index}
+                icon={profileCardsData.icon}
+                cardLabel={profileCardsData.cardLabel}
+                cardValue={profileCardsData.cardValue}
+                isTooltipRequired
+              />
+            </Grid>
+          );
+        })}
       </Grid>
 
       <Grid item xs={12} sx={gridItemThreeStyles}>
@@ -108,9 +106,9 @@ const UserProfile = () => {
               label={<Typography sx={chipTypographyStyles}>Reviews</Typography>}
               variant="outlined"
               clickable
-              onClick={() => {
-                handleSwitchOption("reviews");
-              }}
+              // onClick={() => {
+              //   handleSwitchOption("reviews");
+              // }}
               sx={chipTwoStyles(optionSelected)}
             />
           </Box>

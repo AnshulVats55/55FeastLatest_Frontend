@@ -57,6 +57,7 @@ const NewAdminDashboard = () => {
               icon={bookingData.icon}
               cardLabel={bookingData.cardLabel}
               cardValue={bookingData.cardValue}
+              isTooltipRequired={false}
             />
           </Grid>
         );

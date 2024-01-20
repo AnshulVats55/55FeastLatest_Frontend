@@ -7,7 +7,7 @@ const NonEmployeeGuestDialogUtils = () => {
   const { location } = useSelector((state) => {
     return state.memberDataReducer;
   });
-  console.log("Loc of admin", location);
+  // console.log("Loc of admin", location);
 
   const [nonEmployeeGuests, setNonEmployeeGuests] = useState(0);
   const guestData = {
@@ -21,7 +21,7 @@ const NonEmployeeGuestDialogUtils = () => {
     }
     else{
       const response = await bookForGuests("nonEmployee", location, guestData);
-      console.log("RES OF GUESTS API", response);
+      // console.log("RES OF GUESTS API", response);
     }
   };
 

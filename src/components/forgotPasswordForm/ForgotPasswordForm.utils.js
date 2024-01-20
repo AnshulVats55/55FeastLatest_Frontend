@@ -119,7 +119,7 @@ const ForgotPasswordFormUtils = () => {
           dispatch(setIsLoading(true));
           setIsDisabled(true);
           const response = await createNewPassword(id, token, newPasswordData);
-          console.log("RES OF FORGOT PWD API IS----->>>>>", response);
+          // console.log("RES OF FORGOT PWD API IS----->>>>>", response);
           if (response?.data?.status === snackbarMessages.SUCCESS) {
             dispatch(setIsLoading(false));
             setIsDisabled(false);

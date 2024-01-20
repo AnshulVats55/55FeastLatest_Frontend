@@ -33,6 +33,12 @@ export const DashboardCardOneStyles = {
     cursor: "pointer",
   },
 
+  tooltipContStyles: {
+    position: "absolute",
+    top: "0.25rem",
+    right: "0.25rem",
+  },
+
   cardLabelStyles: (index) => {
     return {
       color:
