@@ -19,24 +19,26 @@ export const getUserProfileStyles = {
 
   boxOneStyles: {
     width: "100%",
-    background: "rgba(0, 0, 0, 0.1)", //#FFEAE4
+    // background: "rgba(200, 200, 200, 0.1)", //#FFEAE4/
+    background:`url(${ProfileImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     display: "flex",
     justifyContent: "center",
-    padding: "1.25rem 0",
+    padding: "2.5rem 0",
     border: "none",
     borderRadius: "0.5rem",
     "@media screen and (max-width: 400px)": {
       padding: "4rem 0",
     },
+    margin:"1rem 0 0",
   },
 
   memberAvatarStyles: {
-    width: "8rem",
-    height: "8rem",
+    width: "7rem",
+    height: "7rem",
     position: "absolute",
-    top: "8rem",
+    top: "9.5rem",
     background: "#FFF",
     "@media screen and (max-width: 400px)": {
       top: "4rem",

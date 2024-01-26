@@ -325,6 +325,12 @@ const BookMealUtils = () => {
           })
         );
         setIsLoaderRequired(false);
+        dispatch(
+          setIsNotified({
+            isAdminNotified: false,
+            notificationDate: dateToBeChecked,
+          })
+        );
       } else if (
         response?.response?.data?.status === snackbarMessages.FAILURE
       ) {

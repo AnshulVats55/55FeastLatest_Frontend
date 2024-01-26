@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { all } from "axios";
 
 const notifyAdmin = {
   notificationStatus: [],
