@@ -166,6 +166,7 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
                         width: "100%",
                         height: "3rem",
                         margin: "0.5rem 0 0.25rem",
+                        background: "rgba(0, 0, 0, 0.2)",
                       }}
                     />
                   );

@@ -62,7 +62,7 @@ export const getNavbarStyles = {
     "&:hover": {
       color: "#FFF",
     },
-    fontSize: "1.5rem !important",
+    fontSize: "1.25rem !important",
     display: { xs: "flex", md: "none" },
     "@media screen and (max-width: 400px)": {
       fontSize: "1.10rem !important",
@@ -75,7 +75,6 @@ export const getNavbarStyles = {
     letterSpacing: ".3rem",
     color: "#FFF",
     textDecoration: "none",
-    fontSize: "1.5rem",
     "&:hover": {
       color: "#FFF",
     },
@@ -95,6 +94,7 @@ export const getNavbarStyles = {
     "@media screen and (max-width: 360px)": {
       width: 175,
     },
+    // background:"pink",
   },
 
   getNavLinksStylesOne: (isActive) => {
@@ -102,7 +102,7 @@ export const getNavbarStyles = {
       position: "relative",
       textDecoration: "none",
       color: "#FFF",
-      fontSize: 16, //16
+      fontSize: 14, //16
       letterSpacing: "1px",
       padding: "0.25rem 0.75rem",
       transition: "0.2s ease-in-out",

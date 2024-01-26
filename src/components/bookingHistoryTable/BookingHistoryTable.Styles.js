@@ -100,5 +100,6 @@ export const BookingHistoryTableStyles = {
     height: "2.5rem",
     margin: "0.5rem",
     borderRadius: "0.25rem",
+    background: "rgba(0, 0, 0, 0.2)",
   },
 };

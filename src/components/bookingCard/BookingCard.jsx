@@ -120,15 +120,15 @@ const BookingCard = ({
               {caption}
             </Typography>
           </Skeleton>
-          <Skeleton animation="wave">
-            <CommonButton
-              children={actionName}
-              type=""
-              customStyles={customStyles(isBooked)}
-              onClick={onClick ? onClick : null}
-              isLoaderRequired={isLoaderRequired}
-            />
-          </Skeleton>
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            sx={{
+              width: "25%",
+              padding: "0.6rem 2rem",
+              borderRadius: "1.25rem",
+            }}
+          ></Skeleton>
         </>
       )}
     </motion.div>

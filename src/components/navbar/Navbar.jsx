@@ -419,7 +419,7 @@ const Navbar = () => {
                       />
                       <List>
                         {adminNavigationLinks?.map((link, index) => (
-                          <Typography
+                          <ListItem
                             key={index}
                             onClick={() => navigate(link.url)}
                             sx={getListItemStylesOne(index)}
@@ -428,7 +428,7 @@ const Navbar = () => {
                             <Typography sx={getListItemTextStylesOne}>
                               {link.text}
                             </Typography>
-                          </Typography>
+                          </ListItem>
                         ))}
                       </List>
                     </Box>
@@ -489,8 +489,9 @@ const Navbar = () => {
                   noWrap
                   onClick={() => navigate("/")}
                   sx={getBrandLogoStylesTwo}
+                  className="brand_logo"
                 >
-                  55Feast
+                  FEASTIFY
                 </Typography>
               </Box>
               <Box sx={getNavLinksStylesTwo}>
@@ -498,8 +499,9 @@ const Navbar = () => {
                   noWrap
                   onClick={() => navigate("/")}
                   sx={getBrandLogoStylesOne}
+                  className="brand_logo"
                 >
-                  55Feast
+                  FEASTIFY
                 </Typography>
                 {isAdmin ? (
                   <Box sx={getNavLinksContStylesTwo}>
@@ -587,10 +589,10 @@ const Navbar = () => {
                       type=""
                       customStyles={{
                         width: "80px",
-                        height: "40px",
+                        height: "2.25rem",
                         background: "transparent",
                         color: "#FFF",
-                        borderRadius: "4px",
+                        borderRadius: "1.25rem",
                         border: "1px solid #FFF",
                         "&:hover": {
                           background: "#FFF",
@@ -600,6 +602,7 @@ const Navbar = () => {
                         "&:focus": {
                           outline: "none",
                         },
+                        fontSize:14,
                       }}
                     />
                   </motion.div>
@@ -662,7 +665,7 @@ const Navbar = () => {
                     <List>
                       {actionLinks?.map((link, index) => (
                         <ListItem
-                          key={index}
+                          key={index}   
                           sx={getListItemStylesTwo(index)}
                           onClick={
                             index === 0

@@ -157,14 +157,14 @@ export const getHomePageStyles = makeStyles()((theme) => ({
 
   getBookYourMealButtonStyles: {
     minWidth: "25% !important",
-    borderRadius: "4px",
+    borderRadius: "1.25rem",
     border: "1px solid #ef5d36",
     color: "#ef5d36",
     margin: "1.5rem 0rem 0rem 0rem",
     transition: "0.25s ease-in",
     fontFamily: "Poppins, sans-serif",
-    fontSize: theme.typography.fontSize,
-    padding: "0.25rem 0.75rem",
+    fontSize: 14,
+    padding: "0.25rem 1rem",
     textTransform: "capitalize",
     textDecoration: "none",
     "&:hover": {
@@ -192,15 +192,15 @@ export const getHomePageStyles = makeStyles()((theme) => ({
 
   getInviteButtonStyles: {
     minWidth: "25% !important",
-    borderRadius: "4px",
+    borderRadius: "1.25rem",
     border: "1px solid transparent",
     color: "#FFF",
     background: "#ef5d36",
     margin: "1.5rem 0rem 0rem 1.5rem",
     transition: "0.25s ease-in",
     fontFamily: "Poppins, sans-serif",
-    fontSize: theme.typography.fontSize,
-    padding: "0.25rem 0.75rem",
+    fontSize: 14,
+    padding: "0.25rem 1rem",
     textTransform: "capitalize",
     "&:hover": {
       background: "transparent",
