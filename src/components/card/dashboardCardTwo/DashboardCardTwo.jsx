@@ -7,7 +7,6 @@ import BookForAnyone from "../../dialog/bookForAnyoneDialog/BookForAnyone";
 import AddMemberDialog from "../../dialog/addMemberDialog/AddMemberDialog";
 import DeleteMemberDialog from "../../dialog/deleteMemberDialog/DeleteMemberDialog";
 import NonEmployeeGuestDialog from "../../dialog/bookForGuestDialog/nonEmployeeGuestDialog/NonEmployeeGuestDialog";
-import MissedCountDialog from "../../dialog/missedCountDialog/MissedCountDialog";
 
 const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
   const {
@@ -42,8 +41,6 @@ const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
     boxTwoStyles,
     cardLabelStyles,
     buttonStyles,
-    // guestButtonContStyles,
-    // guestButtonStyles,
   } = DashboardCardTwoStyles;
 
   return (
