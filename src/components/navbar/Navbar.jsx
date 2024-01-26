@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { useState, ReactNode } from "react";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -25,10 +25,6 @@ import {
   Logout,
   EmojiPeople,
   LockReset,
-  Folder,
-  Restore,
-  Favorite,
-  LocationOn,
   Dashboard,
 } from "@mui/icons-material";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
@@ -37,7 +33,7 @@ import { getNavbarStyles } from "./Navbar.Styles";
 import CommonButton from "../button/CommonButton";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
 import MaleAvatar from "../../assets/male avatar.jpg";
@@ -45,7 +41,6 @@ import FemaleAvatar from "../../assets/female avatar.jpg";
 import { setIsLoading } from "../../store/slices/LoaderSlice";
 import Loader from "../loader/Loader";
 import NavbarPopover from "../navbarPopover/NavbarPopover";
-import MemberAvatar from "../memberAvatar/MemberAvatar";
 
 const Navbar = () => {
   const {
@@ -77,6 +72,10 @@ const Navbar = () => {
       return state.memberDataReducer;
     }
   );
+  const { pathname } = useLocation();
+  console.log("pathame", pathname);
+
+  const [currentURL, setCurrentURL] = useState("/");
 
   const memberName = firstName + " " + lastName;
 
@@ -420,17 +419,16 @@ const Navbar = () => {
                       />
                       <List>
                         {adminNavigationLinks?.map((link, index) => (
-                          <ListItem
+                          <Typography
                             key={index}
-                            component="a"
-                            href={link.url}
+                            onClick={() => navigate(link.url)}
                             sx={getListItemStylesOne(index)}
                           >
                             {link.icon}
                             <Typography sx={getListItemTextStylesOne}>
                               {link.text}
                             </Typography>
-                          </ListItem>
+                          </Typography>
                         ))}
                       </List>
                     </Box>
@@ -464,17 +462,16 @@ const Navbar = () => {
                       />
                       <List>
                         {memberNavigationLinks?.map((link, index) => (
-                          <ListItem
+                          <Typography
                             key={index}
-                            component="a"
-                            href={link.url}
                             sx={getListItemStylesOne(index)}
+                            onClick={() => navigate(link.url)}
                           >
                             {link.icon}
                             <Typography sx={getListItemTextStylesOne}>
                               {link.text}
                             </Typography>
-                          </ListItem>
+                          </Typography>
                         ))}
                       </List>
                     </Box>
@@ -490,8 +487,7 @@ const Navbar = () => {
               >
                 <Typography
                   noWrap
-                  component="a"
-                  href="/"
+                  onClick={() => navigate("/")}
                   sx={getBrandLogoStylesTwo}
                 >
                   55Feast
@@ -500,8 +496,7 @@ const Navbar = () => {
               <Box sx={getNavLinksStylesTwo}>
                 <Typography
                   noWrap
-                  component="a"
-                  href="/"
+                  onClick={() => navigate("/")}
                   sx={getBrandLogoStylesOne}
                 >
                   55Feast
@@ -509,25 +504,21 @@ const Navbar = () => {
                 {isAdmin ? (
                   <Box sx={getNavLinksContStylesTwo}>
                     {adminNavigationLinks?.map((page, index) => {
-                      if (index !== 1) {
-                        return (
-                          <motion.div
-                            transition={{ duration: 0.15 }}
-                            whileTap={{ scale: 0.95 }}
-                            key={index}
+                      return (
+                        <motion.div
+                          transition={{ duration: 0.15 }}
+                          whileTap={{ scale: 0.95 }}
+                          key={index}
+                        >
+                          <Typography
+                            key={page.text}
+                            onClick={() => navigate(page.url)}
+                            sx={getNavLinksStylesOne(pathname === page.url)}
                           >
-                            <Typography
-                              component="a"
-                              href={page.url}
-                              key={page.text}
-                              onClick={handleCloseNavMenu}
-                              sx={getNavLinksStylesOne}
-                            >
-                              {page.text}
-                            </Typography>
-                          </motion.div>
-                        );
-                      }
+                            {page.text}
+                          </Typography>
+                        </motion.div>
+                      );
                     })}
                   </Box>
                 ) : (
@@ -539,11 +530,9 @@ const Navbar = () => {
                         key={index}
                       >
                         <Typography
-                          component="a"
-                          href={page.url}
                           key={page.text}
-                          onClick={handleCloseNavMenu}
-                          sx={getNavLinksStylesOne}
+                          onClick={() => navigate(page.url)}
+                          sx={getNavLinksStylesOne(pathname === page.url)}
                         >
                           {page.text}
                         </Typography>

@@ -1,3 +1,5 @@
+import { rgba } from "@react-spring/shared";
+
 export const getNavbarStyles = {
   getAppbarStyles: {
     width: "100%",
@@ -52,6 +54,7 @@ export const getNavbarStyles = {
   },
 
   getBrandLogoStylesTwo: {
+    cursor: "pointer",
     fontWeight: 700,
     letterSpacing: ".3rem",
     color: "#FFF",
@@ -67,6 +70,7 @@ export const getNavbarStyles = {
   },
 
   getBrandLogoStylesOne: {
+    cursor: "pointer",
     fontWeight: 700,
     letterSpacing: ".3rem",
     color: "#FFF",
@@ -93,30 +97,36 @@ export const getNavbarStyles = {
     },
   },
 
-  getNavLinksStylesOne: {
-    position: "relative",
-    textDecoration: "none",
-    color: "#FFF",
-    fontSize: 16, //16
-    letterSpacing: "1px",
-    padding: "0.25rem 0.75rem",
-    transition: "0.2s ease-in-out",
-    borderRadius: "4px",
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      bottom: "-2px",
-      left: 0,
-      width: "100%",
-      height: "2px",
-      backgroundColor: "#ef5d36",
-      transform: "scaleX(0)",
-      transition: "transform 0.3s ease",
-      borderRadius: "1px",
-    },
-    "&:hover::before": {
-      transform: "scaleX(1)",
-    },
+  getNavLinksStylesOne: (isActive) => {
+    return {
+      position: "relative",
+      textDecoration: "none",
+      color: "#FFF",
+      fontSize: 16, //16
+      letterSpacing: "1px",
+      padding: "0.25rem 0.75rem",
+      transition: "0.2s ease-in-out",
+      cursor: "pointer",
+      borderRadius: "4px",
+      "&::before": {
+        content: '""',
+        position: "absolute",
+        bottom: "-2px",
+        left: 0,
+        width: "100%",
+        height: "2px",
+        backgroundColor: "#ef5d36",
+        transform: "scaleX(0)",
+        transition: "transform 0.3s ease",
+        borderRadius: "1px",
+        ...(isActive && {
+          transform: "scaleX(1)",
+        }),
+      },
+      "&:hover::before": {
+        transform: "scaleX(1)",
+      },
+    };
   },
 
   getNavLinksContStylesTwo: {
@@ -124,7 +134,7 @@ export const getNavbarStyles = {
     justifyContent: "space-between",
     alignItems: "center",
     width: "30%",
-    flexGrow: 0.1,
+    flexGrow: 0.2,
     "@media screen and (max-width: 1069px)": {
       flexGrow: "0.20",
     },
