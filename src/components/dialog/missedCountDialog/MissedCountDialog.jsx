@@ -125,11 +125,11 @@ const MissedCountDialog = ({
             </Grid>
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={getDialogActionStyles}>
+        {/* <DialogActions sx={getDialogActionStyles}>
           <Button onClick={handleClose} sx={getButtonStyles("close")}>
             Close
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </Box>
   );

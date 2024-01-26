@@ -122,7 +122,7 @@ export const getCommonButtonCustomStyles = {
   customStyles: {
     width: "100% !important",
     height: "40px",
-    borderRadius: "4px",
+    borderRadius: "1.25rem",
     border: "1px solid #ef5d36",
     color: "#ef5d36",
     fontSize: "0.9rem !important",

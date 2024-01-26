@@ -46,7 +46,22 @@ const UserProfile = () => {
     <Grid container sx={gridContStyles}>
       <Grid item xs={12} sx={gridItemOneStyles}>
         <Box sx={boxOneStyles}>
-          <Typography className="member_name">{memberName}</Typography>
+          <Typography
+            className="member_name"
+            sx={{
+              "@media screen and (max-width: 900px)": {
+                fontSize: "3.5rem !important",
+              },
+              "@media screen and (max-width: 600px)": {
+                fontSize: "2.75rem !important",
+              },
+              "@media screen and (max-width: 450px)": {
+                fontSize: "2.25rem !important",
+              },
+            }}
+          >
+            {memberName.split(" ")[0]}
+          </Typography>
           <Avatar
             src={
               photo && photo.length > 0

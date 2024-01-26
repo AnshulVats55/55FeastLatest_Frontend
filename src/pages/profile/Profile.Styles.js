@@ -20,7 +20,7 @@ export const getUserProfileStyles = {
   boxOneStyles: {
     width: "100%",
     // background: "rgba(200, 200, 200, 0.1)", //#FFEAE4/
-    background:`url(${ProfileImage})`,
+    background: `url(${ProfileImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     display: "flex",
@@ -28,10 +28,10 @@ export const getUserProfileStyles = {
     padding: "2.5rem 0",
     border: "none",
     borderRadius: "0.5rem",
-    "@media screen and (max-width: 400px)": {
-      padding: "4rem 0",
+    "@media screen and (max-width: 450px)": {
+      padding: "2rem 0",
     },
-    margin:"1rem 0 0",
+    margin: "1rem 0 0",
   },
 
   memberAvatarStyles: {
@@ -40,8 +40,20 @@ export const getUserProfileStyles = {
     position: "absolute",
     top: "9.5rem",
     background: "#FFF",
-    "@media screen and (max-width: 400px)": {
-      top: "4rem",
+    "@media screen and (max-width: 900px)": {
+      top: "8.5rem",
+      width: "6rem",
+      height: "6rem",
+    },
+    "@media screen and (max-width: 600px)": {
+      top: "7.5rem",
+      width: "5.5rem",
+      height: "5.5rem",
+    },
+    "@media screen and (max-width: 450px)": {
+      top: "6.25rem",
+      width: "4.5rem",
+      height: "4.5rem",
     },
   },
 
@@ -119,12 +131,12 @@ export const getUserProfileStyles = {
   },
 
   bookYourMealButtonStyles: {
-    borderRadius: "4px",
+    borderRadius: "1.25rem",
     border: "1px solid #ef5d36",
     color: "#ef5d36",
     transition: "0.25s ease-in",
     fontFamily: "Poppins, sans-serif",
-    fontSize: "1rem",
+    fontSize: 13,
     padding: "0.25rem 0.75rem",
     textTransform: "capitalize",
     textDecoration: "none",

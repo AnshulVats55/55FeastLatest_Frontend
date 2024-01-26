@@ -127,6 +127,7 @@ const BookingCard = ({
               width: "25%",
               padding: "0.6rem 2rem",
               borderRadius: "1.25rem",
+              marginBottom: "1rem",
             }}
           ></Skeleton>
         </>
