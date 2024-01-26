@@ -95,7 +95,7 @@ export const getCommonButtonCustomStyles = {
       border: "1px solid",
       borderColor: isBooked ? "red" : "#ef5d36",
       margin: "1rem 0rem 2rem 0rem",
-      fontSize: 14,
+      fontSize: 13,
       "&:hover": {
         background: isBooked ? "transparent" : "#ef5d36",
         color: isBooked ? "red" : "#FFF",
@@ -123,7 +123,7 @@ export const getCommonButtonCustomStyles = {
       border: "1px solid",
       borderColor: isBooked ? "red" : "#ef5d36",
       margin: "1rem 0rem 2rem 0rem",
-      fontSize: 14,
+      fontSize: 13,
       "&:hover": {
         background: isBooked ? "transparent" : "#ef5d36",
         color: isBooked ? "red" : "#FFF",

@@ -3,12 +3,12 @@ import { makeStyles } from "tss-react/mui";
 export const getInviteButtonStyles = makeStyles()((theme, styles)=>({
     getButtonStyles: {
         width:"100%",
-        borderRadius:"4px",
+        borderRadius:"1.25rem",
         border:"1px solid #ef5d36",
         color:"#ef5d36",
         transition:"0.25s ease-in",
         fontFamily: "Poppins, sans-serif",
-        fontSize: "0.9rem",
+        fontSize: 13,
         padding:"0.2rem 0rem",
         textTransform:"capitalize",
         textDecoration:"none",

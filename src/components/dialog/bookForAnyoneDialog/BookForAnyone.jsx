@@ -174,14 +174,14 @@ const BookForAnyone = ({ open, scroll, handleClose, children }) => {
             )}
           </DialogContentText>
         </DialogContent>
-        <DialogActions className={classes.getDialogActionStyles}>
+        {/* <DialogActions className={classes.getDialogActionStyles}>
           <Button
             onClick={handleClose}
             className={classes.getCloseButtonStyles}
           >
             Close
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </Box>
   );

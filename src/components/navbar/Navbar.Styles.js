@@ -102,7 +102,7 @@ export const getNavbarStyles = {
       position: "relative",
       textDecoration: "none",
       color: "#FFF",
-      fontSize: 14, //16
+      fontSize: 13, //16
       letterSpacing: "1px",
       padding: "0.25rem 0.75rem",
       transition: "0.2s ease-in-out",

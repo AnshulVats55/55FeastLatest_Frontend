@@ -41,7 +41,7 @@ export const getNavbarPopoverStyles = {
   getLinkStyles: {
     textDecoration: "none",
     cursor: "pointer",
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: "Poppins, sans-serif",
   },
 };

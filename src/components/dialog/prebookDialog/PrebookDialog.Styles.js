@@ -67,14 +67,14 @@ export const getPrebookDialogStyles = makeStyles()((theme) => ({
   getCloseButtonStyles: {
     width: "15%",
     height: "35px",
-    borderRadius: "4px",
+    borderRadius: "1.25rem",
     border: "1px solid #ef5d36",
     color: "#ef5d36",
-    margin: "1.5rem 0rem 0rem 5rem",
+    margin: "1.5rem 1.25rem 0.25rem 0rem",
     transition: "0.25s ease-in",
     fontFamily: "Poppins, sans-serif",
-    fontSize: "0.9rem",
-    padding: "0.20rem 0.25rem",
+    fontSize: 13,
+    padding: "0.20rem",
     textTransform: "capitalize",
     textDecoration: "none",
     "&:hover": {

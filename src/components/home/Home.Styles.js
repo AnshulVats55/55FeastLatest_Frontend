@@ -163,7 +163,7 @@ export const getHomePageStyles = makeStyles()((theme) => ({
     margin: "1.5rem 0rem 0rem 0rem",
     transition: "0.25s ease-in",
     fontFamily: "Poppins, sans-serif",
-    fontSize: 14,
+    fontSize: 13,
     padding: "0.25rem 1rem",
     textTransform: "capitalize",
     textDecoration: "none",
@@ -199,7 +199,7 @@ export const getHomePageStyles = makeStyles()((theme) => ({
     margin: "1.5rem 0rem 0rem 1.5rem",
     transition: "0.25s ease-in",
     fontFamily: "Poppins, sans-serif",
-    fontSize: 14,
+    fontSize: 13,
     padding: "0.25rem 1rem",
     textTransform: "capitalize",
     "&:hover": {

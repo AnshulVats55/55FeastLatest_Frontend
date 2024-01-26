@@ -119,14 +119,14 @@ const NonEmployeeGuestDialog = ({
             </Box>
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={getDialogActionStyles}>
+        {/* <DialogActions sx={getDialogActionStyles}>
           <Button
             onClick={handleNonEmployeeDialogClose}
             sx={getButtonStyles("close")}
           >
             Close
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </Box>
   );

@@ -139,11 +139,11 @@ const DeleteMemberDialog = ({
             )}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button onClick={handleClose} sx={getCloseButtonStyles}>
             Close
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </div>
   );

@@ -106,14 +106,14 @@ const PrebookDialog = ({ open, scroll, handleClose }) => {
               <CircularProgress size={15} thickness={4} color="inherit" />
             )}
           </Button>
-          <Button
+          {/* <Button
             onClick={() => {
               handlePrebookDialogClose();
             }}
             className={classes.getCloseButtonStyles}
           >
             Close
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
     </Box>

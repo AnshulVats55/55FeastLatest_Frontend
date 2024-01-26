@@ -269,14 +269,14 @@ const AddMemberDialog = ({ open, scroll, handleClose }) => {
             </Grid>
           </form>
         </DialogContent>
-        <DialogActions className={classes.getDialogActionStyles}>
+        {/* <DialogActions className={classes.getDialogActionStyles}>
           <Button
             onClick={handleClose}
             className={classes.getCloseButtonStyles}
           >
             Close
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </div>
   );

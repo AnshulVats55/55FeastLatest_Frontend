@@ -50,10 +50,10 @@ export const DashboardCardTwoStyles = {
   },
 
   buttonStyles: {
-    borderRadius: "4px",
+    borderRadius:"1.25rem",
     border: "1px solid #ef5d36",
     color: "#ef5d36",
-    fontSize: "0.7rem",
+    fontSize: 12,
     margin: "0.25rem 1rem",
     "&:hover": {
       background: "#ef5d36",
