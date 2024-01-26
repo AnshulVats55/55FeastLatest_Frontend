@@ -8,6 +8,7 @@ import WeeklyDataGraph from "../../components/weeklyDataGraph/WeeklyDataGraph";
 import NoResultMatchesImage from "../../assets/no-result-matches.png";
 import NoBookingsImage from "../../assets/no-booking.png";
 import { motion } from "framer-motion";
+import { faListNumeric } from "@fortawesome/free-solid-svg-icons";
 
 const NewAdminDashboard = () => {
   const {
@@ -58,6 +59,7 @@ const NewAdminDashboard = () => {
               cardLabel={bookingData.cardLabel}
               cardValue={bookingData.cardValue}
               isTooltipRequired={false}
+              regularizationData={index === 2 && regularizationRequests}
             />
           </Grid>
         );
@@ -79,7 +81,7 @@ const NewAdminDashboard = () => {
                 icon={adminAction.icon}
                 cardLabel={adminAction.cardLabel}
                 buttonChildren={adminAction.buttonChildren}
-                regularizationData={index === 1 && regularizationRequests}
+             
               />
             </Grid>
           );

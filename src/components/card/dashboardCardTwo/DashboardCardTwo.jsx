@@ -9,13 +9,7 @@ import DeleteMemberDialog from "../../dialog/deleteMemberDialog/DeleteMemberDial
 import NonEmployeeGuestDialog from "../../dialog/bookForGuestDialog/nonEmployeeGuestDialog/NonEmployeeGuestDialog";
 import MissedCountDialog from "../../dialog/missedCountDialog/MissedCountDialog";
 
-const DashboardCardTwo = ({
-  index,
-  icon,
-  cardLabel,
-  buttonChildren,
-  regularizationData,
-}) => {
+const DashboardCardTwo = ({ index, icon, cardLabel, buttonChildren }) => {
   const {
     todaysCount,
     bookForAnyoneOpen,
@@ -34,10 +28,10 @@ const DashboardCardTwo = ({
     deleteMemberScroll,
     handleDeleteMemberOpen,
     handleDeleteMemberClose,
-    missedCountDialogOpen,
-    missedCountDialogScroll,
-    handleMissedCountDialogOpen,
-    handleMissedCountDialogClose,
+    bookForAnyoneDialogOpen,
+    bookForAnyoneDialogScroll,
+    handleBookForAnyoneDialogOpen,
+    handleBookForAnyoneDialogClose,
     isFileLoading,
     isDailyDataLoading,
     handleExportInExcel,
@@ -76,7 +70,7 @@ const DashboardCardTwo = ({
               index === 0
                 ? () => handleExportInExcel(todaysCount)
                 : index === 1
-                ? handleMissedCountDialogOpen("paper")
+                ? handleBookForAnyoneDialogOpen("paper")
                 : index === 2
                 ? handleAddMemberOpen("paper")
                 : index === 3
@@ -110,12 +104,12 @@ const DashboardCardTwo = ({
           ) : (
             <></>
           )}
-          {missedCountDialogOpen ? (
-            <MissedCountDialog
-              open={missedCountDialogOpen}
-              scroll={missedCountDialogScroll}
-              handleClose={handleMissedCountDialogClose}
-              regularizationData={regularizationData}
+          {bookForAnyoneDialogOpen ? (
+            <BookForAnyone
+              open={bookForAnyoneDialogOpen}
+              scroll={bookForAnyoneDialogScroll}
+              handleClose={handleBookForAnyoneDialogClose}
+              children={"Book"}
             />
           ) : (
             <></>
