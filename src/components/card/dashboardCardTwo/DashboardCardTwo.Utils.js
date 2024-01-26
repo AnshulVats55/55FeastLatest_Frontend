@@ -29,8 +29,8 @@ const DashboardCardTwoUtils = (index) => {
     useState("paper");
   const [deleteMemberOpen, setDeleteMemberOpen] = useState(false);
   const [deleteMemberScroll, setDeleteMemberScroll] = useState("paper");
-  const [missedCountDialogOpen, setMissedCountDialogOpen] = useState(false);
-  const [missedCountDialogScroll, setMissedCountDialogScroll] =
+  const [bookForAnyoneDialogOpen, setBookForAnyoneDialogOpen] = useState(false);
+  const [bookForAnyoneDialogScroll, setBookForAnyoneDialogScroll] =
     useState("paper");
   const [isDailyDataLoading, setIsDailyDataLoading] = useState(false);
   const [isFileLoading, setIsFileLoading] = useState(false);
@@ -105,13 +105,13 @@ const DashboardCardTwoUtils = (index) => {
     setDeleteMemberOpen(false);
   };
 
-  const handleMissedCountDialogOpen = (scrollType) => () => {
-    setMissedCountDialogOpen(true);
-    setMissedCountDialogScroll(scrollType);
+  const handleBookForAnyoneDialogOpen = (scrollType) => () => {
+    setBookForAnyoneDialogOpen(true);
+    setBookForAnyoneDialogScroll(scrollType);
   };
 
-  const handleMissedCountDialogClose = () => {
-    setMissedCountDialogOpen(false);
+  const handleBookForAnyoneDialogClose = () => {
+    setBookForAnyoneDialogOpen(false);
   };
 
   const handleExportInExcel = (memberData) => {
@@ -222,10 +222,10 @@ const DashboardCardTwoUtils = (index) => {
     deleteMemberScroll,
     handleDeleteMemberOpen,
     handleDeleteMemberClose,
-    missedCountDialogOpen,
-    missedCountDialogScroll,
-    handleMissedCountDialogOpen,
-    handleMissedCountDialogClose,
+    bookForAnyoneDialogOpen,
+    bookForAnyoneDialogScroll,
+    handleBookForAnyoneDialogOpen,
+    handleBookForAnyoneDialogClose,
     isFileLoading,
     isDailyDataLoading,
     handleExportInExcel,
