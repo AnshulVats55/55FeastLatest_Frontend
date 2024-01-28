@@ -26,14 +26,17 @@ import { setCustomSnackbar } from "../../store/slices/SnackbarSlice";
 import snackbarMessages from "../../Constants";
 import { HandleLogoutOnSessionExpire } from "../../common/Logout";
 import MemberAvatar from "../memberAvatar/MemberAvatar";
+import Banner from "../banner/Banner";
+import BookMealUtils from "../../pages/bookyourmeal/BookMeal.Utils";
 
 const Home = () => {
   const { classes } = getHomePageStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { handleLogoutOnTokenExpire } = HandleLogoutOnSessionExpire();
+  const { handleMealBooking, isBooked, isLoaderRequired } = BookMealUtils();
 
-  const { isAdmin, location } = useSelector((state) => {
+  const { isAdmin, location, email } = useSelector((state) => {
     return state.memberDataReducer;
   });
 
@@ -53,8 +56,9 @@ const Home = () => {
   const [isTodaysCountFetched, setIsTodaysCountFetched] = useState(false);
   const [isBookingWindowOpen, setIsBookingWindowOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isTodaysMealBooked, setIsTodaysMealBooked] = useState(false);
 
-  const handleMealBooking = () => {
+  const handleNavigateMealBooking = () => {
     navigate("/bookyourmeal");
   };
 
@@ -68,7 +72,6 @@ const Home = () => {
   };
 
   const descriptionElementRef = React.useRef(null);
-
   useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -117,13 +120,20 @@ const Home = () => {
   useEffect(() => {
     const handleGetCountsByDate = async () => {
       const isWindowOpen = handleCheckBookingWindow();
+      console.log("isWindowOpen", isWindowOpen);
       setIsBookingWindowOpen(isWindowOpen);
-      // console.log(isWindowOpen, "=++++++");
       if (isWindowOpen) {
+        //it should be isWindowOpen
         const response = await getCountsByDate(dateToBeChecked, location);
         if (response?.data?.status === snackbarMessages.SUCCESS) {
           setIsTodaysCountFetched(true);
           setTodaysCount(response?.data?.data);
+          response?.data?.data.map((member) => {
+            if (member.email === email) {
+              setIsTodaysMealBooked(true);
+            }
+          });
+          console.log("res at home page", response);
         } else if (
           response?.response?.data?.status === snackbarMessages.FAILURE
         ) {
@@ -158,7 +168,7 @@ const Home = () => {
     };
 
     handleGetCountsByDate();
-  }, []);
+  }, [isBooked]);
 
   const handleMemberSearch = (event) => {
     setSearchTerm(event?.target?.value.toLowerCase());
@@ -183,6 +193,54 @@ const Home = () => {
     <>
       {isDataLoaded ? (
         <Grid container className={classes.getGridContStyles}>
+          {isBookingWindowOpen ? (
+            isTodaysCountFetched ? (
+              !isTodaysMealBooked && (
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    padding: "0.5rem 0",
+                    "@media screen and (max-width: 900px)": {
+                      padding: "0.25rem 0",
+                    },
+                  }}
+                >
+                  <Banner
+                    bannerText={`Planning to join office ${
+                      dateToBeChecked === formattedDate ? "today" : "tomorrow"
+                    }? Book your meal now !`}
+                    actionToBePerformed={handleMealBooking}
+                    isLoading={isLoaderRequired}
+                    buttonChildren="Book Meal"
+                  />
+                </Grid>
+              )
+            ) : (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  padding: "0.5rem 0",
+                  "@media screen and (max-width: 900px)": {
+                    padding: "0.25rem 0",
+                  },
+                }}
+              >
+                <Skeleton
+                  variant="rounded"
+                  animation="wave"
+                  sx={{
+                    height: "3rem",
+                    maxHeight: "3rem",
+                    background: "rgba(0, 0, 0, 0.2)",
+                  }}
+                ></Skeleton>
+              </Grid>
+            )
+          ) : (
+            <></>
+          )}
           {isBookingWindowOpen && (
             <Grid
               item
@@ -359,7 +417,7 @@ const Home = () => {
                 {isAdmin ? (
                   <>
                     <Button
-                      onClick={handleMealBooking}
+                      onClick={handleNavigateMealBooking}
                       className={classes.getBookYourMealButtonStyles}
                     >
                       Book your meal
@@ -391,7 +449,7 @@ const Home = () => {
                   </>
                 ) : (
                   <Button
-                    onClick={handleMealBooking}
+                    onClick={handleNavigateMealBooking}
                     className={classes.getBookYourMealButtonStyles}
                   >
                     Book your meal
@@ -528,7 +586,7 @@ const Home = () => {
                   <>
                     <Skeleton>
                       <Button
-                        onClick={handleMealBooking}
+                        onClick={handleNavigateMealBooking}
                         className={classes.getBookYourMealButtonStyles}
                       >
                         Book your meal
@@ -557,7 +615,7 @@ const Home = () => {
                 ) : (
                   <Skeleton>
                     <Button
-                      onClick={handleMealBooking}
+                      onClick={handleNavigateMealBooking}
                       className={classes.getBookYourMealButtonStyles}
                     >
                       Book your meal
