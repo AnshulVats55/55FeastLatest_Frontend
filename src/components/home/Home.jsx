@@ -99,7 +99,7 @@ const Home = () => {
         return false;
       }
     } else if (currentDay >= 1 && currentDay <= 4) {
-      if (currentHour >= 0 && currentHour <= 15) {
+      if (currentHour >= 0 && currentHour <= 9) {
         return true;
       } else if (currentHour >= 18 && currentHour <= 23) {
         return true;
@@ -107,7 +107,7 @@ const Home = () => {
         return false;
       }
     } else if (currentDay === 5) {
-      if (currentHour >= 0 && currentHour <= 15) {
+      if (currentHour >= 0 && currentHour <= 9) {
         return true;
       } else {
         return false;
@@ -212,6 +212,7 @@ const Home = () => {
                     }? Book your meal now !`}
                     actionToBePerformed={handleMealBooking}
                     isLoading={isLoaderRequired}
+                    isActionPerformed={isTodaysMealBooked}
                     buttonChildren="Book Meal"
                   />
                 </Grid>

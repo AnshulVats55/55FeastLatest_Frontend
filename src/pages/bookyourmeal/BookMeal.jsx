@@ -11,11 +11,10 @@ import BookingCard from "../../components/bookingCard/BookingCard";
 import BookForBuddyDialog from "../../components/dialog/bookForBuddy/BookForBuddy";
 import PrebookDialog from "../../components/dialog/prebookDialog/PrebookDialog";
 import BookMealUtils from "./BookMeal.Utils";
-import CommonButton from "../../components/button/CommonButton";
+import Banner from "../../components/banner/Banner";
 
 const BookMeal = () => {
   const { classes } = getMealBookingStyles();
-  const { customStyles } = getAdditionalStyles;
   const {
     bookForBuddyOpen,
     prebookOpen,
@@ -56,53 +55,13 @@ const BookMeal = () => {
                 },
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  background: "#F2FAFF",
-                  border: "1px solid #009BFF",
-                  borderRadius: "4px",
-                }}
-              >
-                <Box
-                  sx={{
-                    maxWidth: "57%",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    padding: "0.75rem 0.25rem",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: "0.9rem",
-                      color: "#009BFF",
-                      fontWeight: 500,
-                      "@media screen and (max-width: 400px)": {
-                        fontSize: "0.8rem",
-                      },
-                    }}
-                  >
-                    Missed to book meal for today? Notify admin now !
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    maxWidth: "43%",
-                    padding: "0 0.25rem",
-                  }}
-                >
-                  <CommonButton
-                    onClick={handleNotifyAdmin}
-                    customStyles={customStyles(isBooked)}
-                    isLoaderRequired={isOverlayRequired}
-                  >
-                    Notify Admin
-                  </CommonButton>
-                </Box>
-              </Box>
+              <Banner
+                bannerText={"Missed to book meal for today? Notify admin now !"}
+                actionToBePerformed={handleNotifyAdmin}
+                isActionPerformed={isBooked}
+                isLoading={isLoaderRequired}
+                buttonChildren={"Notify Admin"}
+              />
             </Grid>
           )
         ) : (

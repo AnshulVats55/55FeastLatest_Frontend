@@ -5,6 +5,7 @@ const Banner = ({
   bannerText,
   actionToBePerformed,
   isLoading,
+  isActionPerformed,
   buttonChildren,
 }) => {
   return (
@@ -50,16 +51,16 @@ const Banner = ({
           onClick={actionToBePerformed}
           customStyles={{
             fontWeight: "normal",
-            background: "transparent",
-            color: "#ef5d36",
+            background: isActionPerformed ? "red" : "transparent",
+            color: isActionPerformed ? "#FFF" : "#ef5d36",
             borderRadius: "1.25rem",
             border: "1px solid",
-            borderColor: "#ef5d36",
+            borderColor: isActionPerformed ? "red" : "#ef5d36",
             fontSize: 13,
             "&:hover": {
-              background: "#ef5d36",
-              color: "#FFF",
-              borderColor: "#ef5d36",
+              background: isActionPerformed ? "transparent" : "#ef5d36",
+              color: isActionPerformed ? "red" : "#FFF",
+              borderColor: isActionPerformed ? "red" : "#ef5d36",
             },
             "&:focus": {
               outline: "none",
