@@ -29,6 +29,7 @@ const UserProfileUtils = () => {
   const handleNavigation = () => {
     navigate("/bookyourmeal");
   };
+  
   useEffect(() => {
     const getMemberBookingStatus = async () => {
       const response = await handleMemberBookingStatus(email);
@@ -153,6 +154,7 @@ const UserProfileUtils = () => {
       ),
     },
   ];
+
   return {
     photo,
     gender,

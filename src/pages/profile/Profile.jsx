@@ -74,29 +74,31 @@ const UserProfile = () => {
           ></Avatar>
         </Box>
       </Grid>
-      <Grid container item xs={12} sx={gridItemTwoStyles}>
-        {/* <Typography sx={memberNameStyles}>{memberName}</Typography> */}
-        {profileCardsDataArray?.map((profileCardsData, index) => {
-          return (
-            <Grid
-              key={index}
-              item
-              lg={3}
-              md={6}
-              sm={6}
-              xs={12}
-              sx={{ padding: "1rem 0.75rem 0rem" }}
-            >
-              <DashboardCardOne
-                index={index}
-                icon={profileCardsData.icon}
-                cardLabel={profileCardsData.cardLabel}
-                cardValue={profileCardsData.cardValue}
-                isTooltipRequired
-              />
-            </Grid>
-          );
-        })}
+      <Grid item xs={12} sx={gridItemTwoStyles}>
+        <Box sx={boxTwoStyles}>
+          {/* <Typography sx={memberNameStyles}>{memberName}</Typography> */}
+          {profileCardsDataArray?.map((profileCardsData, index) => {
+            return (
+              <Grid
+                key={index}
+                item
+                lg={3}
+                md={6}
+                sm={6}
+                xs={12}
+                sx={{ padding: "1rem 0.75rem 0rem" }}
+              >
+                <DashboardCardOne
+                  index={index}
+                  icon={profileCardsData.icon}
+                  cardLabel={profileCardsData.cardLabel}
+                  cardValue={profileCardsData.cardValue}
+                  isTooltipRequired
+                />
+              </Grid>
+            );
+          })}
+        </Box>
       </Grid>
 
       <Grid item xs={12} sx={gridItemThreeStyles}>

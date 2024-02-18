@@ -4,6 +4,8 @@ import { Box, Typography } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import MissedCountDialog from "../../dialog/missedCountDialog/MissedCountDialog";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "../../tooltip/Tooltip";
 
 const DashboardCardOne = ({
@@ -42,8 +44,14 @@ const DashboardCardOne = ({
           />
         )}
         {isTooltipRequired && index === 3 && (
-          <Box sx={tooltipContStyles}>
-            <CustomTooltip tooltipTitle="Feast Factor is the ratio of meals booked by you and total meals booked" />
+          <Box
+            sx={{
+              position: "absolute",
+              top: "0.25rem",
+              right: "0.25rem",
+            }}
+          >
+            <CustomTooltip tooltipTitle="Feast factor is the ratio of meals booked by you and total number of meals booked" />
           </Box>
         )}
         {icon}
