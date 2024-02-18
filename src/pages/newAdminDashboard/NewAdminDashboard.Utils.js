@@ -199,8 +199,8 @@ const NewAdminDashboardUtils = () => {
     },
     {
       icon: <FontAwesomeIcon icon={faUser} style={iconStylesTwo(2)} />,
-      cardLabel: "Regularize meal",
-      buttonChildren: "Regularize meal",
+      cardLabel: "Book for anyone",
+      buttonChildren: "Book for anyone",
     },
     {
       icon: <FontAwesomeIcon icon={faPlus} style={iconStylesTwo(4)} />,

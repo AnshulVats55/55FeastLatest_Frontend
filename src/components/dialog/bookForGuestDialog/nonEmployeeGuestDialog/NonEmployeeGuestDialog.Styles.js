@@ -81,7 +81,7 @@ export const NonEmployeeGuestDialogStyles = {
     return {
       width: "15%",
       height: "35px",
-      borderRadius: "4px",
+      borderRadius:"1.25rem",
       border: "1px solid #ef5d36",
       color: "#ef5d36",
       margin: type === "close" ? "1.5rem 0rem 0rem 5rem" : "",

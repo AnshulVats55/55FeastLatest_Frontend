@@ -6,9 +6,7 @@ import Slider from "@mui/material/Slider";
 import {
   Box,
   Typography,
-  Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -25,14 +23,12 @@ const NonEmployeeGuestDialog = ({
   nonEmployeeDialogScroll,
   handleNonEmployeeDialogClose,
 }) => {
-  const { setNonEmployeeGuests, handleBookForGuests } =
+  const { setNonEmployeeGuests, handleBookForGuests, isLoaderRequired } =
     NonEmployeeGuestDialogUtils();
   const {
     getDialogTitleStyles,
     getDialogContentStyles,
     getDialogContentTextStyles,
-    getDialogActionStyles,
-    getCloseButtonStyles,
     getSliderStyles,
     getButtonStyles,
     cancelIconStyles,
@@ -84,7 +80,7 @@ const NonEmployeeGuestDialog = ({
                   fontSize: "0.8rem",
                 },
                 fontWeight: 500,
-                marginTop:"1rem",
+                marginTop: "1rem",
               }}
             >
               {`You are booking for ${getReversedDate(dateToBeChecked)}`}
@@ -110,7 +106,7 @@ const NonEmployeeGuestDialog = ({
               />
               <CommonButton
                 children="Book"
-                isLoaderRequired={false}
+                isLoaderRequired={isLoaderRequired}
                 type=""
                 isDisabled={false}
                 customStyles={getButtonStyles("book")}
@@ -119,14 +115,6 @@ const NonEmployeeGuestDialog = ({
             </Box>
           </DialogContentText>
         </DialogContent>
-        {/* <DialogActions sx={getDialogActionStyles}>
-          <Button
-            onClick={handleNonEmployeeDialogClose}
-            sx={getButtonStyles("close")}
-          >
-            Close
-          </Button>
-        </DialogActions> */}
       </Dialog>
     </Box>
   );
