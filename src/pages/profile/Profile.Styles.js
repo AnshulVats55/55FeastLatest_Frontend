@@ -1,4 +1,5 @@
-import ProfileImage from "../../assets/profile-banner.jpg";
+// import ProfileImage from "../../assets/profile-banner.jpg";
+import ProfileImage from "../../assets/profile-bg.svg";
 
 export const getUserProfileStyles = {
   gridContStyles: {
@@ -23,9 +24,10 @@ export const getUserProfileStyles = {
     background: `url(${ProfileImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    objectFit: "fill",
     display: "flex",
     justifyContent: "center",
-    padding: "2.5rem 0",
+    padding: "5rem 0",
     border: "none",
     borderRadius: "0.5rem",
     "@media screen and (max-width: 450px)": {
@@ -38,7 +40,7 @@ export const getUserProfileStyles = {
     width: "7rem",
     height: "7rem",
     position: "absolute",
-    top: "9.5rem",
+    top: "14rem",
     background: "#FFF",
     "@media screen and (max-width: 900px)": {
       top: "8.5rem",

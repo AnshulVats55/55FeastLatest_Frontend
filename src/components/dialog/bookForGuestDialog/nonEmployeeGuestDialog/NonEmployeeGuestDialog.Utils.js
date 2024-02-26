@@ -30,7 +30,6 @@ const NonEmployeeGuestDialogUtils = () => {
     } else {
       setIsLoaderRequired(true);
       const response = await bookForGuests("nonEmployee", location, guestData);
-      console.log("RES OF GUESTS API", response);
       if (response?.data?.status === snackbarMessages.SUCCESS) {
         dispatch(
           setCustomSnackbar({
